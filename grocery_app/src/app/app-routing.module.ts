@@ -14,7 +14,7 @@ const routes: Routes = [
   {path:"home",component:HomeComponent},
   {path:"everything",loadChildren:()=>import('./front/catalog/catalog.module').then((c)=>c.CatalogModule)},
   {path:"cart",component:CartComponent},
-  {path:"login",component:LoginComponent},
+  {path:"users",loadChildren:()=>import('./front/users/users.module').then((m)=>m.UsersModule)},
   {path:"about",component:AboutComponent},
   {path:"contact",component:ContactusComponent}
 ];
