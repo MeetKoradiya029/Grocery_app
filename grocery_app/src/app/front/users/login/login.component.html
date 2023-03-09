@@ -1,1 +1,8 @@
-<div>Login Page </div>
+<div class="formWrapper">
+
+    <form class="loginForm" (ngSubmit)="submit()" [formGroup]="loginForm">
+        <input type="email" placeholder="Enter your email" formControlName="email">
+        <input type="password" placeholder="Enter Password" formControlName="password">
+        <button type="submit">Submit</button>
+    </form>
+</div>

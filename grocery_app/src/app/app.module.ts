@@ -11,6 +11,9 @@ import { AboutComponent } from './navbar/about/about.component';
 import { ContactusComponent } from './navbar/contactus/contactus.component';
 import { ProductListComponent } from './front/catalog/product-list/product-list.component';
 import { CatalogModule } from './front/catalog/catalog.module';
+import { FooterComponent } from './navbar/home/footer/footer.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -19,12 +22,15 @@ import { CatalogModule } from './front/catalog/catalog.module';
     HomeComponent,
     CartComponent,
     AboutComponent,
-    ContactusComponent
+    ContactusComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CatalogModule
+    CatalogModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
