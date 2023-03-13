@@ -1,90 +1,209 @@
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
-  
-  <div class="mt-10 sm:mt-0">
-    <div class="md:grid md:grid-cols-3 md:gap-6">
-      <div class="md:col-span-1">
-        <div class="px-4 sm:px-0">
-          <h3 class="text-base font-semibold leading-6 text-gray-900">Personal Information</h3>
-          <p class="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
-        </div>
-      </div>
-      <div class="mt-5 md:col-span-2 md:mt-0">
-        <form action="#" method="POST">
-          <div class="overflow-hidden shadow sm:rounded-md">
-            <div class="bg-white px-4 py-5 sm:p-6">
-              <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">First name</label>
-                  <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Last name</label>
-                  <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-4">
-                  <label for="email-address" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-                  <input type="text" name="email-address" id="email-address" autocomplete="email" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Country</label>
-                  <select id="country" name="country" autocomplete="country-name" class="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
-                  </select>
-                </div>
-  
-                <div class="col-span-6">
-                  <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
-                  <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                  <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
-                  <input type="text" name="city" id="city" autocomplete="address-level2" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
-                  <input type="text" name="region" id="region" autocomplete="address-level1" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
-                  <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-              </div>
-            </div>
-            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-              <button type="submit" class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
+<div>
+  <div class="container">
+    <div>
+      <h3>Personal Information</h3>
+    </div>
+    <form [formGroup]="registerForm">
+      <div>
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <input
+              type="text"
+              class="form-control input"
+              placeholder="First name"
+              aria-label="First name"
+              formControlName="firstname"
+            />
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('firstname')?.invalid &&
+                (registerForm.get('firstname').dirty ||
+                  registerForm.get('firstname').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('firstname')?.errors?.['required']"
+                >First name is required.</span
+              >
             </div>
           </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  
-  <div class="hidden sm:block" aria-hidden="true">
-    <div class="py-5">
-      <div class="border-t border-gray-200"></div>
-    </div>
-  </div>
-  
+          <div class="col-12 col-md-6">
+            <input
+              type="text"
+              aria-label="Last name"
+              class="form-control"
+              placeholder="Last Name"
+              formControlName="lastname"
+            />
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('lastname')?.invalid &&
+                (registerForm.get('lastname').dirty ||
+                  registerForm.get('lastname').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('lastname')?.errors?.['required']"
+                >Name is required.</span
+              >
+            </div>
+          </div>
+          <div class="col-12">
+            <input
+              type="email"
+              class="form-control"
+              id="email-address"
+              placeholder="Email:name@example.com"
+              formControlName="email"
+            />
+            
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('email')?.invalid &&
+                (registerForm.get('email').dirty ||
+                  registerForm.get('email').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('email')?.errors?.['required']"
+                >email is required.</span
+              >
+              <span *ngIf="registerForm.get('email')?.errors?.['email']"
+                >email should be valid !</span
+              >
+            </div>
+          </div>
+          <div class="col-12">
+            <input
+              type="password"
+              class="form-control"
+              id="floatingPassword"
+              placeholder="Password"
+            />
+            
+          </div>
 
-  
+          <div class="col-4">
+            <select
+              id="country"
+              name="country"
+              class="form-select"
+              autocomplete="country-name"
+              formControlName="country"
+            >
+              <option value="" selected>Select country</option>
+              <option>United States</option>
+              <option>Canada</option>
+              <option>Mexico</option>
+            </select>
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('country')?.invalid &&
+                (registerForm.get('country').dirty ||
+                  registerForm.get('country').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('country')?.errors?.['required']"
+                >Select country</span
+              >
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="City"
+              aria-label="City"
+              formControlName="city"
+            />
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('city')?.invalid &&
+                (registerForm.get('city').dirty ||
+                  registerForm.get('city').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('city')?.errors?.['required']"
+                >Enter city name</span
+              >
+            </div>
+          </div>
+          <div class="col-6 col-md-2">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="State"
+              aria-label="State"
+              formControlName="state"
+            />
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('state')?.invalid &&
+                (registerForm.get('state').dirty ||
+                  registerForm.get('state').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('state')?.errors?.['required']"
+                >state is required.</span
+              >
+            </div>
+          </div>
+          <div class="col-6 col-md-2">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Zip"
+              aria-label="Zip"
+              formControlName="zipcode"
+            />
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('zipcode')?.invalid &&
+                (registerForm.get('zipcode').dirty ||
+                  registerForm.get('zipcode').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('zipcode')?.errors?.['required']"
+                >Zipcode is required.</span
+              >
+              <span *ngIf="registerForm.get('zipcode')?.errors?.['minlength']"
+                >zipcode should be minimium of 6 numbers</span
+              >
+            </div>
+          </div>
+
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control"
+              name="street-address"
+              id="inputAddress"
+              placeholder="Address"
+              formControlName="address"
+            />
+            
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('address')?.invalid &&
+                (registerForm.get('address').dirty ||
+                  registerForm.get('address').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('address')?.errors?.['required']"
+                >Address is required.</span
+              >
+            </div>
+          </div>
+          <div>
+            <button type="submit" (click)="formHandler()">Save</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

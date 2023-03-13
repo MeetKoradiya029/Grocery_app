@@ -1,16 +1,68 @@
 <header>
-    <nav>
-        <ul class="left">
-            <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-            <li><a routerLink="/everything" routerLinkActive="active">Everything</a></li>
-            <li><a routerLink="/about" routerLinkActive="active">About</a></li>
-            <li><a routerLink="/contact" routerLinkActive="active">Contact Us</a></li>
+  <nav class="navbar bg-body-tertiary">
+    <div class="container container_nav">
+      <div class="d-flex">
+        <a routerLink="" routerLinkActive="active">
+            <img
+            src="https://png.pngtree.com/png-clipart/20190925/original/pngtree-black-sticky-line-drawing-online-supermarket-convenience-store-e-commerce-online-png-image_4892039.jpg"
+            alt=""
+            width="50px"
+          />
+        </a>
+       
+        <div class="logo-txt">
+          <div class="h4"><a routerLink="" routerLinkActive="active" style="text-decoration: none;color: black;">Cybercom Creation</a></div>
+          <div class="subHead"><a routerLink="" routerLinkActive="active" style="text-decoration: none; color: gray;">GROCERY SHOPPING APP</a></div>
+        </div>
+
+      </div>
+      <div class="d-flex">
+        
+        <form class="d-flex" role="search">
+          
+          <div class="col-4 divider">
+            <select name="categories" id="category_selector" class="form-select">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+          <div class="col-6 search_input">
+            <input
+            class="form-control"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          
+          </div>
+          <div class="col">
+            <button class="btn search_btn" type="submit"><i class="bi bi-search"><img src="../../assets/search.svg" alt=""></i></button>
+          </div>
+         
+        </form>
+
+      </div>
+
+      <div class="cart_contain" routerLink="/cart" routerLinkActive="active">
+        <div><img src="../../assets/cart4.svg" alt="" height="30px"></div>
+        <div class="cart">
+          <div>My Cart</div>
+          <div>₹21</div>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Meet Koradiya
+        </a>
+      
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
         </ul>
-        <ul class="right">
-            <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
-            <li><a routerLink="/users/login" routerLinkActive="active">Login</a></li>
-        </ul>
-    </nav>
+      </div> 
+      
+    </div>
+  </nav>
 </header>
 
 <router-outlet></router-outlet>

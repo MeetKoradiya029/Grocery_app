@@ -41,3 +41,29 @@
     text-align: center;
   }
   
+
+  .logo-txt{
+    display: flex;
+    flex-direction: column;
+}
+.logo-txt div{
+    line-height: 16px;
+}
+
+.subHead{
+    color: grey;
+}
+
+.footer_container{
+  display: flex;
+
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  margin-left: 450px;
+
+}
+.contact_detail{
+  display: flex;
+  flex-direction: row;
+}

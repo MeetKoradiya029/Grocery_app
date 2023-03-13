@@ -95,3 +95,55 @@
     width: 50px;
     height: 50px;
   }
+  .header{
+    background-color: #2196f3;
+  }
+
+ 
+  .banner .content {
+    text-align: center;
+    width: 60rem;
+  }
+  .banner .content h3 {
+    font-size: 3rem;
+    color: black;
+  }
+  .banner .content span {
+    color:orange;
+  }
+  .banner .content p {
+    padding: 2rem 0;
+    font-size: 1.7rem;
+    color: rgb(45, 44, 44);
+  }
+  .banner .content button:hover {
+    background: orange;
+  }
+  .banner button{
+    width: 200px;
+    border: 1px solid grey;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bg{
+  margin:0px;
+   background-image: url('../../assets/grocery-shopping.jpg');
+   width: 100wh;
+   height: 500px;
+   justify-content: center;
+   align-items: center;
+   background-size: cover;
+  }
+ .heading{
+  padding-top: 190px;
+ }
+.title{
+  display: flex;
+  flex-direction: row;
+}
+.explore_cat .title ul{
+  margin-left: 400px;
+}
+
+  

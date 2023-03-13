@@ -7,7 +7,7 @@ import { LoginComponent } from './front/users/login/login.component';
 import { AboutComponent } from './navbar/about/about.component';
 import { CartComponent } from './navbar/cart/cart.component';
 import { ContactusComponent } from './navbar/contactus/contactus.component';
-import { HomeComponent } from './navbar/home/home.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent},
