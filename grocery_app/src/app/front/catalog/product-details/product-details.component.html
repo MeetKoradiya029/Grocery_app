@@ -1,4 +1,6 @@
+
 <div class="row">
+  <h3>{{category}}</h3>
   <div class="card" style="width: 18rem;" *ngFor="let product of products">
     <img src="{{product.image}}" class="card-img-top">
     <div class="card-body">
@@ -10,5 +12,20 @@
   </div>
 </div>
   
+
+<!-- <owl-carousel [options]="carouselOptions">
+  <ng-container *ngFor="let product of products">
+    <owl-carousel-o-item>
+      
+      <div class="product">
+        <img [src]="product.image" alt="{{product.name}}">
+        <h3>{{product.name}}</h3>
+        <p>{{product.description}}</p>
+      </div>
+    </owl-carousel-o-item>
+  </ng-container>
+</owl-carousel> -->
+
+
 
 

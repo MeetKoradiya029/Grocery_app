@@ -21,9 +21,17 @@
         <form class="d-flex" role="search">
           
           <div class="col-4 divider">
-            <select name="categories" id="category_selector" class="form-select">
-              <option value="all">All Categories</option>
-            </select>
+            <div class="dropdown">
+              <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                All Categories
+              </a>
+            
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item">Vagitables</a></li>
+                <li><a class="dropdown-item">Another action</a></li>
+                <li><a class="dropdown-item">Something else here</a></li>
+              </ul>
+            </div> 
           </div>
           <div class="col-6 search_input">
             <input

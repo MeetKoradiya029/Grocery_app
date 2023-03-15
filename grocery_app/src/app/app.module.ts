@@ -13,7 +13,12 @@ import { ProductListComponent } from './front/catalog/product-list/product-list.
 import { CatalogModule } from './front/catalog/catalog.module';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule  } from 'ngx-owl-carousel-o';
+import { MatCarouselModule } from '@thouet/material-carousel';
+import { CategoryComponent } from './front/catalog/category/category.component';
+import { CommonModule } from '@angular/common';
+import { CategoryProductsComponent } from './front/catalog/category-products/category-products.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +29,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AboutComponent,
     ContactusComponent,
     FooterComponent,
+    CategoryComponent,
+    CategoryProductsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CatalogModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    CarouselModule,
+    MatCarouselModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
