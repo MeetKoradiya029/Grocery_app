@@ -31,6 +31,26 @@ export class CategoryComponent {
       name: 'Bakery',
       image: 'https://blogtricity.com/wp-content/uploads/2021/05/Top-10-Best-Bakery-in-Chandigarh-for-your-sweet-tooth-1-1.jpg',
       quantity: 23
+    },
+    {
+      name: 'Bakery',
+      image: 'https://blogtricity.com/wp-content/uploads/2021/05/Top-10-Best-Bakery-in-Chandigarh-for-your-sweet-tooth-1-1.jpg',
+      quantity: 23
+    },
+    {
+      name: 'Bakery',
+      image: 'https://blogtricity.com/wp-content/uploads/2021/05/Top-10-Best-Bakery-in-Chandigarh-for-your-sweet-tooth-1-1.jpg',
+      quantity: 23
+    },
+    {
+      name: 'Bakery',
+      image: 'https://blogtricity.com/wp-content/uploads/2021/05/Top-10-Best-Bakery-in-Chandigarh-for-your-sweet-tooth-1-1.jpg',
+      quantity: 23
+    },
+    {
+      name: 'Bakery',
+      image: 'https://blogtricity.com/wp-content/uploads/2021/05/Top-10-Best-Bakery-in-Chandigarh-for-your-sweet-tooth-1-1.jpg',
+      quantity: 23
     }
   ];
 }

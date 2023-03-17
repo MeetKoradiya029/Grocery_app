@@ -21,8 +21,9 @@
         <li class="nav-item">
           <a class="nav-link">Meat</a>
         </li>
-        <select name="filter" #category (change)="onHandleChange(category.value)" >
-          <option value="" selected>--select--</option>
+        <select name="filter" #category [(ngModel)]="selectedCategory" (change)="filterProducts()">
+          <option value="" selected disabled>--select--</option>
+          <option value="all">All</option>
           <option value="vagetables">vagetables</option>
           <option value="fruits">fruits</option>
         </select>
@@ -31,27 +32,15 @@
     </div>
     
     
-    <app-product-list> </app-product-list>
+    <app-product-list *ngIf="!selectedCategory"> </app-product-list>
 
 
   </div>  
 
-<div class="row">
-    <h3>{{category}}</h3>
-    <div class="card" style="width: 18rem;" *ngFor="let product of products">
-      <img src="{{product.image}}" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">{{ product.name }}</h5>
-        <p class="card-text">{{ product.description }}</p>
-        <p class="card-text">{{ product.price | currency }}</p>
-        <button type="button" class="btn btn-danger">Add to Cart</button>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <h3>{{category}}</h3>
-    <div class="card" style="width: 18rem;" *ngFor="let product of products">
+  <div class="row" *ngIf="selectedCategory">
+    <h3>{{selectedCategory}}</h3>
+    <div class="card" style="width: 18rem;" *ngFor="let product of filterProducts()">
       <img src="{{product.image}}" class="card-img-top">
       <div class="card-body">
         <h5 class="card-title">{{ product.name }}</h5>

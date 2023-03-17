@@ -146,6 +146,10 @@
   margin-left: 300px;
 }
 
+.featured_prodcuts .title ul{
+  display: flex;
+  flex-direction: row;
+}
 
 
 

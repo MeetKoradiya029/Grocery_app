@@ -19,6 +19,7 @@ import { MatCarouselModule } from '@thouet/material-carousel';
 import { CategoryComponent } from './front/catalog/category/category.component';
 import { CommonModule } from '@angular/common';
 import { CategoryProductsComponent } from './front/catalog/category-products/category-products.component';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { CategoryProductsComponent } from './front/catalog/category-products/cat
     BrowserAnimationsModule,
     CarouselModule,
     MatCarouselModule,
-    CommonModule
+    CommonModule,
+    IvyCarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
