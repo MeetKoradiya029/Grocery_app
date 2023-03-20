@@ -1,7 +1,7 @@
 <div>
-  <div class="container">
+  <div class="container formContainer">
     <div>
-      <h3>Personal Information</h3>
+      <h3>Register Yourself</h3>
     </div>
     <form [formGroup]="registerForm">
       <div>
@@ -56,7 +56,7 @@
               placeholder="Email:name@example.com"
               formControlName="email"
             />
-            
+
             <div
               class="txt-danger"
               *ngIf="
@@ -73,17 +73,62 @@
               >
             </div>
           </div>
+
           <div class="col-12">
             <input
               type="password"
               class="form-control"
               id="floatingPassword"
               placeholder="Password"
+              formControlName="password"
             />
-            
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('password')?.invalid &&
+                (registerForm.get('password').dirty ||
+                  registerForm.get('password').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('password')?.errors?.['required']"
+                >Password is required.</span
+              >
+              <span *ngIf="registerForm.get('password')?.errors?.['minlength']"
+                >Minimum 8 characters are required.</span
+              >
+
+              <!-- <span *ngIf="registerForm.get('password')?.errors?.['pattern']"
+                >A password must be eight characters including one uppercase
+                letter, one special character and alphanumeric characters</span
+              > -->
+            </div>
           </div>
 
-          <div class="col-4">
+          <div class="col-12">
+            <input
+              type="number"
+              class="form-control"
+              name="street-address"
+              id="mobile"
+              placeholder="Mobile No."
+              formControlName="mobile"
+            />
+
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('mobile')?.invalid &&
+                (registerForm.get('mobile').dirty ||
+                  registerForm.get('mobile').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('mobile')?.errors?.['required']"
+                >Enter Mobile No.</span
+              >
+            </div>
+          </div>
+
+          <div class="col-6">
             <select
               id="country"
               name="country"
@@ -109,28 +154,7 @@
               >
             </div>
           </div>
-          <div class="col-12 col-md-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="City"
-              aria-label="City"
-              formControlName="city"
-            />
-            <div
-              class="txt-danger"
-              *ngIf="
-                registerForm.get('city')?.invalid &&
-                (registerForm.get('city').dirty ||
-                  registerForm.get('city').touched)
-              "
-            >
-              <span *ngIf="registerForm.get('city')?.errors?.['required']"
-                >Enter city name</span
-              >
-            </div>
-          </div>
-          <div class="col-6 col-md-2">
+          <div class="col-6">
             <input
               type="text"
               class="form-control"
@@ -151,7 +175,29 @@
               >
             </div>
           </div>
-          <div class="col-6 col-md-2">
+          <div class="col-6">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="City"
+              aria-label="City"
+              formControlName="city"
+            />
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('city')?.invalid &&
+                (registerForm.get('city').dirty ||
+                  registerForm.get('city').touched)
+              "
+            >
+              <span *ngIf="registerForm.get('city')?.errors?.['required']"
+                >Enter city name</span
+              >
+            </div>
+          </div>
+         
+          <div class="col-6">
             <input
               type="text"
               class="form-control"
@@ -185,7 +231,7 @@
               placeholder="Address"
               formControlName="address"
             />
-            
+
             <div
               class="txt-danger"
               *ngIf="
@@ -200,7 +246,13 @@
             </div>
           </div>
           <div>
-            <button type="submit" (click)="formHandler()">Save</button>
+            <button
+              type="submit"
+              (click)="formHandler()"
+              class="btn btn-primary w-100"
+            >
+              Register
+            </button>
           </div>
         </div>
       </div>
