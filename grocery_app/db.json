@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "firstname": "meet ",
+      "lastname": "koradiya",
+      "email": "meet@gmail.com",
+      "password": "12345678",
+      "country": "United States",
+      "address": "ontario",
+      "city": "toranto",
+      "state": "canada",
+      "zipcode": "233223",
+      "mobile": 7284021006,
+      "id": 1
+    },
+    {
+      "firstname": "tony",
+      "lastname": "stark",
+      "email": "tony@gmail.com",
+      "password": "tonytony",
+      "country": "Canada",
+      "address": "wasington school,ontario",
+      "city": "ontario",
+      "state": "toranto",
+      "zipcode": "125487",
+      "mobile": 4567894564,
+      "id": 2
+    }
+  ]
+}

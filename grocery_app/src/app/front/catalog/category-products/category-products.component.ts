@@ -12,7 +12,7 @@ export class CategoryProductsComponent implements OnInit{
   category: any;
   filterProductsArray: any[] = [];
   selectedCategory:string='';
-  filteredProducts: any[];
+  filteredProducts: any[] = [];
   constructor(
     private productService: ProductServiceService,
     private route: ActivatedRoute
@@ -38,7 +38,7 @@ export class CategoryProductsComponent implements OnInit{
 
   
 
-  handleChange(selectedCategory) {
+  handleChange(selectedCategory: any) {
     let filteredProducts = this.products.filter(products=>products.category===selectedCategory)
     console.log(filteredProducts);
     console.log(this.filterProductsArray);

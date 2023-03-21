@@ -6,6 +6,8 @@ import {
   MinLengthValidator,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from 'src/app/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -13,9 +15,9 @@ import {
   styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
-  registerForm: FormGroup;
+  registerForm!: FormGroup;
 
-  constructor() {}
+  constructor(private userService:UserService ,private route:ActivatedRoute,private router:Router) {}
 
   ngOnInit() {
     this.formInitialize();
@@ -77,6 +79,29 @@ export class RegistrationComponent implements OnInit {
 
       console.log('firstname', this.registerForm.getRawValue());
     }
+    
+
+    const body = {
+      firstname:firstname,
+      lastname:lastname,
+      email:email,
+      password:password,
+      country:country,
+      address:address,
+      city:city,
+      state:state,
+      zipcode:zipcode,
+      mobile:mobile,
+    }
+
+    this.userService.RegisterUser(body).subscribe((res)=>{
+      if(res){
+        console.log("response",res);
+        
+        this.router.navigate(['/home']);
+      }
+    })
+
     return flag;
   }
 }

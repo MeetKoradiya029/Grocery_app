@@ -18,8 +18,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('firstname')?.invalid &&
-                (registerForm.get('firstname').dirty ||
-                  registerForm.get('firstname').touched)
+                (registerForm.get('firstname')?.dirty ||
+                  registerForm.get('firstname')?.touched)
               "
             >
               <span *ngIf="registerForm.get('firstname')?.errors?.['required']"
@@ -39,8 +39,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('lastname')?.invalid &&
-                (registerForm.get('lastname').dirty ||
-                  registerForm.get('lastname').touched)
+                (registerForm.get('lastname')?.dirty ||
+                  registerForm.get('lastname')?.touched)
               "
             >
               <span *ngIf="registerForm.get('lastname')?.errors?.['required']"
@@ -61,8 +61,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('email')?.invalid &&
-                (registerForm.get('email').dirty ||
-                  registerForm.get('email').touched)
+                (registerForm.get('email')?.dirty ||
+                  registerForm.get('email')?.touched)
               "
             >
               <span *ngIf="registerForm.get('email')?.errors?.['required']"
@@ -86,8 +86,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('password')?.invalid &&
-                (registerForm.get('password').dirty ||
-                  registerForm.get('password').touched)
+                (registerForm.get('password')?.dirty ||
+                  registerForm.get('password')?.touched)
               "
             >
               <span *ngIf="registerForm.get('password')?.errors?.['required']"
@@ -118,8 +118,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('mobile')?.invalid &&
-                (registerForm.get('mobile').dirty ||
-                  registerForm.get('mobile').touched)
+                (registerForm.get('mobile')?.dirty ||
+                  registerForm.get('mobile')?.touched)
               "
             >
               <span *ngIf="registerForm.get('mobile')?.errors?.['required']"
@@ -145,8 +145,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('country')?.invalid &&
-                (registerForm.get('country').dirty ||
-                  registerForm.get('country').touched)
+                (registerForm.get('country')?.dirty ||
+                  registerForm.get('country')?.touched)
               "
             >
               <span *ngIf="registerForm.get('country')?.errors?.['required']"
@@ -166,8 +166,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('state')?.invalid &&
-                (registerForm.get('state').dirty ||
-                  registerForm.get('state').touched)
+                (registerForm.get('state')?.dirty ||
+                  registerForm.get('state')?.touched)
               "
             >
               <span *ngIf="registerForm.get('state')?.errors?.['required']"
@@ -187,8 +187,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('city')?.invalid &&
-                (registerForm.get('city').dirty ||
-                  registerForm.get('city').touched)
+                (registerForm.get('city')?.dirty ||
+                  registerForm.get('city')?.touched)
               "
             >
               <span *ngIf="registerForm.get('city')?.errors?.['required']"
@@ -209,8 +209,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('zipcode')?.invalid &&
-                (registerForm.get('zipcode').dirty ||
-                  registerForm.get('zipcode').touched)
+                (registerForm.get('zipcode')?.dirty ||
+                  registerForm.get('zipcode')?.touched)
               "
             >
               <span *ngIf="registerForm.get('zipcode')?.errors?.['required']"
@@ -236,8 +236,8 @@
               class="txt-danger"
               *ngIf="
                 registerForm.get('address')?.invalid &&
-                (registerForm.get('address').dirty ||
-                  registerForm.get('address').touched)
+                (registerForm.get('address')?.dirty ||
+                  registerForm.get('address')?.touched)
               "
             >
               <span *ngIf="registerForm.get('address')?.errors?.['required']"

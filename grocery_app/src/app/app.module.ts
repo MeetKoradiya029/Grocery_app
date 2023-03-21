@@ -20,6 +20,7 @@ import { CategoryComponent } from './front/catalog/category/category.component';
 import { CommonModule } from '@angular/common';
 import { CategoryProductsComponent } from './front/catalog/category-products/category-products.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     MatCarouselModule,
     CommonModule,
     IvyCarouselModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
