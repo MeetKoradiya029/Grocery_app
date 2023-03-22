@@ -196,7 +196,7 @@
               >
             </div>
           </div>
-         
+
           <div class="col-6">
             <input
               type="text"
@@ -222,27 +222,36 @@
             </div>
           </div>
 
-          <div class="col-12">
-            <input
-              type="text"
-              class="form-control"
-              name="street-address"
-              id="inputAddress"
-              placeholder="Address"
-              formControlName="address"
-            />
-
-            <div
-              class="txt-danger"
-              *ngIf="
-                registerForm.get('address')?.invalid &&
-                (registerForm.get('address')?.dirty ||
-                  registerForm.get('address')?.touched)
-              "
-            >
-              <span *ngIf="registerForm.get('address')?.errors?.['required']"
-                >Address is required.</span
-              >
+          <div class="col-12" formArrayName="addresses">
+            <div *ngFor="let address of addresses.controls; let i = index">
+              <div [formGroupName]="i">
+                <div class="row align-items-center">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="street-address"
+                    id="inputAddress"
+                    placeholder="Address"
+                    formControlName="address"
+                  />
+                  <button type="button" (click)="removeAddress(i)">
+                    Remove Contact
+                  </button>
+                </div>
+                <div
+                  class="txt-danger"
+                  *ngIf="
+                    registerForm.get('address')?.invalid &&
+                    (registerForm.get('address')?.dirty ||
+                      registerForm.get('address')?.touched)
+                  "
+                >
+                  <span
+                    *ngIf="registerForm.get('address')?.errors?.['required']"
+                    >Address is required.</span
+                  >
+                </div>
+              </div>
             </div>
           </div>
           <div>

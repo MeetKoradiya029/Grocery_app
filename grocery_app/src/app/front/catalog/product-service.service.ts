@@ -75,4 +75,8 @@ export class ProductServiceService {
   getProducts() {
     return this.products;
   }
+
+  getSingleProduct(id:any){
+    this.products[id]
+  }
 }

@@ -10,11 +10,15 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BrowserModule } from '@angular/platform-browser';
 import { CategoryProductsComponent } from './category-products/category-products.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
     ProductListComponent,
     ProductDetailsComponent,
+    ProductCardComponent,
+    CartComponent,
 
   ],
   imports: [

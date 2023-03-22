@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -17,7 +18,12 @@ import { UserService } from 'src/app/user.service';
 export class RegistrationComponent implements OnInit {
   registerForm!: FormGroup;
 
-  constructor(private userService:UserService ,private route:ActivatedRoute,private router:Router) {}
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private fb:FormBuilder
+  ) {}
 
   ngOnInit() {
     this.formInitialize();
@@ -34,14 +40,31 @@ export class RegistrationComponent implements OnInit {
       ]),
       mobile: new FormControl('', [Validators.required]),
       country: new FormControl('', Validators.required),
-      address: new FormControl('', Validators.required),
+      addresses: this.fb.array([this.createAddress()]),
       city: new FormControl('', Validators.required),
       state: new FormControl('', Validators.required),
       zipcode: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
       ]),
+
     });
+  }
+
+  createAddress():FormGroup{
+    return this.fb.group({
+      address:new FormControl("")
+    })
+  }
+  get addresses():FormArray{
+    return this.registerForm.controls['addresses'] as FormArray
+  }
+
+  addAddress(){
+    this.addresses.push(this.createAddress())
+  }
+  removeAddress(index:number){
+    this.addresses.removeAt(index)
   }
 
   formHandler() {
@@ -76,31 +99,29 @@ export class RegistrationComponent implements OnInit {
     }
 
     if (flag == true) {
-
       console.log('firstname', this.registerForm.getRawValue());
     }
-    
 
     const body = {
-      firstname:firstname,
-      lastname:lastname,
-      email:email,
-      password:password,
-      country:country,
-      address:address,
-      city:city,
-      state:state,
-      zipcode:zipcode,
-      mobile:mobile,
-    }
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+      country: country,
+      address: address,
+      city: city,
+      state: state,
+      zipcode: zipcode,
+      mobile: mobile,
+    };
 
-    this.userService.RegisterUser(body).subscribe((res)=>{
-      if(res){
-        console.log("response",res);
-        
+    this.userService.RegisterUser(body).subscribe((res) => {
+      if (res) {
+        console.log('response', res);
+
         this.router.navigate(['/home']);
       }
-    })
+    });
 
     return flag;
   }

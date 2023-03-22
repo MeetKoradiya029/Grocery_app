@@ -101,7 +101,7 @@
       [autoplayInterval]="3000"
       [pauseOnHover]="true"
     >
-      <div class="carousel-cell" *ngFor="let product of products">
+      <div class="carousel-cell" *ngFor="let product of products"  [routerLink]="['/everything/product_details',product.id]">
         <div class="card bg-transparent p-2 m-2">
           <img src="{{ product.image }}" class="img-fluid h-400" alt="" />
           <div class="card-body bg-body-transparent text-center mb-2">
