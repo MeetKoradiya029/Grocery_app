@@ -21,4 +21,16 @@ export class CartService {
   addToCart(prodcutData:any){
     return this.http.post<any>(this.baseUrl+this.addTocartUrl,prodcutData);
   }
+
+  getCartProducts(){
+    return this.http.get<any>(this.baseUrl+this.getCartUrl);
+  }
+
+  updateCartProduct(product:any){
+    return this.http.put<any>(this.baseUrl+this.getCartUrl+"/"+product.id,product)
+  }
+
+  removeCartProducts(id:any){
+    return this.http.delete<any>(this.baseUrl+this.getCartUrl+"/"+id)
+  }
 }

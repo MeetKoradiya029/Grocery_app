@@ -8,6 +8,8 @@ import { ProductServiceService } from '../product-service.service';
   styleUrls: ['./category-products.component.css'],
 })
 export class CategoryProductsComponent implements OnInit{
+  //#region properties
+  //#endregion
   products: any[] = [];
   category: any;
   filterProductsArray: any[] = [];
@@ -19,6 +21,7 @@ export class CategoryProductsComponent implements OnInit{
   ) {}
 
   ngOnInit() {
+    
     this.products = this.productService.getProducts();
 
     this.route.paramMap.subscribe((params) => {

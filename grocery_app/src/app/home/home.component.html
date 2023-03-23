@@ -101,14 +101,14 @@
       [autoplayInterval]="3000"
       [pauseOnHover]="true"
     >
-      <div class="carousel-cell" *ngFor="let product of products"  [routerLink]="['/everything/product_details',product.id]">
-        <div class="card bg-transparent p-2 m-2">
+      <div class="carousel-cell" *ngFor="let product of products; let i=index" >
+        <div class="card bg-transparent p-2 m-2"  [routerLink]="['/everything/product_details',product.id]">
           <img src="{{ product.image }}" class="img-fluid h-400" alt="" />
           <div class="card-body bg-body-transparent text-center mb-2">
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text mb-2 mt-2">{{ product.description }}</p>
             <p class="card-text">{{ product.price | currency }}</p>
-            <button type="button" class="btn btn-danger">Add to Cart</button>
+            <button type="button" class="btn btn-danger" (click)="addToCart(product.id)">Add to Cart</button>
           </div>
         </div>
       </div>

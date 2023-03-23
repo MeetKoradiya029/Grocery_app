@@ -33,11 +33,10 @@ export class ProductDetailsComponent implements OnInit {
         this.category = category;
       }
       if (id) {
-        console.log('product-id:', id);
+        // console.log('product-id:', id);
 
         this.productId = id;
-        console.log(this.products);
-        this.cardProduct();
+        // console.log(this.products);
       }
     });
   }

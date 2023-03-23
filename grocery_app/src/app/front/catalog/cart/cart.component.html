@@ -1,1 +1,54 @@
-<p>cart works!</p>
+<div class="container-fluid main">
+  <div class="col">
+    <button
+      class="btn btn-success my-3"
+      type="button"
+      routerLink="/allcategory"
+      routerLinkActive="avtive"
+    >
+      <img src="../../assets/grid.svg" alt="" style="filter: invert(100%)" />
+      Browse All Categories
+    </button>
+  </div>
+<div class="col img_container">
+    <img src="../../../../assets/cart_img.jpg" alt="" class="img-fluid">
+    <h1 class="h1">My Cart</h1>
+</div>
+
+<div class="card" style="margin-top: 100px;">
+    <div class="card mb-3" *ngFor="let product of cartItems" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{product.image}}" class="img-fluid rounded-start" alt="" >
+            </div>
+            <div class="col-md-8">
+              <div class="float-end">
+                <button type="button" class="btn btn-outline" style="width:50px;height: 50px;" (click)="removeItem(product.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                  </svg>
+                </button>
+              </div>
+                <div class="card-body">
+                  
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p class="card-text">{{product.priceOf}}</p>
+                    <div class="d-flex">
+                        <button class="btn btn-danger" (click)="incrementQuantity(product)">+</button>
+                              <p class="text m-2">{{product.quantity}}</p>
+                        <button class="btn btn-danger" (click)="decrementQuantity(product)">-</button>
+                        <div class="text" style="margin-top: 8px; margin-left: 200px;">{{product.price}}</div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+      <p>Subtotal: {{ Subtotal() | currency}}</p>
+      <p>GST: {{ GST | currency}}</p>
+      <p>Total Price: {{ Total | currency}}</p>
+    </div>
+</div>
+
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../front/catalog/cart.service';
 import { ProductServiceService } from '../front/catalog/product-service.service';
@@ -8,7 +8,7 @@ import { ProductServiceService } from '../front/catalog/product-service.service'
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,OnChanges  {
   products: any[] = [];
   category: any;
   selectedCategory: any;
@@ -33,8 +33,23 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
-  addToCart(){
-    
+  ngOnChanges(){
+    this.addToCart(this.id);
   }
+  cartProducts:any;
+  quantityObj={
+    quantity:1
+  }
+  id:any
+  addToCart(id:any){
+    this.cartProducts = Object.assign(this.products[id-1],this.quantityObj)
+      this.cartService.addToCart(this.cartProducts).subscribe((response)=>{
+        if(response){
+          console.log("response",response);
+        }
+      })
+  }
+
+  
+
 }

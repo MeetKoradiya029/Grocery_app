@@ -225,19 +225,21 @@
           <div class="col-12" formArrayName="addresses">
             <div *ngFor="let address of addresses.controls; let i = index">
               <div [formGroupName]="i">
-                <div class="row align-items-center">
+                <div class="d-flex align-items-center">
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control m-2"
                     name="street-address"
                     id="inputAddress"
                     placeholder="Address"
                     formControlName="address"
                   />
-                  <button type="button" (click)="removeAddress(i)">
-                    Remove Contact
+                  <button type="button" class="btn btn-danger mx-2" (click)="removeAddress(i)">
+                    Remove
                   </button>
+                  
                 </div>
+
                 <div
                   class="txt-danger"
                   *ngIf="
@@ -253,6 +255,7 @@
                 </div>
               </div>
             </div>
+            <button class="btn btn-primary my-2" (click)="addAddress()">Add Address</button>
           </div>
           <div>
             <button
