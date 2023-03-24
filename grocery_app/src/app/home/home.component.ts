@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../front/catalog/cart.service';
 import { ProductServiceService } from '../front/catalog/product-service.service';
 
@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit,OnChanges  {
   constructor(
     private productService: ProductServiceService,
     private route: ActivatedRoute,
-    private cartService:CartService
+    private cartService:CartService,
+    private router:Router
   ) {}
 
   ngOnInit() {
@@ -42,12 +43,17 @@ export class HomeComponent implements OnInit,OnChanges  {
   }
   id:any
   addToCart(id:any){
+    this.id=id-1
     this.cartProducts = Object.assign(this.products[id-1],this.quantityObj)
       this.cartService.addToCart(this.cartProducts).subscribe((response)=>{
         if(response){
           console.log("response",response);
         }
       })
+  }
+
+  gotoProductDetail(){
+    this.router.navigate(['/everything/product_details',this.id])
   }
 
   
