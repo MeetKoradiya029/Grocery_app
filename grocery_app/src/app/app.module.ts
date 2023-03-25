@@ -4,22 +4,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './Layout/home/home.component';
 // import { CategoriesComponent } from './navbar/categories/categories.component';
 import { AboutComponent } from './navbar/about/about.component';
 import { ContactusComponent } from './navbar/contactus/contactus.component';
-import { ProductListComponent } from './front/catalog/product-list/product-list.component';
-import { CatalogModule } from './front/catalog/catalog.module';
+import { CatalogModule } from './Modules/front/catalog/catalog.module';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule  } from 'ngx-owl-carousel-o';
 import { MatCarouselModule } from '@thouet/material-carousel';
-import { CategoryComponent } from './front/catalog/category/category.component';
+import { CategoryComponent } from './Modules/front/catalog/category/category.component';
 import { CommonModule } from '@angular/common';
-import { CategoryProductsComponent } from './front/catalog/category-products/category-products.component';
+import { CategoryProductsComponent } from './Modules/front/catalog/category-products/category-products.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { HttpClientModule } from '@angular/common/http';
+import { CartComponent } from './Modules/front/catalog/cart/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +30,12 @@ import { HttpClientModule } from '@angular/common/http';
     ContactusComponent,
     FooterComponent,
     CategoryComponent,
-    CategoryProductsComponent
+    CategoryProductsComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CatalogModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,

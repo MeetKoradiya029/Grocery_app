@@ -1,0 +1,60 @@
+<div class="container-fluid main">
+    <div class="col">
+      <button
+        class="btn btn-success my-3"
+        type="button"
+        routerLink="/allcategory"
+        routerLinkActive="avtive"
+      >
+        <img src="../../assets/grid.svg" alt="" style="filter: invert(100%)" />
+        Browse All Categories
+      </button>
+    </div>
+  <div class="col img_container">
+      <img src="../../../../assets/cart_img.jpg" alt="" class="img-fluid">
+      <h1 class="h1">My Cart</h1>
+  </div>
+  
+  <div class="container" style="margin-top: 100px;">
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ITEM DESCRIPTION</th>
+          <th scope="col">UNIT PRICE(RS.)</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">SUBTOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of cartItems">
+          <td>
+            <p style="margin:0;">{{product.name}}</p>
+            <p class="text-muted" style="margin:0;">{{product.priceOf}}</p>
+          </td>
+          <td>{{product.price|currency:'INR'}}</td>
+          <td>
+            <div class="d-flex">
+              <button class="btn btn-success" (click)="decrementQuantity(product)"></button>
+              <p class="text">{{product.quantity}}</p>
+              <button class="btn btn-success" (click)="incrementQuantity(product)">+</button>
+            </div>
+        </td>
+        </tr>
+      </tbody>
+
+    </table>
+
+      
+    <div>
+      <p>Subtotal: {{ Subtotal() | currency:'INR'}}</p>
+      <p>GST: {{ GST |currency:'INR'}}</p>
+      <p>Total Price: {{ Total  | currency:'INR'}}</p>
+    </div>
+
+      </div>
+
+  
+  </div>
+  
