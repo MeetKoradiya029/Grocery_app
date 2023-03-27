@@ -8,7 +8,7 @@ import { ProductService } from '../../Shared/Services/product.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit,OnChanges  {
+export class HomeComponent implements OnInit, OnChanges {
   products: any[] = [];
   category: any;
   selectedCategory: any;
@@ -16,8 +16,8 @@ export class HomeComponent implements OnInit,OnChanges  {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private cartService:CartService,
-    private router:Router
+    private cartService: CartService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -34,39 +34,27 @@ export class HomeComponent implements OnInit,OnChanges  {
     });
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.addToCart(this.id);
   }
-  cartProducts:any;
-  quantityObj={
-    quantity:1
-  }
-  id:any
-  addToCart(id:any){
-    if(!this.products[id-1]){
-      console.log("quantity",this.products[id-1].quantity);
-      
-    }
-    console.log("id product:",this.products[id-1]); 
+  cartProducts: any;
+  quantityObj = {
+    quantity: 1,
+  };
+  id: any;
+  addToCart(id: any) {
+   
+    this.cartProducts = Object.assign(this.products[id - 1], this.quantityObj);
+    console.log('cartProduct', this.cartProducts);
 
-    let q = this.products.includes("quantity");
-    console.log("quanti",q);
-    
-    
-    this.cartProducts = Object.assign(this.products[id-1],this.quantityObj)
-    console.log("cartProduct",this.cartProducts);
-    
-      this.cartService.addToCart(this.cartProducts).subscribe((response)=>{
-        if(response){
-          console.log("response",response);
-        }
-      })
+    this.cartService.addToCart(this.cartProducts).subscribe((response) => {
+      if (response) {
+        console.log('response', response);
+      }
+    });
   }
 
-  gotoProductDetail(){
-    this.router.navigate(['/everything/product_details',this.id])
+  gotoProductDetail() {
+    this.router.navigate(['/everything/product_details', this.id]);
   }
-
-  
-
 }
