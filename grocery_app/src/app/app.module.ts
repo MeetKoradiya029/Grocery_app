@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './Layout/navbar/navbar.component';
 import { HomeComponent } from './Layout/home/home.component';
 // import { CategoriesComponent } from './navbar/categories/categories.component';
-import { AboutComponent } from './navbar/about/about.component';
-import { ContactusComponent } from './navbar/contactus/contactus.component';
+import { AboutComponent } from './Layout/navbar/about/about.component';
+import { ContactusComponent } from './Layout/navbar/contactus/contactus.component';
 import { CatalogModule } from './Modules/front/catalog/catalog.module';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,32 +20,38 @@ import { CategoryProductsComponent } from './Modules/front/catalog/category-prod
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './Modules/front/catalog/cart/cart/cart.component';
+import { UsersModule } from './Modules/front/users/users.module';
+import { FrontModule } from './Modules/front/front.module';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    HomeComponent,
-    AboutComponent,
-    ContactusComponent,
-    FooterComponent,
-    CategoryComponent,
-    CategoryProductsComponent,
-    CartComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    CarouselModule,
-    MatCarouselModule,
-    CommonModule,
-    IvyCarouselModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        HomeComponent,
+        AboutComponent,
+        ContactusComponent,
+        FooterComponent,
+        CategoryComponent,
+        CategoryProductsComponent,
+        CartComponent
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        CarouselModule,
+        MatCarouselModule,
+        IvyCarouselModule,
+        HttpClientModule,
+        CatalogModule,
+        FrontModule,
+        UsersModule
+    ]
 })
 export class AppModule { }

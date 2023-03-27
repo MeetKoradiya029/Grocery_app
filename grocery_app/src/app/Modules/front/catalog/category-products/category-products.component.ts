@@ -23,6 +23,7 @@ export class CategoryProductsComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.filterProducts();
+    
   }
 
   ngOnInit() {

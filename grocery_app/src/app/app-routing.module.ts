@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AboutComponent } from './navbar/about/about.component';
-import { ContactusComponent } from './navbar/contactus/contactus.component';
+import { AboutComponent } from './Layout/navbar/about/about.component';
+import { ContactusComponent } from './Layout/navbar/contactus/contactus.component';
 import { HomeComponent } from './Layout/home/home.component';
 import { CategoryProductsComponent } from './Modules/front/catalog/category-products/category-products.component';
 

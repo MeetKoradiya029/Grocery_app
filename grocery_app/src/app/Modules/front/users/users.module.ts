@@ -4,20 +4,29 @@ import { CommonModule } from '@angular/common';
 import { UsersRoutingModule } from './users-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ProfilePageComponent } from '../users/profilePage/profile-page/profile-page.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileSidebarComponent } from './profilePage/profile-sidebar/profile-sidebar.component';
+import { ManageAddressComponent } from './profilePage/profile-page/profileMenuPages/manage-address/manage-address.component';
+import { ChangePasswordComponent } from './profilePage/profile-page/profileMenuPages/change-password/change-password.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegistrationComponent,
-    ProfileComponent
+    ProfileSidebarComponent,
+    ProfilePageComponent,
+    ManageAddressComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
     UsersRoutingModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    FormsModule
+    
+  ],
+  exports:[ProfileSidebarComponent]
 })
 export class UsersModule { }

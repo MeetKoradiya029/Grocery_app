@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../../Shared/Services/product.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit{
   products: any[] = [];
   category: any;
   productId: any;
@@ -16,7 +16,12 @@ export class ProductDetailsComponent implements OnInit {
     private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    
+  }
+
+    
+  
 
   ngOnInit() {
     this.products = this.productService.getProducts();
@@ -39,6 +44,7 @@ export class ProductDetailsComponent implements OnInit {
         // console.log(this.products);
       }
     });
+    this.cardProduct();
   }
 
   showProduct(id: any) {
@@ -51,7 +57,7 @@ product:any
     );
     console.log('product', this.product);
     console.log('product', this.productId);
-
+    
     return this.product;
   }
   counter:number=1
@@ -75,5 +81,9 @@ total=0
     
     this.total = counter*this.product.price
     return this.total
+  }
+
+  addToCart(){
+    
   }
 }

@@ -38,5 +38,25 @@ export class UserService {
       }
   }
 
+  updateUser(id:any,body:any){
+    try {
+        return this.http.put<any>(this.baseUrl+this.postUser+"/"+id,body);
+    } catch (error:any) {
+      return throwError(()=>new Error(error))
+    }
+  }
+
+
+ _setLoggedInUserData(data: any) {
+  localStorage.setItem('userData',JSON.stringify([data]));
+    
+    
+  } 
+  // this method is gives the loggedin user data 
+  _getLoggedInUserData() {
+   return   localStorage.getItem('userData')
+  }
+
+
 
 }

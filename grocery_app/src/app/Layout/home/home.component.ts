@@ -43,8 +43,19 @@ export class HomeComponent implements OnInit,OnChanges  {
   }
   id:any
   addToCart(id:any){
-    this.id=id-1
+    if(!this.products[id-1]){
+      console.log("quantity",this.products[id-1].quantity);
+      
+    }
+    console.log("id product:",this.products[id-1]); 
+
+    let q = this.products.includes("quantity");
+    console.log("quanti",q);
+    
+    
     this.cartProducts = Object.assign(this.products[id-1],this.quantityObj)
+    console.log("cartProduct",this.cartProducts);
+    
       this.cartService.addToCart(this.cartProducts).subscribe((response)=>{
         if(response){
           console.log("response",response);

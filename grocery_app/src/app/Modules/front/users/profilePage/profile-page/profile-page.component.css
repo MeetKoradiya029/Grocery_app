@@ -1,0 +1,23 @@
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  .sidebar-nav {
+    padding-top: 20px;
+  }
+  
+  .nav-item {
+    margin-bottom: 10px;
+  }
+  
+  .card-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  

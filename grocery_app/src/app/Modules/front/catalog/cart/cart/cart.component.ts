@@ -8,11 +8,18 @@ import { CartService } from 'src/app/Shared/Services/cart.service';
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
+  GST: any;
+  Total: any;
+  shipping:any;
+  subtotal:any=0;
+  counter=1;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService) {
+    this.getCartItems();
+  }
 
   ngOnInit() {
-    this.getCartItems();
+    
   }
 
   getCartItems() {
@@ -77,16 +84,17 @@ export class CartComponent implements OnInit {
     }
   }
 
-  GST: any;
-  Total: any;
+
   Subtotal() {
-    let subtotal: any = 0;
-    for (let i = 0; i < this.cartItems.length; i++) {
+    
+    console.log("cart:",this.cartItems);
+    let subtotal=0;
+    for(let i = 0; i < this.cartItems.length; i++) {
       subtotal += this.cartItems[i].quantity * this.cartItems[i].price;
     }
-
+    this.shipping=40;
     this.GST = subtotal * 0.18;
-    this.Total = subtotal + this.GST;
+    this.Total = subtotal + this.GST +this.shipping;
     return subtotal;
   }
 }

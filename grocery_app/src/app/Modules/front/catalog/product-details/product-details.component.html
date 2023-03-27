@@ -1,109 +1,55 @@
 <!-- Display the products that belong to the selected category -->
 
-<div class="card bg-body-transparent text-black">
-  <img
-    src="/assets/grocery_background.jpg"
-    alt=""
-    class="card-img w-100 h-auto opacity-25"
-    height="100"
-  />
-  <div
-    class="card-img-overlay text-center my-3 d-flex justify-content-center align-items-center"
-  >
-    <!-- <div>
-<p id="product_list_text"class="card-title fs-1 fw-bolder" *ngIf="product_item;else not_category">{{ product_item }}</p>
+<div class="card border-0 text-black">
+  <img src="/assets/grocery_background.jpg" alt="" class="card-img w-100 h-auto opacity-25" height="100" >
+  <div class="card-img-overlay text-center my-3 d-flex justify-content-center align-items-center">
+<div>
+<!-- <p id="product_list_text"class="card-title fs-1 fw-bolder" *ngIf="product_item;else not_category">{{ product_item }}</p> -->
 <ng-template #not_category>
-  <p id="product_list_text"class="card-title fs-1 fw-bolder">Grocery Products</p>
+  <p id="product_list_text" class="card-title fs-1 fw-bolder">Grocery Products</p>
 </ng-template>
-    </div> -->
+    </div>
+
+
   </div>
 </div>
 
-<!-- 
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
-          <div class="col" *ngFor="let product of filteredItems">
-              <div class="card bg-white p-2 m-2">
-                <img
-                      class="rounded mx-auto d-block"
-                      src="/assets/{{product.imageurl}}"
-                      alt=""
-                      width="120"
-                      height="120"/>
-                <div class="card-body">
-                  <small>{{product.name}}</small>
-                  <h4>{{product.weight}}</h4>
-                  <ul class="card-body rating" data-mdb-toggle="rating">
-                    <i class="fas fa-star fa-sm text-primary" title="Bad"></i>
-                    <i class="fas fa-star fa-sm text-primary" title="Poor"></i>
-                    <i class="fas fa-star fa-sm text-primary" title="OK"></i>
-                    <i class="fas fa-star fa-sm text-primary" title="Good"></i>
-                    <i class="far fa-star fa-sm text-primary" title="Excellent"></i>
-                    <br></ul>
-                    <small>{{product.sellerName}}</small>
-                    <div class="text-center">
-                      <i class="fas fa-dollar-sign m-2">{{product.moneyOfferPrice}}</i>
-                      <i class="fas fa-dollar-sign text-decoration-line-through m-4">{{product.price}}</i>
-                      <button class="btn btn-outline-light">
-                          <img src="/assets/Cart-btn.png" alt=""></button>
-                      </div>
-                    
+             <div class="container" *ngFor="let item of product">
+                <div class="row" >
+                  <div class="col-lg-4"> 
+                    <img src="{{item.image}}" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-lg-6 mt-4">
+                    <div class="card-body">
+                      <h5 class="card-title"><u>{{item.name}}</u></h5>
+                      <p class="card-text"></p>
+                      <small>MRP: <small class="text-decoration-line-through">{{item.price | currency:'INR':'Rs.'}}</small></small>
+                      <div class="fw-bolder">Price:</div>
+                      <div class="mt-3">
+                        <div class="btn-group me-4" role="group">
+                          <button class="btn btn-outline-light btn-transparent" (click)="addItem()"><img class="border-1" width="20" height="20" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAeUlEQVR4nO3VwQ2DMAwFUM9XeugUCatCt+HWk6twYICA1Aa9J/27/RPJEQAAAAAAAABNzs/IukbWT2TNgdLmXSPLFCeXz/FTXp0F1PdNClh6C9h+P/wl2fyALlmmP3i9K/LoK+AooSxjXoF97hPLAwAAAAAAAMQ9fAHCeEX20iAlZgAAAABJRU5ErkJggg=="></button>
+                          <button class="btn btn-outline-transparent btn-transparent"></button>
+                          <button class="btn btn-outline-light btn-transparent" (click)="removeItem()"><img class="border-1" width="20" height="20" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABeUlEQVR4nO3YS04bURCF4XP3gcdeEgNjEl7tR0J4GhuxIluWvDGw4t7Aj3BQBqCuAVxBu2590j9i0nWEZOlKIYQQQghfif2O6C1Fr35tJXpdlXP8wZM44E3r7d/co78UfRpayD36tTikoY3co/H4f7nHD8zco/gBfiIr9yh+gCNk5R7FD3CMrNyj+AFOkJV7FD/AKbJyj+IHOENW7lH8ABWyaiVGHVEtRVWbH9+OXr5xJYbdjMcPnsSA3apab7/98wNUy+8/5sNleGNkWIshu9kgwxsjo1qM2NH+5vgPWLXgkI82zzFAV4zXYsxuNXoU53ufH+D/L8F4IcYb8Yt2t/3Geb7jc+M3Zu5R/ADnyMo9/mDmHsUPcIGs3OMSM/cofIDEFVbyLnGNlbxL3GAl71IMcEsykneJCVbyLsUAdyQjeZeY1okpDWV4w2u5xHSVmNFQhje8tmPSTczW74+fPoq7lj5j5cZDJ3G/SMw2r83LOT6EEEIIaolnLO9zz1ArmsMAAAAASUVORK5CYII="></button>
+                        </div>
+                        <button type="button" class="btn btn-outline-success btn-transparent" (click)="addToCart()">Add to Cart</button>
+                      </div>                   
+                    </div>
+                  </div>
+                  <div class="col-lg-2"></div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12"> 
+                    <h3 class="mt-2 mb-0">{{item.name}}</h3>
+                    <hr class="mt-1 mb-1">
                   </div>
                 </div>
-            </div>
-        </div>
-      </div>
-              -->
-
-<div class="container mt-3">
-  <div class="row g-0">
-    <div
-      class="card mb-3 border-0"
-      style="width: fit-content; height: max-content"
-      
-    >
-      <div class="row g-0">
-        <div class="col-md-6">
-          <img
-            src="{{ product.image }}"
-            class="img-fluid rounded-start"
-            alt="..."
-          />
-        </div>
-        <div class="col-md-6">
-          <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text"></p>
-            <ul class="rating" data-mdb-toggle="rating">
-              <span class="m-auto">Reviews</span>
-              <i class="fas fa-star fa-sm text-primary" title="Bad"></i>
-              <i class="fas fa-star fa-sm text-primary" title="Poor"></i>
-              <i class="fas fa-star fa-sm text-primary" title="OK"></i>
-              <i class="fas fa-star fa-sm text-primary" title="Good"></i>
-              <i class="far fa-star fa-sm text-primary" title="Excellent"></i>
-              <br />
-            </ul>
-            <p class="card-text">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </p>
-            <button class="btn btn-danger" (click)="removeItem()">-</button>
-            {{counter}}
-            <button class="btn btn-danger" (click)="addItem()">+</button>
-            <div class="text-danger">{{product.price*counter}}</div>
-            <!-- <p>{{product.moneyOfferPrice * quantity | currency}}</p> -->
-            <div>
-              <button type="button">Add to Cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row g-0">
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facere iure quasi,
-    atque modi magnam cupiditate odit voluptate labore voluptates fuga vel culpa
-    porro rem repellendus dignissimos vitae itaque sapiente eum eaque eligendi
-    inventore illo velit? Quisquam veritatis rem amet deleniti repudiandae illum
-    culpa minus cupiditate expedita. Laborum maiores ea deleniti! 
-  </div>
-</div>
+                <div class="row">
+                  <div class="col-lg-12"> 
+                    <h4>About the Product</h4>
+                    <p>Desh ki Sehat, Desh ka Namak! Now celebrating 40 years of trust, Tata Salt has pioneered India's largest vacuum evaporation technology. Untouched by hand, Tata Salt offers an assurance of lodine. With vacuum evaporation technology, Tata namak offers a hygienic alternative to your regular table salt. It contains the requisite amount of iodine which is an essential dietary nutrient for humans. lodine is required for normal growth, thyroid, and brain function. Add the goodness of Tata Salt to your dietary intake and make your meals delicious and nourishing.</p>
+                    <p>Storage Instructions: Store in a cool and dry place.</p> 
+                    <p>*It is generally accepted that lodine helps in the mental development of children.</p>
+                  </div>
+                </div>
+              </div>
+              

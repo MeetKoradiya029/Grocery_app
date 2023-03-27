@@ -52,31 +52,27 @@ export class LoginComponent implements OnInit {
     if (flag == true) {
       console.log('FormData : ', formData);
     }
-    debugger;
+  
     if (this.users.length > 0) {
       console.log(this.users[0].email);
       for (let i = 0; i < this.users.length; i++) {
         if (this.users[i].email === email && this.users[i].password) {
           console.log('login', email);
-          // const loginData = {
-          //   userName: this.users[i].firstname,
-          //   userEmail: this.users[i].email,
-          //   loginAt: new Date().toLocaleString('en-US', {
-          //     timeZone: 'Asia/Kolkata',
-          //   }),
-          // };
-          // let session = sessionStorage.getItem('loginSession');
-          // if (!session || session.length==0) {
-          //     sessionStorage.setItem("loginSession",JSON.stringify([loginData]))
-          // }else{
-
-          //   session.push(loginData);
-          //   sessionStorage.setItem("loginSession",JSON.stringify(session));
-          // }
-
+          let data={
+            firstName:this.users[i].firstname,
+            lastName:this.users[i].lastname,
+            email:this.users[i].email
+          }
+          this.userService._setLoggedInUserData(data);
           this.router.navigate(['home']);
         }
+
+
       }
+
+      
+      
+
     }
 
     return flag;
