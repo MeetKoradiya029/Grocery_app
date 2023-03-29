@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb:FormBuilder
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -38,33 +38,9 @@ export class RegistrationComponent implements OnInit {
         Validators.minLength(8),
         // Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")
       ]),
-      mobile: new FormControl('', [Validators.required]),
-      country: new FormControl('', Validators.required),
-      addresses: this.fb.array([this.createAddress()]),
-      city: new FormControl('', Validators.required),
-      state: new FormControl('', Validators.required),
-      zipcode: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-
+      primary_mobile_number: new FormControl('', [Validators.required]),
+      username: new FormControl('', Validators.required),
     });
-  }
-
-  createAddress():FormGroup{
-    return this.fb.group({
-      address:new FormControl("")
-    })
-  }
-  get addresses():FormArray{
-    return this.registerForm.controls['addresses'] as FormArray
-  }
-
-  addAddress(){
-    this.addresses.push(this.createAddress())
-  }
-  removeAddress(index:number){
-    this.addresses.removeAt(index)
   }
 
   formHandler() {
@@ -73,13 +49,9 @@ export class RegistrationComponent implements OnInit {
       firstname,
       lastname,
       email,
+      username,
       password,
-      country,
-      address,
-      city,
-      state,
-      zipcode,
-      mobile,
+      primary_mobile_number,
     } = this.registerForm.getRawValue();
 
     if (
@@ -87,12 +59,8 @@ export class RegistrationComponent implements OnInit {
       !lastname ||
       !email ||
       !password ||
-      !country ||
-      !address ||
-      !city ||
-      !state ||
-      !zipcode ||
-      !mobile
+      !primary_mobile_number ||
+      !username
     ) {
       alert('Complete form !!');
       return (flag = false);
@@ -103,19 +71,16 @@ export class RegistrationComponent implements OnInit {
     }
 
     const body = {
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
+      first_name: firstname,
+      last_name: lastname,
+      primary_email: email,
       password: password,
-      country: country,
-      address: address,
-      city: city,
-      state: state,
-      zipcode: zipcode,
-      mobile: mobile,
+      primary_mobile_number: primary_mobile_number,
+      username: username,
     };
+    console.log('body', body);
 
-    this.userService.RegisterUser(body).subscribe((res) => {
+    this.userService.registerUser(body).subscribe((res) => {
       if (res) {
         console.log('response', res);
 

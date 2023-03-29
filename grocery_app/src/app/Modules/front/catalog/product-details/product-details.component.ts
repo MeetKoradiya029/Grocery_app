@@ -3,6 +3,7 @@ import { ProductService } from '../../../../Shared/Services/product.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/Shared/Services/cart.service';
+import { LoginComponent } from '../../users/login/login.component';
 
 @Component({
   selector: 'app-product-details',
@@ -16,7 +17,11 @@ export class ProductDetailsComponent implements OnInit {
   productId: any;
   cartProducts: any;
   productWithQuantity:any;
+  totalQuantity:any;
+  
+  existingInCart:any;
   //#region 
+ 
 
   constructor(
     private productService: ProductService,
@@ -46,18 +51,16 @@ export class ProductDetailsComponent implements OnInit {
         this.category = category;
       }
       if (id) {
-        // console.log('product-id:', id);
+        console.log('product-id:', id);
 
         this.productId = id;
-        // console.log(this.products);
+        console.log(this.productId);
       }
     });
     this.cardProduct();
   }
 
-  showProduct(id: any) {
-    this.router.navigate(['products', id]);
-  }
+
   product: any;
   cardProduct() {
     this.product = this.products.filter(
@@ -68,40 +71,18 @@ export class ProductDetailsComponent implements OnInit {
 
     return this.product;
   }
-  counter: number = 1;
-
-  addItem() {
-    if (this.counter >= 1) {
-      this.counter++;
-    }
-    this.quantity(this.counter);
-    return this.counter;
-  }
-  removeItem() {
-    if (this.counter > 1) {
-      this.counter--;
-    }
-    this.quantity(this.counter);
-  }
-  total = 0;
-  quantity(counter: number) {
-    console.log(this.product.price);
-
-    this.total = counter * this.product.price;
-    return this.total;
-  }
-
+  fromInput!:any
   quantityObj = {
-    quantity: 1,
+    quantity:this.fromInput,
   };
-
   addToCart() {
     // console.log('product::', this.product[0]);
-
-    let existingIncart = this.cartProducts.find(
+    console.log("quantity from input:");
+    
+    this.existingInCart = this.cartProducts.find(
       (product: any) => product.id == this.product[0].id
     );
-    if(!existingIncart){
+    if(!this.existingInCart){
       this.productWithQuantity = Object.assign(this.product[0],this.quantityObj);
       console.log("Product with Quantity:",this.productWithQuantity);
       this.cartService.addToCart(this.productWithQuantity).subscribe((res)=>{
@@ -110,13 +91,32 @@ export class ProductDetailsComponent implements OnInit {
           
         }
       })
+      if(this.fromInput){
+       this.checkInputQuantity(this.fromInput);
+      }
+      
     }else{
       console.log("id:",this.productId);
       
-      console.log("existing item :",this.cartProducts[this.productId]);
-      
+      console.log("existing item :",this.cartProducts);
+
+     
       this.cartProducts[this.productId]
+      this.checkInputQuantity(this.fromInput);
     }
     // console.log('existing product', existingIncart);
   }
+
+    checkInputQuantity(quantityFromInput:any){
+      for(let i=0;i<this.cartProducts.length;i++){
+        if(this.cartProducts[i].id==this.product[0].id){
+
+          this.totalQuantity =this.cartProducts[i].quantity+quantityFromInput;
+          console.log("total quantity:",this.totalQuantity);
+          quantityFromInput=""
+        }
+
+        return this.totalQuantity
+      }
+    }
 }

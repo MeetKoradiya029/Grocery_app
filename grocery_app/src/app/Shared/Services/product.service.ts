@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ProductService {
+
+  
   products: any[] = [
     {
       id: 1,
@@ -18,7 +20,7 @@ export class ProductService {
     {
       id: 2,
       name: 'Banana',
-      category:"fruit",
+      category:"fruits",
       description: 'A ripe yellow banana.',
       price: 0.59,
       priceOf:"6 pcs price",

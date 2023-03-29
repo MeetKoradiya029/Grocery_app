@@ -19,9 +19,9 @@
     [height]="300"
     [autoplayInterval]="3000"
     [pauseOnHover]="true">
-    <div class="carousel-cell" *ngFor="let category of categories">
-        <div class="card bg-warning-subtle p-3 m-2" [routerLink]="['/catalog/products' ,category.name.toLowerCase()]">
-            <img src="{{category.image}}" alt="" width="120" height="120"/>
+    <div class="carousel-cell" *ngFor="let category of categoriesFormDB">
+        <div class="card bg-warning-subtle p-3 m-2" >
+            <img src="{{category.image}}" alt="" width="120" height="120" [routerLink]="['/catalog/products' ,category.name.toLowerCase()]"/>
             <div class="card-body text-center">
                 <h4>{{category.name}}</h4>
 

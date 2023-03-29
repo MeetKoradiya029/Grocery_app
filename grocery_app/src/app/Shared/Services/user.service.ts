@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
+import { UserModel } from 'src/app/Models/user-model';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -11,6 +12,9 @@ export class UserService {
   baseUrl = environment.baseUrl;
   postUser = environment.postUserUrl;
   getUserUrl = environment.getUsersUrl;
+  baseURL = environment.baseURL;
+  registerURL = environment.registerUser;
+
   constructor(private http:HttpClient) { }
 
   getUsers(){
@@ -28,6 +32,14 @@ export class UserService {
       } catch (error:any) {
         return throwError(()=>new Error(error));
       }
+  }
+
+  registerUser(body:UserModel){
+    try {
+        return this.http.post<UserModel>(this.baseURL+this.registerURL,body);
+    } catch (error:any) {
+      return throwError(()=>new Error(error))
+    }
   }
 
   getUserDetail(id:any){

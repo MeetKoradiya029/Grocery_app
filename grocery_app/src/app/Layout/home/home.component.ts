@@ -8,7 +8,7 @@ import { ProductService } from '../../Shared/Services/product.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit, OnChanges {
+export class HomeComponent implements OnInit {
   products: any[] = [];
   category: any;
   selectedCategory: any;
@@ -34,16 +34,12 @@ export class HomeComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges() {
-    this.addToCart(this.id);
-  }
   cartProducts: any;
   quantityObj = {
     quantity: 1,
   };
   id: any;
   addToCart(id: any) {
-   
     this.cartProducts = Object.assign(this.products[id - 1], this.quantityObj);
     console.log('cartProduct', this.cartProducts);
 

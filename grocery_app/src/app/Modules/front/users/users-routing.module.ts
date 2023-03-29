@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfilePageComponent } from './profilePage/profile-page/profile-page.component';
 import { ChangePasswordComponent } from './profilePage/profile-page/profileMenuPages/change-password/change-password.component';
 import { ManageAddressComponent } from './profilePage/profile-page/profileMenuPages/manage-address/manage-address.component';
+import { ProfileComponent } from './profilePage/profile-page/profileMenuPages/profile/profile.component';
 import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   {path:"register",component:RegistrationComponent},
   {path:"profile",component:ProfilePageComponent},
   {path:"profile/manageaddress",component:ManageAddressComponent},
-  {path:"profile/changepass",component:ChangePasswordComponent}
+  {path:"profile/changepass",component:ChangePasswordComponent},
+  {path:"profile/home",component:ProfileComponent}
 ];
 
 @NgModule({

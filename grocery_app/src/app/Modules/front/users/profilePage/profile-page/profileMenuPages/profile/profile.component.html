@@ -1,0 +1,73 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-3">
+      <app-profile-sidebar></app-profile-sidebar>
+    </div>
+    <div class="col">
+      <div class="container" id="main_container">
+        <form [formGroup]="userDataForm" class="row">
+          <div class="col col-md-3">
+            <label class="form-label" for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              class="form-control form-control-md"
+              formControlName="firstName"
+            />
+            <label class="form-label" for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control form-control-md"
+              formControlName="email"
+            />
+            <label class="form-label" for="altEmail">Alternate Email</label>
+            <input
+              type="email"
+              id="altEmail"
+              class="form-control form-control-md"
+            />
+            <label class="form-label" for="form3Example9">DOB</label>
+            <input
+              type="date"
+              id="form3Example9"
+              class="form-control form-control-md"
+              formControlName="dob"
+            />
+          </div>
+
+          <div class="col col-md-3">
+            <label class="form-label" for="form3Example1n">Last name</label>
+            <input
+              type="text"
+              id="form3Example1n"
+              class="form-control"
+              formControlName="lastName"
+            />
+            <label class="form-label" for="form3Example99">Contact No.</label>
+            <input
+              type="tel"
+              id="form3Example99"
+              class="form-control"
+              formControlName="mobileNo"
+            />
+            <label class="form-label" for="form3Example99"
+              >Alerternate Contact No.</label
+            >
+            <input type="tel" id="form3Example99" class="form-control" />
+          </div>
+
+          <div class="col">
+            <button
+              type="button"
+              id="btn_save"
+              class="btn btn-success px-4 float-end"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

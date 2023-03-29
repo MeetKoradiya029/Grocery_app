@@ -1,13 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CategoryService } from 'src/app/Shared/Services/category.service';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
-export class CategoryComponent {
-  constructor(private router:Router){}
+export class CategoryComponent implements OnInit{
+
+  categoriesFormDB:any=[];
+  constructor(private router:Router , private categoryService:CategoryService){}
+  ngOnInit(){
+    this.categoriesFormDB=this.categoryService.getAllCategories().subscribe((res)=>{
+      if(res){
+        console.log("categories from database ",res);
+        this.categoriesFormDB=res;
+      }
+    });
+    
+
+    
+  }
+
+
+
+
   food: any;
   
 

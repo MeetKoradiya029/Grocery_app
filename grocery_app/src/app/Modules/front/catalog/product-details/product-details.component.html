@@ -27,9 +27,7 @@
                       <div class="fw-bolder">Price:</div>
                       <div class="mt-3">
                         <div class="btn-group me-4" role="group">
-                          <button class="btn btn-outline-light btn-transparent" (click)="addItem()"><img class="border-1" width="20" height="20" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAeUlEQVR4nO3VwQ2DMAwFUM9XeugUCatCt+HWk6twYICA1Aa9J/27/RPJEQAAAAAAAABNzs/IukbWT2TNgdLmXSPLFCeXz/FTXp0F1PdNClh6C9h+P/wl2fyALlmmP3i9K/LoK+AooSxjXoF97hPLAwAAAAAAAMQ9fAHCeEX20iAlZgAAAABJRU5ErkJggg=="></button>
-                          <button class="btn btn-outline-transparent btn-transparent"></button>
-                          <button class="btn btn-outline-light btn-transparent" (click)="removeItem()"><img class="border-1" width="20" height="20" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABeUlEQVR4nO3YS04bURCF4XP3gcdeEgNjEl7tR0J4GhuxIluWvDGw4t7Aj3BQBqCuAVxBu2590j9i0nWEZOlKIYQQQghfif2O6C1Fr35tJXpdlXP8wZM44E3r7d/co78UfRpayD36tTikoY3co/H4f7nHD8zco/gBfiIr9yh+gCNk5R7FD3CMrNyj+AFOkJV7FD/AKbJyj+IHOENW7lH8ABWyaiVGHVEtRVWbH9+OXr5xJYbdjMcPnsSA3apab7/98wNUy+8/5sNleGNkWIshu9kgwxsjo1qM2NH+5vgPWLXgkI82zzFAV4zXYsxuNXoU53ufH+D/L8F4IcYb8Yt2t/3Geb7jc+M3Zu5R/ADnyMo9/mDmHsUPcIGs3OMSM/cofIDEFVbyLnGNlbxL3GAl71IMcEsykneJCVbyLsUAdyQjeZeY1okpDWV4w2u5xHSVmNFQhje8tmPSTczW74+fPoq7lj5j5cZDJ3G/SMw2r83LOT6EEEIIaolnLO9zz1ArmsMAAAAASUVORK5CYII="></button>
+                         <input type="number" class="form-control" name="quantity" id="quantity" style="width:50px;" [(ngModel)]="fromInput">
                         </div>
                         <button type="button" class="btn btn-outline-success btn-transparent" (click)="addToCart()">Add to Cart</button>
                       </div>                   

@@ -1,35 +1,62 @@
 <div class="container-fluid position-relative">
-    <div class="col">
-        <button
-          class="btn btn-success my-3"
-          type="button"
-          routerLink="/allcategory"
-          routerLinkActive="avtive"
-        >
-          <img src="../../assets/grid.svg" alt="" style="filter: invert(100%)" />
-          Browse All Categories
-        </button>
+  <div class="col">
+    <button
+      class="btn btn-success my-3"
+      type="button"
+      routerLink="/allcategory"
+      routerLinkActive="avtive"
+    >
+      <img src="../../assets/grid.svg" alt="" style="filter: invert(100%)" />
+      Browse All Categories
+    </button>
+  </div>
+  <div class="col position-relative">
+    <img src="../../../../assets/cart_img.jpg" alt="" class="img-fluid" />
+    <h1 class="h1 position-absolute top-50 start-50 translate-middle">
+      Checkout
+    </h1>
+  </div>
+  <div class="container d-flex flex-column align-items-center">
+    
+    <div style="max-width: 300px;">
+      <div class="text addTitle">Select Delivery Address</div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+        />
+        <label class="form-check-label text-muted" for="flexRadioDefault1">
+          502 Shapath-II, Opp Rajpath Club SG Road Ahmedabad, Gujarat, 380015
+        </label>
       </div>
-      <div class="col position-relative">
-        <img src="../../../../assets/cart_img.jpg" alt="" class="img-fluid" />
-        <h1 class="h1 position-absolute top-50 start-50 translate-middle">Checkout</h1>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault2"
+          checked
+        />
+        <label class="form-check-label text-muted" for="flexRadioDefault2">
+          Opp Nehru Bhavan, Rajmahal Road, Opp Nehru Bhavan, Rajmahal Road
+          Vadodara, Gujarat, 390001io
+        </label>
       </div>
-      <div class="container d-flex flex-column align-items-center">
-        <div class="text addTitle">Select Delivery Address</div>
-        <div>
-
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-              <label class="form-check-label text-muted" for="flexRadioDefault1">
-                Default radio
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-              <label class="form-check-label text-muted" for="flexRadioDefault2">
-                Default checked radio
-              </label>
-            </div>
-        </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault2"
+          checked
+        />
+        <label class="form-check-label text-muted" for="flexRadioDefault2">
+          Opp Nehru Bhavan, Rajmahal Road, Opp Nehru Bhavan, Rajmahal Road
+          Vadodara, Gujarat, 390001io
+        </label>
       </div>
+    </div>
+  </div>
 </div>

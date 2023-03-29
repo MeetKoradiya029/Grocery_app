@@ -3,7 +3,7 @@
     <button
       class="btn btn-success my-3"
       type="button"
-      routerLink="/allcategory"
+      routerLink="/catalog/categories"
       routerLinkActive="avtive"
     >
       <img src="../../assets/grid.svg" alt="" style="filter: invert(100%)" />
@@ -26,8 +26,9 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let product of cartItems">
+      <tbody *ngFor="let group of groupedProducts; let i=index">
+        {{group.category}}
+        <tr *ngFor="let product of group.cart; let j=index">
           <td>
             <p style="margin: 0">{{ product.name }}</p>
             <p class="text-muted" style="margin: 0">{{ product.priceOf }}</p>
@@ -37,7 +38,7 @@
             <div class="d-flex qty">
               <button
                 class="btn btn-sm qtyBtnMinus"
-                (click)="decrementQuantity(product)"
+                (click)="decrementQuantity(i,j)"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +57,7 @@
               <p class="text my-2 mx-3">{{ product.quantity }}</p>
               <button
                 class="btn btn-sm qtyBtnPlus"
-                (click)="incrementQuantity(product)"
+                (click)="incrementQuantity(i,j)"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +77,7 @@
           </td>
           <td>{{ product.price * product.quantity | currency : "INR" }}</td>
           <td>
-            <button class="btn removeBtn" (click)="removeItem(product.id)">
+            <button class="btn removeBtn" (click)="removeItem(product.id,i,j)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -110,14 +111,14 @@
           <li
             class="list-group-item d-flex justify-content-between align-items-center px-0"
           >
-            Shipping
+            GST
             <span>{{ GST | currency : "INR" }}</span>
           </li>
         
         <li
           class="list-group-item d-flex justify-content-between align-items-center px-0"
         >
-          GST 
+          Shipping
           <span>{{ shipping | currency : "INR" }}</span>
         </li>
           <li

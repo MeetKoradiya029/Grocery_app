@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/Shared/Services/cart.service';
 
 @Component({
@@ -6,20 +6,38 @@ import { CartService } from 'src/app/Shared/Services/cart.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, AfterViewInit {
   cartItems: any[] = [];
   GST: any;
   Total: any;
-  shipping:any;
-  subtotal:any=0;
-  counter=1;
+  shipping: any;
+  subtotal: any = 0;
+  counter = 1;
+  groupedProducts: any = [];
 
-  constructor(private cartService: CartService) {
-    this.getCartItems();
+  constructor(private cartService: CartService) {}
+  ngAfterViewInit() {
+    this.groupedProducts = this.cartItems.reduce((acc, product) => {
+      const existingCategory = acc.find((group: any) => {
+        console.log('category', group.category);
+        console.log('category product:', product.category);
+
+        return group.category === product.category;
+      });
+
+      if (existingCategory) {
+        existingCategory.cart.push(product);
+        // this.groupedProducts=this.cartlength
+      } else {
+        acc.push({ category: product.category, cart: [product] });
+      }
+      return acc;
+    }, []);
+    console.log(this.groupedProducts, 'CartLength');
   }
 
   ngOnInit() {
-    
+    this.getCartItems();
   }
 
   getCartItems() {
@@ -27,6 +45,23 @@ export class CartComponent implements OnInit {
       if (response) {
         console.log('cart items :', response);
         this.cartItems = response;
+        this.groupedProducts = this.cartItems.reduce((acc, product) => {
+          const existingCategory = acc.find((group: any) => {
+            console.log('category', group.category);
+            console.log('category product:', product.category);
+
+            return group.category === product.category;
+          });
+
+          if (existingCategory) {
+            existingCategory.cart.push(product);
+            // this.groupedProducts=this.cartlength
+          } else {
+            acc.push({ category: product.category, cart: [product] });
+          }
+          return acc;
+        }, []);
+        console.log(this.groupedProducts, 'CartLength');
       }
     });
     console.log('Cart Items : ', this.cartItems);
@@ -34,7 +69,7 @@ export class CartComponent implements OnInit {
     return this.cartItems;
   }
   productId: any;
-  removeItem(id: any) {
+  removeItem(id: any, index: any, productIndex: any) {
     //  id =  parseInt(id)
     this.productId = id;
     console.log('id :', typeof id);
@@ -43,58 +78,53 @@ export class CartComponent implements OnInit {
       if (response) {
         console.log('delted : ', id, response);
         console.log('cart Items', this.cartItems);
-        this.delete(id);
+        this.delete(id, index, productIndex);
       }
     });
   }
-  delete(id: any) {
-    let deleted = this.cartItems.filter((product) => product.id !== id);
+  delete(id: any, index: any, productIndex: any) {
+    let deleted = this.groupedProducts[index].cart.filter(
+      (product: any) => product.id != this.groupedProducts[index].id
+    );
     console.log('deleted items:', deleted);
-    this.cartItems = deleted;
+    this.groupedProducts[index].cart = deleted;
     console.log(this.cartItems);
 
-    return this.cartItems;
+    return this.groupedProducts[index].cart.splice(productIndex, 1);
   }
   // counter:number;
 
-  incrementQuantity(product: any) {
+  incrementQuantity(index: any, productIndex: any) {
     // console.log("full object:",product);
     // console.log("updated:",product.quantity);
-    let updateQuantity = product.quantity;
-    if (updateQuantity >= 1) {
-      product.quantity++;
-      this.cartService.updateCartProduct(product).subscribe((response) => {
-        if (response) {
-          console.log('updated quantity', response);
-        }
-      });
-    } else {
-      alert('you can not remove');
+    // console.log(this.cart[index].moneyOfferPrice)
+    this.groupedProducts[index].cart[productIndex].quantity += 1;
+  }
+  decrementQuantity(index: any, productIndex: any) {
+    // console.log("Quantity",this.groupedProducts[index].cart[productindex].quantity);
+    //   console.log(this.cart[index].moneyOfferPrice)
+    if (this.groupedProducts[index].cart[productIndex].quantity > 1) {
+      this.groupedProducts[index].cart[productIndex].quantity -= 1;
     }
   }
-  decrementQuantity(product: any) {
-    let updateQuantity = product.quantity;
-    if (updateQuantity > 1) {
-      product.quantity--;
-      this.cartService.updateCartProduct(product).subscribe((response) => {
-        if (response) {
-          console.log('updated quantity', response);
-        }
-      });
-    }
-  }
-
 
   Subtotal() {
+    // console.log('cart:', this.cartItems);
+    let subtotal = 0;
+    for (let i = 0; i < this.groupedProducts.length; i++) {
+      for (let j = 0; j < this.groupedProducts[i].cart.length; j++) {
+        subtotal +=
+          this.groupedProducts[i].cart[j].price *
+          this.groupedProducts[i].cart[j].quantity;
+          console.log("subtotal:> ",subtotal);
+          
+      }
     
-    console.log("cart:",this.cartItems);
-    let subtotal=0;
-    for(let i = 0; i < this.cartItems.length; i++) {
-      subtotal += this.cartItems[i].quantity * this.cartItems[i].price;
     }
-    this.shipping=40;
+
+    this.shipping = 40;
     this.GST = subtotal * 0.18;
-    this.Total = subtotal + this.GST +this.shipping;
+    this.Total = subtotal + this.GST + this.shipping;
     return subtotal;
   }
 }

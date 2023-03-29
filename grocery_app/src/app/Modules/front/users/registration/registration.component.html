@@ -73,6 +73,27 @@
               >
             </div>
           </div>
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder="username"
+              formControlName="username"
+            />
+
+            <div
+              class="txt-danger"
+              *ngIf="
+                registerForm.get('username')?.invalid &&
+                (registerForm.get('username')?.dirty ||
+                  registerForm.get('username')?.touched)
+              "
+            >
+              <span *ngIf="registerForm.get('username')?.errors?.['required']"
+                >username is required.</span>
+            </div>
+          </div>
 
           <div class="col-12">
             <input
@@ -106,157 +127,28 @@
 
           <div class="col-12">
             <input
-              type="number"
+              type="text"
               class="form-control"
-              name="street-address"
+              name="mobile"
               id="mobile"
               placeholder="Mobile No."
-              formControlName="mobile"
+              formControlName="primary_mobile_number"
             />
 
             <div
               class="txt-danger"
               *ngIf="
-                registerForm.get('mobile')?.invalid &&
-                (registerForm.get('mobile')?.dirty ||
-                  registerForm.get('mobile')?.touched)
+                registerForm.get('primary_mobile_number')?.invalid &&
+                (registerForm.get('primary_mobile_number')?.dirty ||
+                  registerForm.get('primary_mobile_number')?.touched)
               "
             >
-              <span *ngIf="registerForm.get('mobile')?.errors?.['required']"
+              <span *ngIf="registerForm.get('primary_mobile_number')?.errors?.['required']"
                 >Enter Mobile No.</span
               >
             </div>
           </div>
 
-          <div class="col-6">
-            <select
-              id="country"
-              name="country"
-              class="form-select"
-              autocomplete="country-name"
-              formControlName="country"
-            >
-              <option value="" selected>Select country</option>
-              <option>United States</option>
-              <option>Canada</option>
-              <option>Mexico</option>
-            </select>
-            <div
-              class="txt-danger"
-              *ngIf="
-                registerForm.get('country')?.invalid &&
-                (registerForm.get('country')?.dirty ||
-                  registerForm.get('country')?.touched)
-              "
-            >
-              <span *ngIf="registerForm.get('country')?.errors?.['required']"
-                >Select country</span
-              >
-            </div>
-          </div>
-          <div class="col-6">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="State"
-              aria-label="State"
-              formControlName="state"
-            />
-            <div
-              class="txt-danger"
-              *ngIf="
-                registerForm.get('state')?.invalid &&
-                (registerForm.get('state')?.dirty ||
-                  registerForm.get('state')?.touched)
-              "
-            >
-              <span *ngIf="registerForm.get('state')?.errors?.['required']"
-                >state is required.</span
-              >
-            </div>
-          </div>
-          <div class="col-6">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="City"
-              aria-label="City"
-              formControlName="city"
-            />
-            <div
-              class="txt-danger"
-              *ngIf="
-                registerForm.get('city')?.invalid &&
-                (registerForm.get('city')?.dirty ||
-                  registerForm.get('city')?.touched)
-              "
-            >
-              <span *ngIf="registerForm.get('city')?.errors?.['required']"
-                >Enter city name</span
-              >
-            </div>
-          </div>
-
-          <div class="col-6">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Zip"
-              aria-label="Zip"
-              formControlName="zipcode"
-            />
-            <div
-              class="txt-danger"
-              *ngIf="
-                registerForm.get('zipcode')?.invalid &&
-                (registerForm.get('zipcode')?.dirty ||
-                  registerForm.get('zipcode')?.touched)
-              "
-            >
-              <span *ngIf="registerForm.get('zipcode')?.errors?.['required']"
-                >Zipcode is required.</span
-              >
-              <span *ngIf="registerForm.get('zipcode')?.errors?.['minlength']"
-                >zipcode should be minimium of 6 numbers</span
-              >
-            </div>
-          </div>
-
-          <div class="col-12" formArrayName="addresses">
-            <div *ngFor="let address of addresses.controls; let i = index">
-              <div [formGroupName]="i">
-                <div class="d-flex align-items-center">
-                  <input
-                    type="text"
-                    class="form-control m-2"
-                    name="street-address"
-                    id="inputAddress"
-                    placeholder="Address"
-                    formControlName="address"
-                  />
-                  <button type="button" class="btn btn-danger mx-2" (click)="removeAddress(i)">
-                    Remove
-                  </button>
-                  
-                </div>
-
-                <div
-                  class="txt-danger"
-                  *ngIf="
-                    registerForm.get('address')?.invalid &&
-                    (registerForm.get('address')?.dirty ||
-                      registerForm.get('address')?.touched)
-                  "
-                >
-                  <span
-                    *ngIf="registerForm.get('address')?.errors?.['required']"
-                    >Address is required.</span
-                  >
-                </div>
-              </div>
-            </div>
-            <button class="btn btn-primary my-2" (click)="addAddress()">Add Address</button>
-          </div>
           <div>
             <button
               type="submit"

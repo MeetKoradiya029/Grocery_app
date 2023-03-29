@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileSidebarComponent } from './profilePage/profile-sidebar/profile-sidebar.component';
 import { ManageAddressComponent } from './profilePage/profile-page/profileMenuPages/manage-address/manage-address.component';
 import { ChangePasswordComponent } from './profilePage/profile-page/profileMenuPages/change-password/change-password.component';
+import { ProfileComponent } from './profilePage/profile-page/profileMenuPages/profile/profile.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -18,13 +20,15 @@ import { ChangePasswordComponent } from './profilePage/profile-page/profileMenuP
     ProfileSidebarComponent,
     ProfilePageComponent,
     ManageAddressComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
     UsersRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
     
   ],
   exports:[ProfileSidebarComponent]
