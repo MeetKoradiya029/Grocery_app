@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../Shared/Services/cart.service';
 import { ProductService } from '../../Shared/Services/product.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +13,22 @@ export class HomeComponent implements OnInit {
   products: any[] = [];
   category: any;
   selectedCategory: any;
+  durationInSeconds = 5;
+
 
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private _snackBar:MatSnackBar
   ) {}
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
 
   ngOnInit() {
     this.products = this.productService.getProducts();
@@ -48,9 +58,8 @@ export class HomeComponent implements OnInit {
         console.log('response', response);
       }
     });
+    this.openSnackBar("Item Added in cart","ok");
   }
 
-  gotoProductDetail() {
-    this.router.navigate(['/everything/product_details', this.id]);
-  }
+
 }

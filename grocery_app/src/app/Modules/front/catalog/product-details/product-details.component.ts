@@ -28,7 +28,9 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cartService: CartService
-  ) {}
+  ) {
+    window.scroll(0,0);
+  }
 
   ngOnInit() {
     this.products = this.productService.getProducts();
@@ -71,19 +73,20 @@ export class ProductDetailsComponent implements OnInit {
 
     return this.product;
   }
-  fromInput!:any
-  quantityObj = {
-    quantity:this.fromInput,
-  };
+  fromInput!:number
+  
   addToCart() {
+    let quantityObj = {
+      quantity:this.fromInput,
+    };
     // console.log('product::', this.product[0]);
-    console.log("quantity from input:");
+    console.log("quantity from input:",quantityObj.quantity);
     
     this.existingInCart = this.cartProducts.find(
       (product: any) => product.id == this.product[0].id
     );
     if(!this.existingInCart){
-      this.productWithQuantity = Object.assign(this.product[0],this.quantityObj);
+      this.productWithQuantity = Object.assign(this.product[0],quantityObj);
       console.log("Product with Quantity:",this.productWithQuantity);
       this.cartService.addToCart(this.productWithQuantity).subscribe((res)=>{
         if(res){
@@ -99,10 +102,12 @@ export class ProductDetailsComponent implements OnInit {
       console.log("id:",this.productId);
       
       console.log("existing item :",this.cartProducts);
-
+      
+      if(this.fromInput){
+        this.checkInputQuantity(this.fromInput);
+      }
      
-      this.cartProducts[this.productId]
-      this.checkInputQuantity(this.fromInput);
+     
     }
     // console.log('existing product', existingIncart);
   }

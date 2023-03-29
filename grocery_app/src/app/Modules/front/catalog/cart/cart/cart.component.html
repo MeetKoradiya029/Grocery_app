@@ -27,7 +27,7 @@
         </tr>
       </thead>
       <tbody *ngFor="let group of groupedProducts; let i=index">
-        {{group.category}}
+       <p class="h4">{{group.category}}</p>
         <tr *ngFor="let product of group.cart; let j=index">
           <td>
             <p style="margin: 0">{{ product.name }}</p>

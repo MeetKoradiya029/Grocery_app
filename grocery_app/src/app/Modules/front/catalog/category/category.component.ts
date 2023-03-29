@@ -10,7 +10,9 @@ import { CategoryService } from 'src/app/Shared/Services/category.service';
 export class CategoryComponent implements OnInit{
 
   categoriesFormDB:any=[];
-  constructor(private router:Router , private categoryService:CategoryService){}
+  constructor(private router:Router , private categoryService:CategoryService){
+    window.scroll(0,0);
+  }
   ngOnInit(){
     this.categoriesFormDB=this.categoryService.getAllCategories().subscribe((res)=>{
       if(res){

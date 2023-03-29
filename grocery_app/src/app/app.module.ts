@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './Modules/front/catalog/cart/cart/cart.component';
 import { UsersModule } from './Modules/front/users/users.module';
 import { FrontModule } from './Modules/front/front.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { FrontModule } from './Modules/front/front.module';
         HttpClientModule,
         CatalogModule,
         FrontModule,
-        UsersModule
+        UsersModule,
+        MatSnackBarModule
     ]
 })
 export class AppModule { }
