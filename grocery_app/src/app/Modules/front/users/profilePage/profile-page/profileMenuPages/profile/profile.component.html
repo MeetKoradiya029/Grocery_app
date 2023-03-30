@@ -7,13 +7,20 @@
       <div class="container" id="main_container">
         <form [formGroup]="userDataForm" class="row">
           <div class="col col-md-3">
-            <label class="form-label" for="firstName">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              class="form-control form-control-md"
-              formControlName="firstName"
-            />
+            <div style="margin-bottom: 10px;">
+
+              <label class="form-label" for="firstName">First Name &nbsp; <p *ngIf="userDataForm.get('firstName')?.invalid&&(userDataForm.get('firstName')?.touched||userDataForm.get('firstName')?.dirty)">
+                <span class="text text-danger" style="font-size: small;margin-bottom: 10px;" *ngIf="userDataForm.get('firstName')?.errors?.['required']">
+                  Enter First Name
+                </span>
+              </p></label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control form-control-md"
+                formControlName="firstName"
+              />
+            </div>
             <label class="form-label" for="email">Email</label>
             <input
               type="email"

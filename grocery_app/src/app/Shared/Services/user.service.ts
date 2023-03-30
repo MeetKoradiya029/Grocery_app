@@ -14,6 +14,7 @@ export class UserService {
   getUserUrl = environment.getUsersUrl;
   baseURL = environment.baseURL;
   registerURL = environment.registerUser;
+  loginURL = environment.loginUser;
 
   constructor(private http:HttpClient) { }
 
@@ -37,6 +38,14 @@ export class UserService {
   registerUser(body:UserModel){
     try {
         return this.http.post<UserModel>(this.baseURL+this.registerURL,body);
+    } catch (error:any) {
+      return throwError(()=>new Error(error))
+    }
+  }
+
+  loginUser(body:any){
+    try {
+      return this.http.post<any>(this.baseURL+this.loginURL,body);
     } catch (error:any) {
       return throwError(()=>new Error(error))
     }

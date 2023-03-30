@@ -12,26 +12,24 @@
       <div class="row-12">
         <div class="form-outline mb-4">
           <input
-            type="email"
+            type="text"
             id="form2Example1"
             class="form-control"
-            formControlName="email"
-            placeholder="Email Address"
+            formControlName="username"
+            placeholder="Enter Username"
           />
           <div
               class="text text-danger"
               *ngIf="
-                loginForm.get('email')?.invalid &&
-                (loginForm.get('email')?.dirty ||
-                  loginForm.get('email')?.touched)
+                loginForm.get('username')?.invalid &&
+                (loginForm.get('username')?.dirty ||
+                  loginForm.get('usrname')?.touched)
               "
             >
-              <span *ngIf="loginForm.get('email')?.errors?.['required']"
+              <span *ngIf="loginForm.get('username')?.errors?.['required']"
                 >Email is required.</span
               >
-              <span *ngIf="loginForm.get('email')?.errors?.['email']"
-                >Email is invalid.</span
-              >
+             
             </div>
             
           

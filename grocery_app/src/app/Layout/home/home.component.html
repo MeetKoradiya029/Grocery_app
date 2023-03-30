@@ -100,32 +100,38 @@
       [cellWidth]="350"
       [autoplayInterval]="3000"
       [pauseOnHover]="true"
+      class="container"
     >
-      <div
-        class="carousel-cell"
-        *ngFor="let product of products; let i = index"
-      >
-        <div class="card bg-transparent p-2 m-2">
+    <div class="carousel-cell" *ngFor="let product of products;let i=index"  >
+      <div class="card bg-white m-2 w-auto" >
           <img
-            src="{{ product.image }}"
-            class="img-fluid h-400"
-            alt=""
-            [routerLink]="['/catalog/product_details', product.id]"
-          />
-          <div class="card-body bg-body-transparent text-center mb-2">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text mb-2 mt- 2">{{ product.description }}</p>
-            <p class="card-text">{{ product.price | currency }}</p>
-            <button
-              type="button"
-              class="btn btn-danger"
-              (click)="addToCart(product.id)"
-            >
-              Add to Cart
-            </button>
+              class="rounded mx-auto d-block"
+              src="{{product.image}}"
+              alt=""
+              width="175"
+              height="100"
+              [routerLink]="['/catalog/product_details', product.id]"/>
+          <div class="card-body text-left">
+              <small>{{product.name}}</small>
+              <h4>1 kg</h4>
+              <ul class="float-end" data-mdb-toggle="rating">
+                  <i class="fas fa-star fa-sm text-primary" title="Bad"></i>
+                  <i class="fas fa-star fa-sm text-primary" title="Poor"></i>
+                  <i class="fas fa-star fa-sm text-primary" title="OK"></i>
+                  <i class="fas fa-star fa-sm text-primary" title="Good"></i>
+                  <i class="far fa-star fa-sm text-primary" title="Excellent"></i>
+                  <br></ul>
+            
+                  <div class="text">
+                      <i class="my-2">{{product.price | currency:'INR'}}</i>
+                      
+                     
+                  </div>
+                  <div> <button class="btn btn-primary w-100" (click)="addToCart(i)">
+                    Add to cart </button></div>
+                  </div>
+              </div>
           </div>
-        </div>
-      </div>
     </carousel>
   </div>
 

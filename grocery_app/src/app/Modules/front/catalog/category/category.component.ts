@@ -14,11 +14,19 @@ export class CategoryComponent implements OnInit{
     window.scroll(0,0);
   }
   ngOnInit(){
-    this.categoriesFormDB=this.categoryService.getAllCategories().subscribe((res)=>{
+    
+    this.categoriesFormDB=this.categoryService.getAllCategories().subscribe((res:any)=>{
+      
       if(res){
         console.log("categories from database ",res);
         this.categoriesFormDB=res;
       }
+    },
+      (    error: any) => {
+      console.error('Error:', error);
+    },
+    () => {
+      console.log('Request complete.');
     });
     
 

@@ -18,11 +18,13 @@ import { CategoryComponent } from './Modules/front/catalog/category/category.com
 import { CommonModule } from '@angular/common';
 import { CategoryProductsComponent } from './Modules/front/catalog/category-products/category-products.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CartComponent } from './Modules/front/catalog/cart/cart/cart.component';
 import { UsersModule } from './Modules/front/users/users.module';
 import { FrontModule } from './Modules/front/front.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CategoryService } from './Shared/Services/category.service';
+import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -37,7 +39,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         CategoryProductsComponent,
         CartComponent
     ],
-    providers: [],
+    providers: [
+        CategoryService,
+        {
+            provide:HTTP_INTERCEPTORS,
+            useClass:AuthInterceptor,
+            multi:true,
+        }
+    ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

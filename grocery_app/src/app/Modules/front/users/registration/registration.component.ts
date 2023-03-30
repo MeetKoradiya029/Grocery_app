@@ -78,7 +78,7 @@ export class RegistrationComponent implements OnInit {
       primary_mobile_number: primary_mobile_number,
       username: username,
     };
-    console.log('body', body);
+    // console.log('body', body);
 
     this.userService.registerUser(body).subscribe((res) => {
       if (res) {

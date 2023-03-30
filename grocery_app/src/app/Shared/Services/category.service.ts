@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Category } from 'src/app/Models/category-model';
 import { environment } from 'src/environments/environment.development';
 
@@ -12,13 +12,17 @@ export class CategoryService {
   getAllCategory = environment.getAllcategory;
 
   constructor(private http: HttpClient) {}
+  categoryParse:any
 
-  getAllCategories(){
+  getAllCategories():Observable<any>{
       try {
-        return this.http.get<Category>(this.baseUrl+this.getAllCategory);
-      } catch (error:any) {
+        this.categoryParse=this.http.get<any>(this.baseUrl+this.getAllCategory)
+        console.log("category respone ==>>", this.categoryParse);
+        return (this.categoryParse)
+          } catch (error:any) {
         return throwError(()=>new Error(error))
-      }
+      } 
   }
+  
 
 }
