@@ -11,10 +11,13 @@ export class UserService {
 
   baseUrl = environment.baseUrl;
   postUser = environment.postUserUrl;
+
   getUserUrl = environment.getUsersUrl;
   baseURL = environment.baseURL;
   registerURL = environment.registerUser;
   loginURL = environment.loginUser;
+  changePasswordUrl = environment.changePassword
+  updateProfile = environment.updateProfile
 
   constructor(private http:HttpClient) { }
 
@@ -59,9 +62,17 @@ export class UserService {
       }
   }
 
-  updateUser(id:any,body:any){
+  changePassword(){
     try {
-        return this.http.put<any>(this.baseUrl+this.postUser+"/"+id,body);
+      return this.http.get<any>(this.baseURL+this.changePassword);
+    } catch (error:any) {
+      return throwError(()=> new Error(error))
+    }
+  }
+
+  updateUser(body:any){
+    try {
+        return this.http.put<any>(this.baseURL+this.updateProfile,body);
     } catch (error:any) {
       return throwError(()=>new Error(error))
     }

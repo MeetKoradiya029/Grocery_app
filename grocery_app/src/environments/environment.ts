@@ -4,6 +4,8 @@ export const environment = {
     getAllcategory:"category/get-all-categories",
     registerUser:"customer/register",
     loginUser:"customer/login",
+    changePassword:'customer/changePassword',
+    updateProfile:'customer/update-customer',
     postUserUrl:"users",
     getUsersUrl:"users",
     addTocart:"cart",

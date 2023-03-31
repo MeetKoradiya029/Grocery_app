@@ -46,7 +46,7 @@
             <button class="btn search_btn" type="submit"><i class="bi bi-search"><img src="../../assets/search.svg" alt=""></i></button>
           </div>
           <div class="container">
-            <button class="btn btn-danger" type="submit" routerLink="users/login" routerLinkActive="active">Login</button>
+            <button class="btn btn-danger" type="submit" routerLink="users/login" routerLinkActive="active" *ngIf="!user">Login</button>
           </div>
          
         </form>

@@ -59,16 +59,27 @@ export class LoginComponent implements OnInit {
         username:username,
         password:password
     }
-    this.userService.loginUser(this.body).subscribe((res)=>{
-      if(res){
-        console.log("login response:",res);
-        this.token = res.data;
-        console.log("token",this.token);
-        
+    
+    const user = localStorage.getItem('userToken');
+    if(!user){
+      this.userService.loginUser(this.body).subscribe((res)=>{
+        if(res){
+          console.log("login response:",res);
+          this.token = res.data;
+          console.log("token",this.token);
+                    
+          localStorage.setItem("userToken",JSON.stringify(this.token))
+          this.router.navigate(['/home']);        
+        }
+      })
+    }else{
+      console.log("local token",user);
+      
+    }
+    
+    
+    console.log('User Token',user);
 
-        this.router.navigate(['/home']);        
-      }
-    })
 
 
 

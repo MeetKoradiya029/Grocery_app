@@ -25,6 +25,7 @@ import { FrontModule } from './Modules/front/front.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CategoryService } from './Shared/Services/category.service';
 import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
+import { UserService } from './Shared/Services/user.service';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
     ],
     providers: [
         CategoryService,
+        UserService,
         {
             provide:HTTP_INTERCEPTORS,
             useClass:AuthInterceptor,

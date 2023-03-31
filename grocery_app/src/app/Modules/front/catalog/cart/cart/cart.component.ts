@@ -95,14 +95,11 @@ export class CartComponent implements OnInit, AfterViewInit {
   // counter:number;
 
   incrementQuantity(index: any, productIndex: any) {
-    // console.log("full object:",product);
-    // console.log("updated:",product.quantity);
-    // console.log(this.cart[index].moneyOfferPrice)
+    
     this.groupedProducts[index].cart[productIndex].quantity += 1;
   }
   decrementQuantity(index: any, productIndex: any) {
-    // console.log("Quantity",this.groupedProducts[index].cart[productindex].quantity);
-    //   console.log(this.cart[index].moneyOfferPrice)
+   
     if (this.groupedProducts[index].cart[productIndex].quantity > 1) {
       this.groupedProducts[index].cart[productIndex].quantity -= 1;
     }

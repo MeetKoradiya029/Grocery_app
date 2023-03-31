@@ -9,59 +9,59 @@
           <div class="col col-md-3">
             <div style="margin-bottom: 10px;">
 
-              <label class="form-label" for="firstName">First Name &nbsp; <p *ngIf="userDataForm.get('firstName')?.invalid&&(userDataForm.get('firstName')?.touched||userDataForm.get('firstName')?.dirty)">
-                <span class="text text-danger" style="font-size: small;margin-bottom: 10px;" *ngIf="userDataForm.get('firstName')?.errors?.['required']">
-                  Enter First Name
-                </span>
-              </p></label>
+              <label class="form-label" for="firstName">First Name &nbsp; </label>
               <input
                 type="text"
                 id="firstName"
                 class="form-control form-control-md"
                 formControlName="firstName"
               />
+              <div *ngIf="userDataForm.get('firstName')?.invalid&&(userDataForm.get('firstName')?.touched||userDataForm.get('firstName')?.dirty)">
+                <span class="text text-danger" style="font-size: small;margin-bottom: 10px;" *ngIf="userDataForm.get('firstName')?.errors?.['required']">
+                  Enter First Name
+                </span>
+              </div>
             </div>
-            <label class="form-label" for="email">Email</label>
+            <label class="form-label" for="email">Alternate Email</label>
             <input
               type="email"
               id="email"
               class="form-control form-control-md"
               formControlName="email"
             />
-            <label class="form-label" for="altEmail">Alternate Email</label>
+            <label class="form-label" for="password">Password</label>
             <input
-              type="email"
-              id="altEmail"
+              type="password"
+              id="password"
               class="form-control form-control-md"
+              formControlName="password"
             />
-            <label class="form-label" for="form3Example9">DOB</label>
-            <input
-              type="date"
-              id="form3Example9"
-              class="form-control form-control-md"
-              formControlName="dob"
-            />
+            
           </div>
-
+         
           <div class="col col-md-3">
-            <label class="form-label" for="form3Example1n">Last name</label>
-            <input
-              type="text"
-              id="form3Example1n"
-              class="form-control"
-              formControlName="lastName"
-            />
-            <label class="form-label" for="form3Example99">Contact No.</label>
-            <input
-              type="tel"
-              id="form3Example99"
-              class="form-control"
-              formControlName="mobileNo"
-            />
-            <label class="form-label" for="form3Example99"
-              >Alerternate Contact No.</label
-            >
-            <input type="tel" id="form3Example99" class="form-control" />
+            <div style="margin-bottom: 10px;">
+          
+              <label class="form-label" for="form3Example1n">Last name</label>
+              <input
+                type="text"
+                id="form3Example1n"
+                class="form-control"
+                formControlName="lastName"
+              />
+              
+              <label class="form-label" for="altMobile"
+                >Alerternate Contact No.</label
+              >
+              <input type="tel" id="altMobile" class="form-control"  formControlName="mobileNo"/>
+              <label class="form-label" for="form3Example9">DOB</label>
+              <input
+                type="date"
+                id="form3Example9"
+                class="form-control form-control-md"
+                formControlName="dob"
+              />
+            </div>
           </div>
 
           <div class="col">

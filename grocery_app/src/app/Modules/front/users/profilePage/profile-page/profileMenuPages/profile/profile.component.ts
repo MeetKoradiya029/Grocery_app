@@ -9,10 +9,10 @@ import { UserService } from 'src/app/Shared/Services/user.service';
 })
 export class ProfileComponent {
   userData!: any
+  formData:any
   userDataForm!: FormGroup ;
   constructor(private fb :FormBuilder,private userService:UserService){}
   ngOnInit() {
-   this._getUserDataFromLocalStorage()
   }
   
   // this methos is initilized the form
@@ -23,59 +23,38 @@ export class ProfileComponent {
       dob: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       mobileNo: new FormControl('', [Validators.required]),
+      password:new FormControl('',[Validators.required]),
    
     })
   }
   //this method is get the user stored data from the local storage
-  _getUserDataFromLocalStorage() {
-    // code need to update used service for storing data in local storage 
-    const data = localStorage.getItem('userData')
-    if (data) {
-      this.userData = JSON.parse(data);
-      console.log(this.userData);
-      this._initForm()
-      this.userDataForm.setValue({
-        firstName: this.userData[0].firstname||"",
-        lastName:this.userData[0].lastname||"" ,
-        dob:this.userData[0].DateOfBirth||"",
-        email:this.userData[0].email||"",
-        mobileNo: this.userData[0].mobileNo||"",
+  
+  // this method is updating data in server and also in localstorage
+  
+
+    formHandler(){
+
+      this.formData = this.userDataForm.getRawValue();
+
+      const body = {
+        first_name:this.formData.firstname,
+        last_name:this.formData.lastname,
+        password:this.userData.password,
+        date_of_birth:this.formData.dob,
+        secondary_mobile_number:this.formData.mobileNo,
+        secondary_email:this.formData.email,
+      }
+      this.userService.updateUser(body).subscribe((res:any) => {
+        if (res) {
+          console.log("resonse of update data :",res);
+          
+        }
+      }, (error:any) => {
+        alert("something went wrong please try again")
       })
     }
-  }
-  // this method is updating data in server and also in localstorage
-  _updateUserData() {
-    
-  
-    const userData = this.userDataForm.getRawValue();
-    const body = {
- 
-      firstName: userData.firstName || "",
-      lastName: userData.lastName || "",
-      DateOfBirth: userData.dob || Date,
-      gender: this.userData[0].gender || "",
-      address: this.userData[0].address||"",
-      pincode: this.userData[0].pincode||"",
-      city: this.userData[0].pincode||"",
-      email: userData.email||"",
-      mobileNo: userData.mobileNo||"",
-      password:this.userData[0].password||"",
-    }
-
- // data updating in local storage code here ...//
-    
-    this.userService._setLoggedInUserData(body);
-
-
     // this is called api for the updating the data in the server 
-    this.userService.updateUser(this.userData[0].id, body).subscribe((res:any) => {
-      if (res) {
-        alert("data updated successfuly")
-      }
-    }, (error:any) => {
-      alert("something went wrong please try again")
-    })
    
-  }
-
+   
 }
+

@@ -9,9 +9,15 @@ import { CartService } from 'src/app/Shared/Services/cart.service';
 export class NavbarComponent implements OnInit{
 
   cartProducts:any=[];
+  user:any
 
   constructor(private cartService:CartService){
 
+     this.user = localStorage.getItem('userToken');
+    if(this.user){
+      console.log('user--token:',this.user);
+
+    }
   }
 
   ngOnInit() {
