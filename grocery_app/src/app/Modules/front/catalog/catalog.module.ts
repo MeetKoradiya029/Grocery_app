@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [ProductListComponent, ProductDetailsComponent],
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
     CarouselModule,
     FormsModule,
     IvyCarouselModule,
+    RouterModule
   ],
 
   exports: [ProductListComponent],

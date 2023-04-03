@@ -1,54 +1,97 @@
 <div class="container mt-3">
-    <div class="row">
-        <div class="col-md-3">
-            <app-profile-sidebar></app-profile-sidebar>
-        </div>
-        <div class="col mx-5 d-flex justify-content-center">
-            <div class="g-1 m-lg-5 d-flex justify-content-center">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <h5 class="card-title fs-5"><span class="text-success">Default Address:</span> Office</h5>
-                      <p class="card-text fs-6">B-305, The First, B/H Keshavbaug, Vastrapur, Ahmedabad, Gujarat 380015</p>
-                      <div class="text-center card-footer bg-transparent border-0">
-                        <button class="btn btn-outline-dark">DELIVER HERE</button>
-                        <button class="btn btn-outline-transparent"><img src="https://img.icons8.com/cute-clipart/32/null/delete-forever.png"/></button>
-                        <button class="btn btn-outline-transparent"><img src="https://img.icons8.com/cute-clipart/32/null/pencil.png"/></button>
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <h5 class="card-title fs-5">Home</h5>
-                      <p class="card-text fs-6">B-305, The First, B/H Keshavbaug, Vastrapur, Ahmedabad, Gujarat 380015</p>
-                      <div class="text-center card-footer bg-transparent border-0">
-                          <button class="btn btn-outline-dark">DELIVER HERE</button>
-                          <button class="btn btn-outline-transparent"><img src="https://img.icons8.com/cute-clipart/32/null/delete-forever.png"/></button>
-                          <button class="btn btn-outline-transparent"><img src="https://img.icons8.com/cute-clipart/32/null/pencil.png"/></button>
-                        </div>
-                    </div>
-                    
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100">
-       
-                    <div class="card-body">
-                      <h5 class="card-title fs-5">Home</h5>
-                      <p class="card-text fs-6">B-305, The First, B/H Keshavbaug, Vastrapur, Ahmedabad, Gujarat 380015</p>
-                      <div class="text-center card-footer bg-transparent border-0">
-                        <button class="btn btn-outline-dark">DELIVER HERE</button>
-                        <button class="btn btn-outline-transparent"><img src="https://img.icons8.com/cute-clipart/32/null/delete-forever.png"/></button>
-                        <button class="btn btn-outline-transparent"><img src="https://img.icons8.com/cute-clipart/32/null/pencil.png"/></button>
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-              </div>
+  <div class="row">
+    <div class="col-md-3">
+      <app-profile-sidebar></app-profile-sidebar>
     </div>
+    <div class="col">
+      <form class="form" [formGroup]="address">
+       
+        <div class="form-group col">
+          <label for="inputAddress">Address</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            placeholder="1234 Main St"
+            formControlName="address_1"
+          />
+        </div>
+        <div class="form-group col">
+          <label for="inputAddress2">Address 2</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress2"
+            placeholder="Apartment, studio, or floor"
+            formControlName="address_2"
+          />
+        </div>
+        <div class="form-group col">
+          <label for="inputArea">Area</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputArea"
+            placeholder="Area or Society"
+            formControlName="area"
+          />
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="inputCountry">Country</label>
+            <select id="inputCountry" class="form-control" formControlName="country">
+              <option selected disabled hidden>--country--</option>
+              <option>India</option>
+            </select>
+          </div>
+          <div class="form-group col">
+            <label for="inputState">State</label>
+            <select id="inputState" class="form-control" formControlName="state">
+              <option selected disabled hidden>--state--</option>
+              <option>Gujarat</option>
+            </select>
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity" formControlName="city" />
+          </div>
+          <div class="form-group col">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip" formControlName="zip" />
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="form-group col">
+            <label for="inputLandmark">Landmark</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputLandmark"
+              placeholder="Landmark"
+              formControlName="landmark"
+            />
+          </div>
+          <div class="form-group col">
+            <label for="inputTag">Tag</label>
+            <select id="inputTag" class="form-control" formControlName="tag">
+              <option selected disabled hidden>--Tag--</option>
+              <option value="home">Home</option>
+              <option value="work">Work</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        
+        
+      </form>
+    </div>
+    <div class="col">
+      <button type="submit" class="btn btn-primary" (click)="addAddress()">Save</button>
+    </div>
+   
+  </div>
 </div>

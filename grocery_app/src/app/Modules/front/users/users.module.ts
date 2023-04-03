@@ -11,6 +11,7 @@ import { ManageAddressComponent } from './profilePage/profile-page/profileMenuPa
 import { ChangePasswordComponent } from './profilePage/profile-page/profileMenuPages/change-password/change-password.component';
 import { ProfileComponent } from './profilePage/profile-page/profileMenuPages/profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuard } from 'src/app/Shared/Guards/auth.guard';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
     
   ],
+  providers:[AuthGuard],
   exports:[ProfileSidebarComponent]
 })
 export class UsersModule { }

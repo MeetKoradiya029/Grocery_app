@@ -84,7 +84,7 @@ export class RegistrationComponent implements OnInit {
       if (res) {
         console.log('response', res);
 
-        this.router.navigate(['/home']);
+        this.router.navigate(['/users/login']);
       }
     });
 

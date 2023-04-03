@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
 import { UserModel } from 'src/app/Models/user-model';
 import { environment } from 'src/environments/environment.development';
@@ -18,25 +19,33 @@ export class UserService {
   loginURL = environment.loginUser;
   changePasswordUrl = environment.changePassword
   updateProfile = environment.updateProfile
+  getUserDetailUrl = environment.getUserDetails
+  addAddressUrl = environment.addAddress
 
-  constructor(private http:HttpClient) { }
+  snackHorizontal:MatSnackBarHorizontalPosition='start';
+  snackVertical:MatSnackBarVerticalPosition = 'bottom';
+  snackmsg:any;
+  snackaction:any;
 
-  getUsers(){
-    try {
+
+  constructor(private http:HttpClient,private snackbar:MatSnackBar) { }
+
+  // getUsers(){
+  //   try {
       
-      return this.http.get<any>(this.baseUrl+this.getUserUrl);
-    } catch (error:any) {
-      return throwError(()=>new Error(error));
-    }
-  }
+  //     return this.http.get<any>(this.baseUrl+this.getUserUrl);
+  //   } catch (error:any) {
+  //     return throwError(()=>new Error(error));
+  //   }
+  // }
 
-  RegisterUser(body:any){
-      try {
-        return this.http.post<any>(this.baseUrl+this.postUser,body);
-      } catch (error:any) {
-        return throwError(()=>new Error(error));
-      }
-  }
+  // RegisterUser(body:any){
+  //     try {
+  //       return this.http.post<any>(this.baseUrl+this.postUser,body);
+  //     } catch (error:any) {
+  //       return throwError(()=>new Error(error));
+  //     }
+  // }
 
   registerUser(body:UserModel){
     try {
@@ -54,17 +63,17 @@ export class UserService {
     }
   }
 
-  getUserDetail(id:any){
+  getUserDetail(){
       try {
-        return this.http.get<any>(this.baseUrl+this.getUserUrl+"/"+id);
+        return this.http.get<any>(this.baseURL+this.getUserDetailUrl);
       } catch (error:any) {
         return throwError(()=>new Error(error))
       }
   }
 
-  changePassword(){
+  changePassword(body:any){
     try {
-      return this.http.get<any>(this.baseURL+this.changePassword);
+      return this.http.put<any>(this.baseURL+this.changePasswordUrl,body);
     } catch (error:any) {
       return throwError(()=> new Error(error))
     }
@@ -73,6 +82,16 @@ export class UserService {
   updateUser(body:any){
     try {
         return this.http.put<any>(this.baseURL+this.updateProfile,body);
+    } catch (error:any) {
+      return throwError(()=>new Error(error))
+    }
+
+    
+  }
+
+  addAddress(body:any){
+    try {
+      return this.http.post<any>(this.baseURL+this.addAddressUrl,body);
     } catch (error:any) {
       return throwError(()=>new Error(error))
     }
@@ -89,6 +108,12 @@ export class UserService {
    return   localStorage.getItem('userData')
   }
 
+  openSnackBar(snackmsg:any,snackaction:any,snackHorizontal:MatSnackBarHorizontalPosition,snackVertical:MatSnackBarVerticalPosition){
+    this.snackbar.open(snackmsg,snackaction,{
+      horizontalPosition:snackHorizontal,
+      verticalPosition:snackVertical
+    })
+  }
 
 
 }

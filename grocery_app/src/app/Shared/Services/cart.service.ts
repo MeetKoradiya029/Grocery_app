@@ -19,6 +19,20 @@ export class CartService {
   constructor(private http:HttpClient) { }
 
   addToCart(prodcutData:any){
+    let cart:any  = localStorage.getItem("cart");
+    if(cart !== null){
+      JSON.parse(cart);
+    }
+    if(cart|| cart.length>0){
+      cart.push();
+      localStorage.setItem("cart",JSON.stringify(cart))
+  }else{
+
+    localStorage.setItem("cart",JSON.stringify([]))
+    
+  }
+
+
     return this.http.post<any>(this.baseUrl+this.addTocartUrl,prodcutData);
   }
 

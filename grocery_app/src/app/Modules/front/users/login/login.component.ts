@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/Shared/Services/user.service';
 
 @Component({
@@ -14,15 +15,15 @@ export class LoginComponent implements OnInit {
   validUser: any = [];
   body:any={}
   token:any
+  date:any
+  expireTime:any;
+  cookie:any;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router,private cookieService:CookieService) {}
 
   ngOnInit() {
     this.initializeForm();
-    this.userService.getUsers().subscribe((res) => {
-      this.users = res;
-      console.log(this.users);
-    });
+    
   }
 
   initializeForm() {
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(6),
       ]),
     });
   }
@@ -60,20 +61,26 @@ export class LoginComponent implements OnInit {
         password:password
     }
     
-    const user = localStorage.getItem('userToken');
+    const user = this.cookieService.get('userLoginToken');
     if(!user){
       this.userService.loginUser(this.body).subscribe((res)=>{
         if(res){
           console.log("login response:",res);
           this.token = res.data;
           console.log("token",this.token);
-                    
+          
+          this.date = new Date();
+          this.expireTime = new Date(this.date.getTime()+ 3600*24*1000)
+         this.cookieService.set('userLoginToken',this.token,{expires:1,sameSite:'Lax'});
+         this.cookie = this.cookieService.get('userLoginToken');
+          console.log('cookie:',this.cookie);
+          
           localStorage.setItem("userToken",JSON.stringify(this.token))
           this.router.navigate(['/home']);        
         }
       })
     }else{
-      console.log("local token",user);
+      this.router.navigate([''])
       
     }
     

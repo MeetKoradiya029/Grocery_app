@@ -58,7 +58,7 @@
         <div><img src="../../assets/cart4.svg" alt="" height="30px"></div>
         <div class="cart">
           <div>My Cart</div>
-          <div>₹21-({{cartProducts.length}})</div>
+          <div>{{subtotal()|currency:'INR'}}({{cartProducts.length}})</div>
         </div>
       </div>
       
@@ -68,7 +68,7 @@
         </a>
       
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" routerLink="/users/profile">Profile</a></li>
+          <li><a class="dropdown-item" routerLink="/users">Profile</a></li>
           <li><a class="dropdown-item" href="#">Orders</a></li>
           <li><a class="dropdown-item" href="#">Setting</a></li>
         </ul>

@@ -15,6 +15,7 @@ import { UserService } from 'src/app/Shared/Services/user.service';
 export class ChangePasswordComponent implements OnInit {
   changePassowrd!: FormGroup;
   formData:any
+  body: any;
 
   constructor(private userService: UserService, private fb: FormBuilder) {}
   ngOnInit() {
@@ -32,5 +33,19 @@ export class ChangePasswordComponent implements OnInit {
       
   submit(){
       this.formData = this.changePassowrd.getRawValue();
+      console.log("change Password",this.formData);
+      
+       this.body = {
+        oldPassword:this.formData.oldpassword,
+        newPassword:this.formData.newPassword,
+       }
+
+       this.userService.changePassword(this.body).subscribe((res)=>{
+        if(res){
+          console.log("change pass res",res);
+          
+        }
+       })
+
   }
 }

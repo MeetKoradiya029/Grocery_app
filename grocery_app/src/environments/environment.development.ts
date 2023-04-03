@@ -6,6 +6,8 @@ export const environment = {
     loginUser:"customer/login",
     changePassword:'customer/changePassword',
     updateProfile:'customer/update-customer',
+    getUserDetails:'customer/customer-details',
+    addAddress:"customer/add-customer-address",
     postUserUrl:"users",
     getUsersUrl:"users",
     addTocart:"cart",
