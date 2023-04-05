@@ -1,12 +1,12 @@
 import { Injectable, OnInit } from '@angular/core';
-import { CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivateChild,OnInit {
+export class AuthGuard implements CanActivate,OnInit {
 
   token:any;
 
@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivateChild,OnInit {
       return false
     }
   }
-  canActivateChild(
+  canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if(this.checkUser()){

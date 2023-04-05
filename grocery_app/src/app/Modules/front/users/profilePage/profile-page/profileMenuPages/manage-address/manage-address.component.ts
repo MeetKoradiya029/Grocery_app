@@ -39,6 +39,7 @@ export class ManageAddressComponent implements OnInit {
   }
 
   addAddress() {
+   let flag=true;
     const {
       address_1,
       address_2,
@@ -66,16 +67,25 @@ export class ManageAddressComponent implements OnInit {
     }
     console.log("body",this.body);
     
+    if(!address_1||!address_2||!area||!city||!state||!country||!zip||!landmark||!tag){
+      this.userService.openSnackBar('Form Is Empty',"OK","center","bottom")
+      flag = false;
+      return flag;
+    }
+    if(flag==true){
 
-    this.userService.addAddress(this.body).subscribe((res)=>{
-      if(res){
-        console.log("address response :",res);
-        this.userService.openSnackBar("Address Saved successfully !","OK","end","bottom");
-      }else{
-          
-      }
-    })
+      this.userService.addAddress(this.body).subscribe((res)=>{
+        if(res){
+          console.log("address response :",res);
+          this.userService.openSnackBar("Address Saved successfully !","OK","end","bottom");
+          this.address.reset()
+        }else{
+            
+        }
+      })
 
+    }
+    return flag
 
   }
 

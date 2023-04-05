@@ -7,9 +7,11 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CartModule } from './cart/cart.module';
+import { LoaderComponent } from './loader_for_products/loader/loader.component';
 
 @NgModule({
-  declarations: [ProductListComponent, ProductDetailsComponent],
+  declarations: [ProductListComponent, ProductDetailsComponent, LoaderComponent],
   imports: [
     CommonModule,
     CatalogRoutingModule,
@@ -17,7 +19,10 @@ import { RouterModule } from '@angular/router';
     CarouselModule,
     FormsModule,
     IvyCarouselModule,
-    RouterModule
+    CartModule,
+    RouterModule,
+
+    
   ],
 
   exports: [ProductListComponent],

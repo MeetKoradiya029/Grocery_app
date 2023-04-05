@@ -13,29 +13,31 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   {
-    path: '',
+    path: 'profile',
     component: ProfileComponent,
-    canActivateChild: [AuthGuard],
-    children: [
-      {path:'',component:ProfileComponent},
-      {
-        path: 'profile/home',
-        component: ProfileComponent,
-      },
-      {
-        path: 'profile/manageaddress',
-        component: ManageAddressComponent,
-      },
-      {
-        path: 'profile/changepass',
-        component: ChangePasswordComponent, 
-      },
-      {
-        path:'orderconfirm',
-        component:OrderConfirmComponent
-      }
-    ],
+    canActivate: [AuthGuard],
   },
+  {
+    path:'profile/home',
+    component:ProfileComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path:'profile/changepass',
+    component:ChangePasswordComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path:'profile/manageaddress',
+    component:ManageAddressComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path:'orderconfirm',
+    component:OrderConfirmComponent,
+    canActivate:[AuthGuard]
+  }
+
 
 
  

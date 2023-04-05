@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Category } from 'src/app/Models/category-model';
@@ -12,17 +16,25 @@ export class CategoryService {
   getAllCategory = environment.getAllcategory;
 
   constructor(private http: HttpClient) {}
-  categoryParse:any
+  categoryParse: any;
 
-  getAllCategories():Observable<any>{
-      try {
-        this.categoryParse=this.http.get<any>(this.baseUrl+this.getAllCategory)
-        console.log("category respone ==>>", this.categoryParse);
-        return (this.categoryParse)
-          } catch (error:any) {
-        return throwError(()=>new Error(error))
-      } 
+  getAllCategories(): Observable<any> {
+    try {
+      this.categoryParse = this.http.get<any>(
+        this.baseUrl + this.getAllCategory,
+        {
+          headers: new HttpHeaders({
+            'ngrok-skip-browser-warning': 'skip-browser-warning',
+            'Access-Control-Allow-Origin': '*',
+          }),
+        }
+      );
+      console.log('category respone ==>>', this.categoryParse);
+      return this.categoryParse;
+    } catch (error: any) {
+      return throwError(() => new Error(error));
+    }
   }
-  
 
+ 
 }

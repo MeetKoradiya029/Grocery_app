@@ -11,7 +11,7 @@ import { ProfilePageComponent } from '../users/profilePage/profile-page/profile-
 const routes: Routes = [
   // {path:"products",component:ProductListComponent},
   {path:'categories',component:CategoryComponent},
-  {path:'products/:category', component:ProductListComponent},
+  {path:'products-list/:id', component:ProductListComponent},
   {path:'product_details/:id',component:ProductDetailsComponent},
   {path:'cart',component:CartComponent},
   {path:'checkout',component:CheckoutComponent},

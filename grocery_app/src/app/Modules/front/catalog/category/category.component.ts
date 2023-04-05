@@ -10,6 +10,7 @@ import { CategoryService } from 'src/app/Shared/Services/category.service';
 export class CategoryComponent implements OnInit{
 
   categoriesFormDB:any=[];
+  categoryId:any;
   constructor(private router:Router , private categoryService:CategoryService){
     window.scroll(0,0);
   }
@@ -18,8 +19,11 @@ export class CategoryComponent implements OnInit{
     this.categoriesFormDB=this.categoryService.getAllCategories().subscribe((res:any)=>{
       
       if(res){
-        console.log("categories from database ",res);
-        this.categoriesFormDB=res;
+        console.log("categories from database ",res.data);
+        this.categoriesFormDB=res.data;
+      
+        console.log("category id:",this.categoryId);
+        
       }
     },
       (    error: any) => {

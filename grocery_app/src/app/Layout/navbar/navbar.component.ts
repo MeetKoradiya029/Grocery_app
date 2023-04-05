@@ -53,8 +53,8 @@ export class NavbarComponent implements OnInit,DoCheck {
   getUserDetail() {
     this.userService.getUserDetail().subscribe((res) => {
       if (res) {
-        console.log('user details response ', res);
-        this.userDetails = res;
+        console.log('user details response ', res.data);
+        this.userDetails = res.data;
       }
     });
 

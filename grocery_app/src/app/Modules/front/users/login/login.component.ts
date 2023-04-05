@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
       this.userService.loginUser(this.body).subscribe((res)=>{
         if(res){
           console.log("login response:",res);
-          this.token = res.data;
+          this.token = res.data.token;
           console.log("token",this.token);
           
           this.date = new Date();

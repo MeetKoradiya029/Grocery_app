@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
@@ -65,7 +65,15 @@ export class UserService {
 
   getUserDetail(){
       try {
-        return this.http.get<any>(this.baseURL+this.getUserDetailUrl);
+        let reqheaders  = {
+          'ngrok-skip-browser-warning': 'skip-browser-warning'
+        }     
+        const requestOptions = {                                                                                                                                                                         
+          headers: new Headers(reqheaders), 
+        };
+        return this.http.get<any>(this.baseURL+this.getUserDetailUrl,
+          {headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'})});
+        //return this.http.get<any>(this.baseURL+this.getUserDetailUrl);
       } catch (error:any) {
         return throwError(()=>new Error(error))
       }

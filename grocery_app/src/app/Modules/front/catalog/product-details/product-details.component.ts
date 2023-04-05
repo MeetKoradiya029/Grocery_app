@@ -22,6 +22,8 @@ export class ProductDetailsComponent implements OnInit {
   existingInCart: any;
   existing_Product: any;
   QuantityErrMsg: string | undefined;
+  isLoading=false;
+
   //#region
 
   constructor(
@@ -30,10 +32,18 @@ export class ProductDetailsComponent implements OnInit {
     private router: Router,
     private cartService: CartService
   ) {
-    window.scroll(0, 0);
+    window.scroll(0, 0)
+    this.isLoading=true;
   }
 
   ngOnInit() {
+    
+
+    setTimeout(()=>{
+      this.isLoading=false
+    },2000)
+
+   
     this.products = this.productService.getProducts();
     console.log('all product:', this.products);
     this.ShowCart();
@@ -57,6 +67,7 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
     this.cardProduct();
+    
   }
 
   product: any;
@@ -66,7 +77,7 @@ export class ProductDetailsComponent implements OnInit {
     );
     console.log('product', this.product);
     console.log('product', this.productId);
-
+  
     return this.product;
   }
   fromInput=1
