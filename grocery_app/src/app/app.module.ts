@@ -12,7 +12,7 @@ import { CatalogModule } from './Modules/front/catalog/catalog.module';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CarouselModule  } from 'ngx-owl-carousel-o';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatCarouselModule } from '@thouet/material-carousel';
 import { CategoryComponent } from './Modules/front/catalog/category/category.component';
 import { CommonModule } from '@angular/common';
@@ -26,45 +26,46 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CategoryService } from './Shared/Services/category.service';
 import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
 import { UserService } from './Shared/Services/user.service';
-
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavbarComponent,
-        HomeComponent,
-        AboutComponent,
-        ContactusComponent,
-        FooterComponent,
-        CategoryComponent,
-        CategoryProductsComponent,
-        CartComponent
-    ],
-    providers: [
-        CategoryService,
-        UserService,
-        {
-            provide:HTTP_INTERCEPTORS,
-            useClass:AuthInterceptor,
-            multi:true,
-        }
-    ],
-    bootstrap: [AppComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        CarouselModule,
-        MatCarouselModule,
-        IvyCarouselModule,
-        HttpClientModule,
-        CatalogModule,
-        FrontModule,
-        UsersModule,
-        MatSnackBarModule
-    ]
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    HomeComponent,
+    AboutComponent,
+    ContactusComponent,
+    FooterComponent,
+    CategoryComponent,
+    CategoryProductsComponent,
+    CartComponent,
+  ],
+  providers: [
+    CategoryService,
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    CarouselModule,
+    MatCarouselModule,
+    IvyCarouselModule,
+    HttpClientModule,
+    CatalogModule,
+    FrontModule,
+    UsersModule,
+    MatSnackBarModule,
+    MatCardModule,
+  ],
 })
-export class AppModule { }
+export class AppModule {}

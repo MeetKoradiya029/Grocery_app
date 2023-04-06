@@ -8,6 +8,8 @@ export const environment = {
     updateProfile:'customer/update-customer',
     getUserDetails:'customer/customer-details',
     addAddress:"customer/add-customer-address",
+    updateAddress:"customer/update-customer-address",
+    deleteAddress:'customer/delete-customer-address',
     getAllProductsByCategoryId:'product/get-product-by-category-id',
     getProductById:'product/get-product-by-id',
     encryptId:"encryption",

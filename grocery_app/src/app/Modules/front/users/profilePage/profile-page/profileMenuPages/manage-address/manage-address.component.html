@@ -4,8 +4,27 @@
       <app-profile-sidebar></app-profile-sidebar>
     </div>
     <div class="col">
+      <div class="d-flex flex-row">
+        <div class="card" style="width: 18rem; margin:5px" *ngFor="let address of addressArr">
+          <div class="card-body ">
+            <h5 class="card-title">{{address.tag}} Address</h5>
+            
+            <div class="card-text">
+              {{address.address_line_1}},
+            </div>
+            <div class="card-text">{{address.address_line_2}},</div>
+            <div class="card-text">{{address.area}},</div>
+            <div class="card-text">{{address.city}}-{{address.postal_code}}</div>
+            <div class="card-text" style="margin-bottom: 8px;">{{address.state}},{{address.country}}</div>
+
+            <button class="btn btn-primary" style="margin-right: 10px;" (click)="editAddress(address)">Edit</button>
+            <button class="btn btn-danger" (click)="Ondelete(address.id)">Delete</button>
+          </div>
+        </div>
+        
+      </div>
+
       <form class="form" [formGroup]="address">
-       
         <div class="form-group col">
           <label for="inputAddress">Address</label>
           <input
@@ -13,11 +32,20 @@
             class="form-control"
             id="inputAddress"
             placeholder="1234 Main St"
-            formControlName="address_1"
+            formControlName="address_line_1"
           />
-          <div *ngIf="address.get('address_1')?.invalid && (address.get('address_1')?.touched||address.get('address_1')?.dirty)">
-            <span class="text text-danger" *ngIf="address.get('address_1')?.errors?.['required']">
-              Enter adderess 
+          <div
+            *ngIf="
+              address.get('address_1')?.invalid &&
+              (address.get('address_1')?.touched ||
+                address.get('address_1')?.dirty)
+            "
+          >
+            <span
+              class="text text-danger"
+              *ngIf="address.get('address_1')?.errors?.['required']"
+            >
+              Enter adderess
             </span>
           </div>
         </div>
@@ -28,11 +56,20 @@
             class="form-control"
             id="inputAddress2"
             placeholder="Apartment, studio, or floor"
-            formControlName="address_2"
+            formControlName="address_line_2"
           />
-          <div *ngIf="address.get('address_2')?.invalid && (address.get('address_2')?.touched||address.get('address_1')?.dirty)">
-            <span class="text text-danger" *ngIf="address.get('address_2')?.errors?.['required']">
-              Enter adderess 
+          <div
+            *ngIf="
+              address.get('address_2')?.invalid &&
+              (address.get('address_2')?.touched ||
+                address.get('address_1')?.dirty)
+            "
+          >
+            <span
+              class="text text-danger"
+              *ngIf="address.get('address_2')?.errors?.['required']"
+            >
+              Enter adderess
             </span>
           </div>
         </div>
@@ -45,8 +82,16 @@
             placeholder="Area or Society"
             formControlName="area"
           />
-          <div *ngIf="address.get('area')?.invalid && (address.get('area')?.touched||address.get('area')?.dirty)">
-            <span class="text text-danger" *ngIf="address.get('area')?.errors?.['required']">
+          <div
+            *ngIf="
+              address.get('area')?.invalid &&
+              (address.get('area')?.touched || address.get('area')?.dirty)
+            "
+          >
+            <span
+              class="text text-danger"
+              *ngIf="address.get('area')?.errors?.['required']"
+            >
               Enter area name
             </span>
           </div>
@@ -54,52 +99,103 @@
         <div class="row">
           <div class="form-group col">
             <label for="inputCountry">Country</label>
-            <select id="inputCountry" class="form-control" formControlName="country">
+            <select
+              id="inputCountry"
+              class="form-control"
+              formControlName="country"
+            >
               <option selected disabled hidden>--country--</option>
               <option>India</option>
+              <option>United States</option>
             </select>
-            <div *ngIf="address.get('country')?.invalid && (address.get('country')?.touched||address.get('country')?.dirty)">
-              <span class="text text-danger" *ngIf="address.get('country')?.errors?.['required']">
-                select country ! 
+            <div
+              *ngIf="
+                address.get('country')?.invalid &&
+                (address.get('country')?.touched ||
+                  address.get('country')?.dirty)
+              "
+            >
+              <span
+                class="text text-danger"
+                *ngIf="address.get('country')?.errors?.['required']"
+              >
+                select country !
               </span>
             </div>
           </div>
           <div class="form-group col">
             <label for="inputState">State</label>
-            <select id="inputState" class="form-control" formControlName="state">
+            <select
+              id="inputState"
+              class="form-control"
+              formControlName="state"
+            >
               <option selected disabled hidden>--state--</option>
               <option>Gujarat</option>
+              <option>Canada</option>
             </select>
-            <div *ngIf="address.get('state')?.invalid && (address.get('state')?.touched||address.get('state')?.dirty)">
-              <span class="text text-danger" *ngIf="address.get('state')?.errors?.['required']">
-                Enter adderess 
+            <div
+              *ngIf="
+                address.get('state')?.invalid &&
+                (address.get('state')?.touched || address.get('state')?.dirty)
+              "
+            >
+              <span
+                class="text text-danger"
+                *ngIf="address.get('state')?.errors?.['required']"
+              >
+                Enter adderess
               </span>
             </div>
           </div>
-          
         </div>
         <div class="row">
           <div class="form-group col">
             <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" formControlName="city" />
-            <div *ngIf="address.get('city')?.invalid && (address.get('city')?.touched||address.get('city')?.dirty)">
-              <span class="text text-danger" *ngIf="address.get('city')?.errors?.['required']">
+            <input
+              type="text"
+              class="form-control"
+              id="inputCity"
+              formControlName="city"
+            />
+            <div
+              *ngIf="
+                address.get('city')?.invalid &&
+                (address.get('city')?.touched || address.get('city')?.dirty)
+              "
+            >
+              <span
+                class="text text-danger"
+                *ngIf="address.get('city')?.errors?.['required']"
+              >
                 Enter city name
               </span>
             </div>
           </div>
           <div class="form-group col">
             <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip" formControlName="zip" />
-            <div *ngIf="address.get('zip')?.invalid && (address.get('zip')?.touched||address.get('zip')?.dirty)">
-              <span class="text text-danger" *ngIf="address.get('zip')?.errors?.['required']">
+            <input
+              type="text"
+              class="form-control"
+              id="inputZip"
+              formControlName="postal_code"
+            />
+            <div
+              *ngIf="
+                address.get('zip')?.invalid &&
+                (address.get('zip')?.touched || address.get('zip')?.dirty)
+              "
+            >
+              <span
+                class="text text-danger"
+                *ngIf="address.get('zip')?.errors?.['required']"
+              >
                 Enter postal code
               </span>
             </div>
           </div>
         </div>
         <div class="row">
-
           <div class="form-group col">
             <label for="inputLandmark">Landmark</label>
             <input
@@ -118,20 +214,41 @@
               <option value="work">Work</option>
               <option value="other">Other</option>
             </select>
-            <div *ngIf="address.get('tag')?.invalid && (address.get('tag')?.touched||address.get('tag')?.dirty)">
-              <span class="text text-danger" *ngIf="address.get('tag')?.errors?.['required']">
+            <div
+              *ngIf="
+                address.get('tag')?.invalid &&
+                (address.get('tag')?.touched || address.get('tag')?.dirty)
+              "
+            >
+              <span
+                class="text text-danger"
+                *ngIf="address.get('tag')?.errors?.['required']"
+              >
                 Select tag
               </span>
             </div>
           </div>
         </div>
-        
-        
+
+        <div class="col">
+          <button
+            *ngIf="!showUpdateBtn"
+            type="submit"
+            class="btn btn-primary my-3"
+            (click)="addAddress()"
+          >
+            Add
+          </button>
+          <button
+            *ngIf="showUpdateBtn"
+            type="submit"
+            class="btn btn-primary my-3"
+            (click)="UpdateAddress(address.value)"
+          >
+            Update
+          </button>
+        </div>
       </form>
     </div>
-    <div class="col">
-      <button type="submit" class="btn btn-primary" (click)="addAddress()">Save</button>
-    </div>
-   
   </div>
 </div>

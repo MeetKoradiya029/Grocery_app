@@ -7,6 +7,8 @@ export const environment = {
     changePassword:'customer/changePassword',
     updateProfile:'customer/update-customer',
     addAddress:"customer/add-customer-address",
+    updateAddress:"customer/update-customer-address",
+    deleteAddress:'customer/delete-customer-address',
     getUserDetails:'customer/customer-details',
     getAllProductsByCategoryId:'product/get-product-by-category-id',
     getProductById:'product/get-product-by-id',

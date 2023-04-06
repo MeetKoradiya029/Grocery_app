@@ -62,7 +62,7 @@ export class ProductService {
   }
   getProductById(encryption: any) {
     try {
-      return this.http.get<any>(this.baseURL + this.getProductById, {
+      return this.http.get<any>(this.baseURL + this.getProductByIdUrl, {
         headers: new HttpHeaders({
           'ngrok-skip-browser-warning': 'skip-browser-warning',
           'Access-Control-Allow-Origin': '*',

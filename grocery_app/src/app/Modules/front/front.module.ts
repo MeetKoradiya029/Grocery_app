@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FrontRoutingModule } from './front-routing.module';
-import { ProfileSidebarComponent } from './users/profilePage/profile-sidebar/profile-sidebar.component';
-import { UsersModule } from './users/users.module';
+// import { UsersModule } from './users/users.module';
 
 
 @NgModule({
@@ -12,7 +11,7 @@ import { UsersModule } from './users/users.module';
   imports: [
     CommonModule,
     FrontRoutingModule,
-    UsersModule
+    // UsersModule
   ]
 })
 export class FrontModule { }

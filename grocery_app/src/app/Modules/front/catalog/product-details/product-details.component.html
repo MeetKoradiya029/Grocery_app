@@ -24,24 +24,25 @@
     <app-loader></app-loader>
 </div>
 <ng-template #not_loading> 
-  <div class="container" *ngFor="let item of product">
+  <div class="container" *ngFor="let item of filteredItem">
     <div class="row">
       <div class="col-lg-4">
-        <img src="{{ item.image }}" class="img-fluid rounded-start" alt="..." />
+        <img src="{{ item.avatar_image }}" class="img-fluid rounded-start" alt="..." />
       </div>
       <div class="col-lg-6 mt-4">
         <div class="card-body">
           <h5 class="card-title">
-            <u>{{ item.name }}</u>
+            <u>{{ item.title }}</u>
           </h5>
           <p class="card-text"></p>
           <small
             >MRP:
             <small class="text-decoration-line-through">{{
-              item.price | currency : "INR" : "Rs."
+              item.amount | currency : "INR" : "Rs."
             }}</small></small
           >
-          <div class="fw-bolder">Price:</div>
+          <div class="fw-bolder">Discount Price:{{item.discount_amount}}</div>
+          <div class="fw-bolder">total Price:{{item.amount}}</div>
           <div class="mt-3">
             <div class="btn-group me-4" role="group">
               <input
