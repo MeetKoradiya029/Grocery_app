@@ -1,48 +1,100 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class CartService {
-
+export class CartService implements OnInit {
+  //#region
   baseUrl = environment.baseUrl;
   addTocartUrl = environment.addTocart;
   getCartUrl = environment.getCart;
-  
 
-  cartItems:any=[];
-  // cartItems$ = new Subject<any>()
+  cartItems: any = [];
+  shipping!: number;
+  GST!: number;
+  Total: any;
+  cartData:any;
+  cartTotal:any
+  cartTotal$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  //#endregion
 
-  constructor(private http:HttpClient) { }
+  //#region
+  constructor(private http: HttpClient) {}
+  ngOnInit() {
+    this.cartProducts();
+  }
 
-  addToCart(prodcutData:any){
-  //   let cart:any  = localStorage.getItem("cart");
-  //   if(cart !== null){
-  //     JSON.parse(cart);
-  //   }
-  //   if(cart|| cart.length>0){
-  //     cart.push();
-  //     localStorage.setItem("cart",JSON.stringify(cart))
-  // }else{
+  //#endregion
 
-  //   localStorage.setItem("cart",JSON.stringify([]))
+  //#region 
+  addToCart(prodcutData: any) {
     
-  // }
-    return this.http.post<any>(this.baseUrl+this.addTocartUrl,prodcutData);
+    return this.http.post<any>(this.baseUrl + this.addTocartUrl, prodcutData);
+  }
+  setCartTotal(total: number) {
+    try {
+      return this.cartTotal$.next(total);
+    } catch (error:any) {
+      return throwError(() => new Error(error))
+    }
   }
 
-  getCartProducts(){
-    return this.http.get<any>(this.baseUrl+this.getCartUrl);
+  getCartProducts() {
+    try {
+      return this.http.get<any>(this.baseUrl + this.getCartUrl);
+    } catch (error: any) {
+      return throwError(() => new Error(error));
+    }
   }
 
-  updateCartProduct(product:any){
-    return this.http.put<any>(this.baseUrl+this.getCartUrl+"/"+product.id,product)
+  updateCartProduct(product: any) {
+    try {
+      return this.http.put<any>(
+        this.baseUrl + this.getCartUrl + '/' + product.id,
+        product
+      );
+    } catch (error: any) {
+      return throwError(() => new Error(error));
+    }
   }
 
-  removeCartProducts(id:any){
-    return this.http.delete<any>(this.baseUrl+this.getCartUrl+"/"+id)
+  removeCartProducts(id: any) {
+    try {
+      return this.http.delete<any>(this.baseUrl + this.getCartUrl + '/' + id);
+    } catch (error: any) {
+      return throwError(() => new Error(error));
+    }
   }
+
+  cartProducts() {
+    this.getCartProducts().subscribe((res) => {
+      if (res) {
+        console.log('cart response ->>>', res);
+        this.cartItems = res;
+      }
+    });
+  }
+
+
+  Subtotal() {
+    // console.log('cart:', this.cartItems);
+    let subtotal = 0;
+    for (let i = 0; i < this.cartItems.length; i++) {
+      
+        subtotal +=
+          this.cartItems[i].amount *
+          this.cartItems[i].quantity;
+          console.log("subtotal:> ",subtotal);
+
+    }
+
+    this.shipping = 40;
+    this.GST = subtotal * 0.18;
+    this.Total = subtotal + this.GST + this.shipping;
+    return subtotal;
+  }
+  //#endregion
 }

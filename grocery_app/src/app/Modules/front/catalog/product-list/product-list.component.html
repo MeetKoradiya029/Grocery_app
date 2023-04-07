@@ -1,12 +1,12 @@
 <div class="row">
     <h3>{{category}}</h3>
-    <div class="card" style="width: 18rem;" *ngFor="let product of category_productArr" [routerLink]="['/catalog/product-details/',product.product.id]">
-      <img src="{{product.product.avatar_image}}" class="card-img-top" [routerLink]="['/catalog/product-details/',product.product.id]">
+    <div class="card" style="width: 18rem;" *ngFor="let product of category_productArr">
+      <img src="../../../../../assets/cat_img.jpg" class="card-img-top" [routerLink]="['/catalog/product-details/',product.product.id]">
       <div class="card-body">
         <h5 class="card-title">{{ product.product.title}}</h5>
         <p class="card-text">{{ product.product.description }}</p>
         <p class="card-text">{{ product.product.amount | currency }}</p>
-        <button type="button" class="btn btn-danger">Add to Cart</button>
+        <button type="button" class="btn btn-danger" (click)="AddToCart(product.product)">Add to Cart</button>
       </div>
     </div>
 </div>

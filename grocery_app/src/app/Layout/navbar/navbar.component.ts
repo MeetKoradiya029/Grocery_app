@@ -12,6 +12,7 @@ import { UserService } from 'src/app/Shared/Services/user.service';
 export class NavbarComponent implements OnInit,DoCheck {
   cartProducts: any = [];
   user: any;
+  userName:any
   userDetails: any;
 
   constructor(
@@ -37,7 +38,13 @@ export class NavbarComponent implements OnInit,DoCheck {
       this.cartProducts = res;
     });
     this.subtotal();
-    this.getUserDetail();
+    
+    this.userName = this.cookieService.get('userLoginToken');
+
+    
+      this.getUserDetail();
+    
+    
   }
 
   subtotal() {

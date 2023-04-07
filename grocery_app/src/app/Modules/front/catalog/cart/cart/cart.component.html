@@ -26,19 +26,19 @@
           <th></th>
         </tr>
       </thead>
-      <tbody *ngFor="let group of groupedProducts; let i=index">
-       <p class="h4">{{group.category}}</p>
-        <tr *ngFor="let product of group.cart; let j=index">
+      <tbody>
+       <!-- <p class="h4">{{group.category}}</p> -->
+        <tr *ngFor="let product of cartItems;let i=index">
           <td>
-            <p style="margin: 0">{{ product.name }}</p>
-            <p class="text-muted" style="margin: 0">{{ product.priceOf }}</p>
+            <p style="margin: 0">{{ product.title}}</p>
+            
           </td>
-          <td>{{ product.price | currency : "INR" }}</td>
+          <td>{{ product.amount | currency : "INR" }}</td>
           <td>
             <div class="d-flex qty">
               <button
                 class="btn btn-sm qtyBtnMinus"
-                (click)="decrementQuantity(i,j)"
+                (click)="decrementQuantity(i)"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@
               <p class="text my-2 mx-3">{{ product.quantity }}</p>
               <button
                 class="btn btn-sm qtyBtnPlus"
-                (click)="incrementQuantity(i,j)"
+                (click)="incrementQuantity(i)"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -75,9 +75,9 @@
               </button>
             </div>
           </td>
-          <td>{{ product.price * product.quantity | currency : "INR" }}</td>
+          <td>{{ product.amount * product.quantity | currency : "INR" }}</td>
           <td>
-            <button class="btn removeBtn" (click)="removeItem(product.id,i,j)">
+            <button class="btn removeBtn" (click)="removeItem(product.id,i)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -134,7 +134,7 @@
           </li>
         </ul>
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" routerLink="/catalog/checkout" routerLinkActive="active">
+        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="goToCheckout()">
           Go to checkout
         </button>
       </div>
