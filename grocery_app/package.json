@@ -27,6 +27,7 @@
     "bootstrap": "^5.3.0-alpha1",
     "bootstrap-icons": "^1.10.3",
     "ngx-cookie-service": "^15.0.0",
+    "ngx-dialogs": "^1.0.2",
     "ngx-owl-carousel-o": "^15.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

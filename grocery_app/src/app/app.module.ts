@@ -27,6 +27,7 @@ import { CategoryService } from './Shared/Services/category.service';
 import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
 import { UserService } from './Shared/Services/user.service';
 import { MatCardModule } from '@angular/material/card';
+import  { NgxDialogsModule } from 'ngx-dialogs';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { MatCardModule } from '@angular/material/card';
     UsersModule,
     MatSnackBarModule,
     MatCardModule,
+    NgxDialogsModule
   ],
 })
 export class AppModule {}

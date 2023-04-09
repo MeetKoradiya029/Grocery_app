@@ -4,10 +4,13 @@ import { ProductService } from '../../../../Shared/Services/product.service';
 import { EncryptionService } from 'src/app/Shared/Services/encryption.service';
 import { CartService } from 'src/app/Shared/Services/cart.service';
 import { UserService } from 'src/app/Shared/Services/user.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Ngxalert } from 'ngx-dialogs';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
+  styles: ['.custom-alert{color:red;}'],
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
@@ -18,26 +21,35 @@ export class ProductListComponent implements OnInit {
   id: any;
   categoryId: any;
   encryptedId: any;
-  cartProducts:any=[]
-  cartObj:any={}
-  userId:any
+  cartProducts: any = [];
+  cartObj: any = {};
+  userId: any;
+  dialogTitle: any;
+
+  user: any;
+  alertWithustomCssClass: any = new Ngxalert();
+  confirmAlert: any = new Ngxalert();
+  alertWithBtnObj: any = new Ngxalert();
+  username: any;
+
   //#endregion
 
-  //#region 
+  //#region
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router,
     private encryptionService: EncryptionService,
-    private cartService:CartService,
-    private userService:UserService
+    private cartService: CartService,
+    private userService: UserService,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit() {
     this.products = this.productService.getProducts();
+    this.checkUser();
     this.getUserDetials();
     this.getCartItems();
-
 
     // this.route.paramMap.subscribe((params) => {
     //   // Read category parameter from URL
@@ -65,7 +77,7 @@ export class ProductListComponent implements OnInit {
   }
   //#endregion
 
-  //#region 
+  //#region
   encryption(id: any) {
     this.encryptionService.encryptId(id).subscribe({
       next: (encryptionResponse) => {
@@ -95,40 +107,94 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  getCartItems(){
-    this.cartService.getCartProducts().subscribe((res)=>{
-      if(res){
-        this.cartProducts=res;
-        console.log("Cart Products ><<><><",this.cartProducts);
-        
+  getCartItems() {
+    this.cartService.getCartProducts().subscribe((res) => {
+      if (res) {
+        this.cartProducts = res;
+        console.log('Cart Products ><<><><', this.cartProducts);
       }
-    })
+    });
   }
 
-  getUserDetials(){
-    this.userService.getUserDetail().subscribe({next:(res)=>{
-      if(res){
-        console.log("User Data:----",res);
+  getUserDetials() {
+    this.userService.getUserDetail().subscribe({
+      next: (res) => {
+        if (res) {
+          console.log('User Data:----', res);
 
-        this.userId=res.data.id;
-        console.log("User ID ::--",this.userId);
-        
-      }
-    },error:()=>{}})
+          this.userId = res.data.id;
+          this.username = res.data.username;
+          console.log('User ID ::--', this.userId);
+        }
+      },
+      error: () => {},
+    });
+    return this.userId;
   }
 
-  AddToCart(productObj:any) {
-     this.cartObj={
-         user_id:this.userId,
-         items:[productObj]
-     }
+  checkUser() {
+    this.user = this.cookieService.get('userLoginToken');
+    console.log('user exist', this.user);
 
-     this.cartService.addToCart(this.cartObj).subscribe((res)=>{
-      if(res){
-        console.log("cart response",res);
-        this.getCartItems();
-      }
-     })
+    return this.user;
   }
+
+  AddToCart(productObj: any) {
+    const qtyObj = {
+      quantity: 1,
+    };
+    let productWithQty = Object.assign(productObj, qtyObj);
+    console.log('product with quantity:', productWithQty);
+
+    this.cartObj = {
+      user_id: this.userId,
+      items: [productWithQty],
+    };
+
+    if (this.user) {
+      let existingItem = this.cartProducts.find(
+        (item: any) =>
+          (item.user_id == this.userId) && (item.items.find((product:any)=>product.id==productObj.id))
+      );
+      console.log('existing item', existingItem);
+      if (existingItem) {
+        this.openConfirmDialog(
+          `Hello ${this.username}`,
+          'Item already Exist in your cart plese check cart'
+        );
+      } else {
+        this.cartService.addToCart(this.cartObj).subscribe((res) => {
+          if (res) {
+            console.log('cart response', res);
+            this.getCartItems();
+            this.userService.openSnackBar(
+              'Item Added in your cart!',
+              'OK',
+              'end',
+              'top'
+            );
+          }
+        });
+      }
+    } else {
+      let guestItem = localStorage.getItem('guestUser');
+      if (guestItem) {
+        this.openConfirmDialog(
+          'Attention!',
+          'You can add ony one item per user!'
+        );
+      } else {
+        localStorage.setItem('guestUser', JSON.stringify(productObj));
+      }
+    }
+  }
+
+  openConfirmDialog(dialogTitle: any, message: any) {
+    this.alertWithBtnObj.create({
+      title: dialogTitle,
+      message: message,
+    });
+  }
+
   //#endregion
 }

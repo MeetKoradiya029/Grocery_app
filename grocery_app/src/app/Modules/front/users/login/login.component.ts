@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { CartService } from 'src/app/Shared/Services/cart.service';
 import { UserService } from 'src/app/Shared/Services/user.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { UserService } from 'src/app/Shared/Services/user.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  //#region 
   loginForm!: FormGroup;
   users: any = [];
   validUser: any = [];
@@ -18,8 +20,10 @@ export class LoginComponent implements OnInit {
   date:any
   expireTime:any;
   cookie:any;
-
-  constructor(private userService: UserService, private router: Router,private cookieService:CookieService) {}
+  userId:any;
+  cartArr:any;
+  //#endregion
+  constructor(private userService: UserService, private router: Router,private cookieService:CookieService,private cartService:CartService) {}
 
   ngOnInit() {
     this.initializeForm();
@@ -71,11 +75,13 @@ export class LoginComponent implements OnInit {
           
           this.date = new Date();
           this.expireTime = new Date(this.date.getTime()+ 3600*24*1000)
+          
          this.cookieService.set('userLoginToken',this.token,{expires:1,sameSite:'Lax'});
          this.cookie = this.cookieService.get('userLoginToken');
           console.log('cookie:',this.cookie);
           
           localStorage.setItem("userToken",JSON.stringify(this.token))
+          this.getUserId();
           this.router.navigate(['/home']);        
         }
       })
@@ -115,6 +121,38 @@ export class LoginComponent implements OnInit {
       return flag;
       
 
+    }
+
+    getUserId(){
+        this.userService.getUserDetail().subscribe((res)=>{
+          if(res){
+            console.log("user Id:",res.data.id);
+            this.userId = res.data.id;
+            this.CreateCart();
+          }
+        })
+    }
+
+    CreateCart(){
+      const cart = {
+        id:this.userId,
+        items:[],
+      }
+
+      this.cartService.getCartProducts().subscribe((res)=>{
+        this.cartArr = res;
+        console.log("Cart :-->",this.cartArr);
+        let existing_customer = this.cartArr.find((user:any)=>user.id===this.userId);
+        console.log("Existing customer:",existing_customer);
+
+        if(!existing_customer){
+          this.cartService.addToCart(cart).subscribe((res)=>{
+            console.log("cart created!",res);
+            
+          })
+        }
+        
+      })
     }
 
    

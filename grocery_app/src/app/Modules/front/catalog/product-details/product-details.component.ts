@@ -6,6 +6,7 @@ import { CartService } from 'src/app/Shared/Services/cart.service';
 import { LoginComponent } from '../../users/login/login.component';
 import { EncryptionService } from 'src/app/Shared/Services/encryption.service';
 import { UserService } from 'src/app/Shared/Services/user.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-product-details',
@@ -18,18 +19,22 @@ export class ProductDetailsComponent implements OnInit {
   category: any;
   productId: any;
   cartProducts: any;
-  ProductWithQuantity: any
+  ProductWithQuantity: any;
   totalQuantity: any;
 
   existingInCart: any;
   existing_Product: any;
   QuantityErrMsg: string | undefined;
-  isLoading=false;
+  isLoading = false;
 
-  Id:any;
-  productSlug:any;
-  filteredItem:any=[];
-  encryptedId:any;
+  Id: any;
+  productSlug: any;
+  filteredItem: any = [];
+  encryptedId: any;
+  customerId: any;
+  user: any;
+  userId: any;
+  cart: any=[];
   //#region
 
   constructor(
@@ -37,33 +42,31 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cartService: CartService,
-    private encryptionService:EncryptionService,
-    private userService:UserService
+    private encryptionService: EncryptionService,
+    private userService: UserService,
+    private cookieService: CookieService
   ) {
-    window.scroll(0, 0)
-    this.isLoading=true;
-    this.route.paramMap.subscribe((params)=>{
-      this.Id=params.get('id');
-      this.productSlug=params.get('slug');
-      console.log("Product Id:-"+this.Id+" Slug:--"+this.productSlug);
-      
-    })
+    window.scroll(0, 0);
+    this.isLoading = true;
+    this.route.paramMap.subscribe((params) => {
+      this.Id = params.get('id');
+      this.productSlug = params.get('slug');
+      console.log('Product Id:-' + this.Id + ' Slug:--' + this.productSlug);
+    });
   }
 
   ngOnInit() {
-    
+    this.ShowCart();
+    this.getUserId();
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
 
-    setTimeout(()=>{
-      this.isLoading=false
-    },2000)
+    this.encryption(this.Id);
+    console.log('filterd Item :::::::', this.filteredItem);
 
-    this.encryption(this.Id)
-    console.log("filterd Item :::::::",this.filteredItem);
-    
-   
     this.products = this.productService.getProducts();
     console.log('all product:', this.products);
-    this.ShowCart();
 
     this.route.paramMap.subscribe((params) => {
       // Read category parameter from URL
@@ -83,74 +86,99 @@ export class ProductDetailsComponent implements OnInit {
         console.log(this.productId);
       }
     });
-  
-    
   }
 
-  
-  
-  fromInput=1
-
- 
+  fromInput = 1;
 
   quantityObj = {
     quantity: this.fromInput,
   };
-Product_Obj:any={}
+  existing_cart:any
+  existing_product:any
   ADDCart(product: any) {
-    console.log('ShowCartArr', this.cartProducts);
-    console.log('Product', product);
-    this.existing_Product = this.cartProducts.find((Item: any) => {
-      return Item.title.toLowerCase() === product.title.toLowerCase();
-    });
-    console.log('Existing Product', this.existing_Product);
-    if (this.quantityObj.quantity > 0 && !this.existing_Product) {
-      console.log('Show Cart Arr', this.cartProducts);
-      this.ProductWithQuantity = Object.assign(
-        this.filteredItem[0],
-        this.quantityObj
-      );
-      console.log("Product with Quantity : ----------",this.ProductWithQuantity);
-      
-      // this.Product_Obj= JSON.parse(this.ProductWithQuantity)
-      console.log("product with added quantity :",this.ProductWithQuantity.quantity);
-      
+    console.log('current product:-->', product);
 
-      this.cartService.addToCart(this.ProductWithQuantity).subscribe((res) => {
-        console.log(res);
-      });
+    this.user = this.cookieService.get('userLoginToken');
+    if (this.user) {
+      this.existing_cart = this.cart.find((user: any) => user.id == this.userId);
+      console.log('Existing cart:', typeof(this.existing_cart));
 
+      this.existing_product = this.existing_cart.items.find((p:any)=>p.id==product.id);
+      console.log("existing cart items array -----",this.existing_product);
       
-    } else if (this.existing_Product) {
-      this.QuantityErrMsg = 'Product Is Existing';
+      console.log('Existing product :', this.existing_product);
+      if (this.existing_cart) {
 
-      this.existing_Product.quantity = this.existing_Product.quantity + 1;
-      this.fromInput=this.existing_Product.quantity
-      console.log("existing_Product.quantity",this.existing_Product.quantity)
-      console.log("productWithQuantity",this.Product_Obj)
-      // this.ProductWithQuantity.quantity = this.existing_Product.quantity;
-      this.cartService
-        .updateCartProduct(this.existing_Product)
-        .subscribe((cart) => {
-          console.log('Edit Card Product', cart);
-        });
+        if (!this.existing_product) {
+          debugger;
+          this.ProductWithQuantity = Object.assign(product, this.quantityObj);
+
+          this.cartService
+            .AddCartUserWise(this.userId, this.ProductWithQuantity)
+            .subscribe((res) => {
+              console.log('Product with no-existing response:', res);
+              this.ShowCart();
+            });
+        } else if (this.existing_product) {
+          // debugger;
+          // existing_product.quantity = existing_product.quantity + 1;
+          // this.fromInput = existing_product.quantity;
+          // this.cartService
+          //   .UpdateCartUserWise(this.userId,existing_product).subscribe((res)=>{
+          //     console.log("existing_ product response",res);
+              
+          //   });
+
+          for(let i=0;i<this.existing_cart.items.length;i++){
+            this.existing_cart.items[i]
+            if(this.existing_cart.items[i]==product){
+              this.existing_cart.items[i].quantity=this.existing_cart.items[i].quantity+1
+              this.quantityObj.quantity=this.existing_cart.items[i].quantity
+          
+              console.log("this.existing_cart.items[i]",product)
+              console.log("this.existing_cart.items[i].quantity",this.existing_cart.items[i].quantity)
+              console.log("this.quantityObj.quantity",this.quantityObj.quantity)
+            }
+          }    
+          console.log("existing_cart",this.existing_cart)
+          
+              this.existing_product.quantity=this.existing_product.quantity+1;
+              this.quantityObj.quantity=this.existing_product.quantity
+              this.fromInput=this.existing_product.quantity
+          
+                this.cartService.EditCart(this.userId,this.existing_cart).subscribe((cart)=>{
+                  // console.log("cart in Service",cart)
+                  // console.log("Product Index",productindex)
+                  console.log("cart",cart)
+                })
+             
+              }
+        }
+      
     } else {
-      this.QuantityErrMsg = 'Please Enter Valid Quantity';
+      localStorage.setItem('guestUserCart', JSON.stringify(product));
     }
-    this.userService.openSnackBar("Item Added In Cart!!","Ok","end","bottom");
-    this.ShowCart();
   }
 
   ShowCart() {
     this.cartProducts = this.cartService.getCartProducts().subscribe((res) => {
       if (res) {
         console.log('cart products:', res);
-        this.cartProducts = res;
+        this.cart = res;
+        
+        console.log('cart all ', this.cart);
       }
     });
   }
 
-
+  getUserId() {
+    this.userService.getUserDetail().subscribe((res) => {
+      if (res) {
+        console.log('user Id:', res.data.id);
+        this.userId = res.data.id;
+      }
+    });
+  }
 
   checkInputQuantity(quantityFromInput: any) {
     for (let i = 0; i < this.cartProducts.length; i++) {
@@ -164,25 +192,42 @@ Product_Obj:any={}
     }
   }
 
-  getProductById(encryption:any){
-    this.productService.getProductById(encryption).subscribe({next:(res)=>{
-      if(res){
-        console.log("Product By id response :: ",res);
-        this.filteredItem.push(res.data)
-        console.log("Filtered Product ::: ",this.filteredItem);
-        
-      }
-    },error:()=>{}})
+  getProductById(encryption: any) {
+    this.productService.getProductById(encryption).subscribe({
+      next: (res) => {
+        if (res) {
+          console.log('Product By id response :: ', res);
+          this.filteredItem.push(res.data);
+          console.log('Filtered Product ::: ', this.filteredItem);
+        }
+      },
+      error: () => {},
+    });
   }
 
-  encryption(id:any){
-    this.encryptionService.encryptId(id).subscribe({next:(response)=>{
-        if(response){
-          console.log("encryption response::::",response);
+  encryption(id: any) {
+    this.encryptionService.encryptId(id).subscribe({
+      next: (response) => {
+        if (response) {
+          console.log('encryption response::::', response);
           this.encryptedId = response.data;
-          console.log("Encrypted ID: ",this.encryptedId);
+          console.log('Encrypted ID: ', this.encryptedId);
           this.getProductById(this.encryptedId);
         }
-    },error:()=>{}})
+      },
+      error: () => {},
+    });
+  }
+  getCustomerId() {
+    this.userService.getUserDetail().subscribe({
+      next: (res) => {
+        if (res) {
+          this.customerId = res.data.id;
+        }
+      },
+      error: (error) => {
+        console.log('Get user details error::', error);
+      },
+    });
   }
 }

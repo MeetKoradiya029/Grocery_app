@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, mergeMap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -16,8 +16,8 @@ export class CartService implements OnInit {
   shipping!: number;
   GST!: number;
   Total: any;
-  cartData:any;
-  cartTotal:any
+  cartData: any;
+  cartTotal: any;
   cartTotal$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   //#endregion
 
@@ -29,16 +29,15 @@ export class CartService implements OnInit {
 
   //#endregion
 
-  //#region 
+  //#region
   addToCart(prodcutData: any) {
-    
     return this.http.post<any>(this.baseUrl + this.addTocartUrl, prodcutData);
   }
   setCartTotal(total: number) {
     try {
       return this.cartTotal$.next(total);
-    } catch (error:any) {
-      return throwError(() => new Error(error))
+    } catch (error: any) {
+      return throwError(() => new Error(error));
     }
   }
 
@@ -50,10 +49,80 @@ export class CartService implements OnInit {
     }
   }
 
-  updateCartProduct(product: any) {
+  AddCartUserWise(customerId: number, data: any) {
+    try {
+      return this.http
+        .get(this.baseUrl + this.addTocartUrl + '/' + customerId)
+        .pipe(
+          mergeMap((user: any) => {
+            const currentItemArray = user.items;
+            currentItemArray.push(data);
+
+            return this.http.patch(
+              this.baseUrl + this.addTocartUrl + '/' + customerId,
+              {
+                items: currentItemArray,
+              }
+            );
+          })
+        );
+
+      // this.url= `${this.baseurl}${customerId}/items`;
+      // return this.http.patch(`this.baseurl${customerId}`,{
+      //   items: [...data]
+      // })
+    } catch (error: any) {
+      return throwError(() => new Error(error));
+    }
+  }
+
+  UpdateCartUserWise(customerId: number, data: any) {
+    try {
+      return this.http
+        .get(this.baseUrl + this.addTocartUrl + '/' + customerId)
+        .pipe(
+          mergeMap((user: any) => {
+            let currentItemArray = user.items;
+
+            for(let i=0;i<currentItemArray.length;i++){
+              if(currentItemArray[i].id==data.id){
+                currentItemArray[i].quantity=data.quantity
+              }
+              return currentItemArray;
+            }
+            console.log("current Item Array :",currentItemArray);
+            
+
+            return this.http.patch(
+              this.baseUrl + this.addTocartUrl + '/' + customerId,
+              {
+                items: currentItemArray,
+              }
+            );
+          })
+        );
+
+      // this.url= `${this.baseurl}${customerId}/items`;
+      // return this.http.patch(`this.baseurl${customerId}`,{
+      //   items: [...data]
+      // })
+    } catch (error: any) {
+      return throwError(() => new Error(error));
+    }
+  }
+
+  EditCart(customer_id:any,data:any){
+    try {
+      return this.http.put(this.baseUrl + this.addTocartUrl+'/'+customer_id,data)
+    } catch (error:any) {
+      return throwError(()=>new Error(error))
+    }
+  }
+
+  updateCartProduct( customerId: any,product:any){
     try {
       return this.http.put<any>(
-        this.baseUrl + this.getCartUrl + '/' + product.id,
+        this.baseUrl + this.getCartUrl + '/' + customerId,
         product
       );
     } catch (error: any) {
@@ -78,17 +147,12 @@ export class CartService implements OnInit {
     });
   }
 
-
   Subtotal() {
     // console.log('cart:', this.cartItems);
     let subtotal = 0;
     for (let i = 0; i < this.cartItems.length; i++) {
-      
-        subtotal +=
-          this.cartItems[i].amount *
-          this.cartItems[i].quantity;
-          console.log("subtotal:> ",subtotal);
-
+      subtotal += this.cartItems[i].amount * this.cartItems[i].quantity;
+      console.log('subtotal:> ', subtotal);
     }
 
     this.shipping = 40;

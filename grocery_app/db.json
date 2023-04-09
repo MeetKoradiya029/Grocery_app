@@ -29,7 +29,7 @@
   ],
   "cart": [
     {
-      "user_id": 37,
+      "id": 37,
       "items": [
         {
           "id": 1,
@@ -45,54 +45,44 @@
           "is_active": true,
           "deleted_at": null,
           "createdAt": "2023-04-04T09:55:25.000Z",
-          "updatedAt": "2023-04-04T09:55:25.000Z"
-        }
-      ],
-      "id": 1
-    },
-    {
-      "user_id": 37,
-      "items": [
+          "updatedAt": "2023-04-04T09:55:25.000Z",
+          "quantity": 1
+        },
         {
-          "id": 8,
-          "title": "product-8",
-          "amount": 200,
+          "id": 10,
+          "title": "product-10",
+          "amount": 110,
           "discount_type": 1,
           "discount_amount": 0,
-          "avatar_image": "1680602444212-male.jpg",
+          "avatar_image": "1680602491447-male.jpg",
           "images": null,
-          "short_description": "short description 8",
-          "description": "description 8",
-          "slug": "product-8",
+          "short_description": "short description 10",
+          "description": "description 10",
+          "slug": "product-10",
           "is_active": true,
           "deleted_at": null,
-          "createdAt": "2023-04-04T10:00:44.000Z",
-          "updatedAt": "2023-04-04T10:00:44.000Z"
-        }
-      ],
-      "id": 2
-    },
-    {
-      "user_id": 37,
-      "items": [
+          "createdAt": "2023-04-04T10:01:31.000Z",
+          "updatedAt": "2023-04-04T10:01:31.000Z",
+          "quantity": 7
+        },
         {
-          "id": 9,
-          "title": "product-9",
-          "amount": 260,
+          "id": 3,
+          "title": "product-3",
+          "amount": 70,
           "discount_type": 1,
           "discount_amount": 0,
-          "avatar_image": "1680602467883-male.jpg",
+          "avatar_image": "1680602234759-male.jpg",
           "images": null,
-          "short_description": "short description 9",
-          "description": "description 9",
-          "slug": "product-9",
+          "short_description": "short description 3",
+          "description": "description 3",
+          "slug": "product-3",
           "is_active": true,
           "deleted_at": null,
-          "createdAt": "2023-04-04T10:01:07.000Z",
-          "updatedAt": "2023-04-04T10:01:07.000Z"
+          "createdAt": "2023-04-04T09:57:14.000Z",
+          "updatedAt": "2023-04-04T09:57:14.000Z",
+          "quantity": 15
         }
-      ],
-      "id": 3
+      ]
     }
   ]
 }

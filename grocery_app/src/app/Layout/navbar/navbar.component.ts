@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit,DoCheck {
   ) {}
   ngDoCheck() {
     this.user = this.cookieService.get('userLoginToken')
+    
     if(this.user){
       return this.user
     }
@@ -38,11 +39,22 @@ export class NavbarComponent implements OnInit,DoCheck {
       this.cartProducts = res;
     });
     this.subtotal();
-    
-    this.userName = this.cookieService.get('userLoginToken');
+    this.router.events.subscribe((res:any)=>{
+      this.userName = this.cookieService.get('userLoginToken');
+      if(res.url){
+
+        if(this.userName){
+
+          console.log("res.url",res.url);
+          
+          this.user = this.cookieService.get('userLoginToken');
+          console.log("User====>",this.user)
+          this.getUserDetail();
+        }
+        }
+  })
 
     
-      this.getUserDetail();
     
     
   }

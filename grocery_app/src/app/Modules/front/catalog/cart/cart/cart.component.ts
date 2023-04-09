@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/Shared/Services/cart.service';
+import { UserService } from 'src/app/Shared/Services/user.service';
 
 @Component({
   selector: 'app-cart',
@@ -8,7 +9,7 @@ import { CartService } from 'src/app/Shared/Services/cart.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit, AfterViewInit {
-  //#region 
+  //#region
   cartItems: any[] = [];
   GST: any;
   Total: any;
@@ -16,12 +17,20 @@ export class CartComponent implements OnInit, AfterViewInit {
   subtotal: any = 0;
   counter = 1;
   groupedProducts: any = [];
-  data:any;
-  product:any=[]
+  data: any;
+  product: any = [];
   dateFormat: any;
+  existing_cart: any;
+  userId: any;
+  productArray: any=[];
+  cartProductsFor: any;
   //#endregion
-  //#region 
-  constructor(private cartService: CartService,private router:Router) {}
+  //#region
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private userService: UserService
+  ) {}
   ngAfterViewInit() {
     this.groupedProducts = this.cartItems.reduce((acc, product) => {
       const existingCategory = acc.find((group: any) => {
@@ -43,16 +52,15 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getCartItems();
-    let date = new Date()
-    let getYear = date.toLocaleString("default", { year: "numeric" });
-    let getMonth = date.toLocaleString("default", { month: "2-digit" });
-    let getDay = date.toLocaleString("default", { day: "2-digit" });
-    this.dateFormat = getYear + "-" + getMonth + "-" + getDay;
+    this.getUserId();
+
+    let date = new Date();
+    let getYear = date.toLocaleString('default', { year: 'numeric' });
+    let getMonth = date.toLocaleString('default', { month: '2-digit' });
+    let getDay = date.toLocaleString('default', { day: '2-digit' });
+    this.dateFormat = getYear + '-' + getMonth + '-' + getDay;
   }
   //#endregion
-
-  
 
   // getCartItems() {
   //   this.cartService.getCartProducts().subscribe((response: any[]) => {
@@ -83,18 +91,35 @@ export class CartComponent implements OnInit, AfterViewInit {
   //   return this.cartItems;
   // }
 
-
-  getCartItems(){
-    this.cartService.getCartProducts().subscribe((res)=>{
-      if(res){
-        this.cartItems=res;
-        console.log("Cart Items :----",this.cartItems);
+  getCartItems() {
+    this.cartService.getCartProducts().subscribe((res) => {
+      if (res) {
+        this.cartItems = res;
+        // console.log("UserID",this.userId)
+        // console.log("RES=>>>>",res)
+        console.log('Cart Items :----', this.cartItems);
+        this.existing_cart = this.cartItems.find(
+          (item) => item.id === this.userId
+        );
+        console.log('Existing cart:', this.existing_cart);
+        // this.cartProductsFor = this.existing_cart.items;
       }
-    })
+    });
+  }
+
+  getUserId() {
+    this.userService.getUserDetail().subscribe((res) => {
+      if (res) {
+        this.userId = res.data.id;
+        console.log('user id :', this.userId);
+        this.getCartItems();
+      }
+    });
+    return this.userId;
   }
 
   productId: any;
-  removeItem(id:any,i:any) {
+  removeItem(id: any, i: any) {
     //  id =  parseInt(id)
     this.productId = id;
     console.log('id :', typeof id);
@@ -103,39 +128,35 @@ export class CartComponent implements OnInit, AfterViewInit {
       if (response) {
         console.log('delted : ', id, response);
         console.log('cart Items', this.cartItems);
-        this.cartItems.splice(i,1)
+        this.cartItems.splice(i, 1);
       }
       // this.delete(id);
     });
   }
   delete(id: any) {
-    let deleted = this.cartItems.filter((product)=>product.id!=id);
-    console.log('deleted items:',deleted);
+    let deleted = this.cartItems.filter((product) => product.id != id);
+    console.log('deleted items:', deleted);
     return deleted;
   }
   // counter:number;
 
-  incrementQuantity(index:any) {
-    
-    this.cartItems[index].quantity += 1;
+  incrementQuantity(index: any) {
+    this.existing_cart.items[index].quantity += 1;
   }
   decrementQuantity(index: any) {
-   
-    if (this.cartItems[index].quantity > 1) {
-      this.cartItems[index].quantity -= 1;
+    if (this.existing_cart.items[index].quantity > 1) {
+      this.existing_cart.items[index].quantity -= 1;
     }
   }
 
   Subtotal() {
     // console.log('cart:', this.cartItems);
     let subtotal = 0;
-    for (let i = 0; i < this.cartItems.length; i++) {
-      
-        subtotal +=
-          this.cartItems[i].amount *
-          this.cartItems[i].quantity;
-          console.log("subtotal:> ",subtotal);
-
+    for (let i = 0; i < this.existing_cart.items.length; i++) {
+      subtotal +=
+        this.existing_cart.items[i].amount *
+        this.existing_cart.items[i].quantity;
+      // console.log("subtotal:> ",subtotal);
     }
 
     this.shipping = 40;
@@ -144,43 +165,43 @@ export class CartComponent implements OnInit, AfterViewInit {
     return subtotal;
   }
 
-  
-  get_cart_data(){
-for(let i=0;i<this.cartItems.length;i++){
-
- 
-  this.product=[{
-    "product_id":  this.cartItems[0].id,
-    "product_name": this.cartItems[0].title,
-    "qty": this.cartItems[0].quantity,
-    "product_amount": this.cartItems[0].amount,
-    "discount_type": 1,
-    "discount_amount": 0
-}]
-}
-console.log("product",this.product)
-return this.product
+  get_cart_data() {
+    for (let i = 0; i < this.existing_cart.items.length; i++) {
+      this.product = {
+        product_id: this.existing_cart.items[i].id,
+        product_name: this.existing_cart.items[i].title,
+        qty: this.existing_cart.items[i].quantity,
+        product_amount: this.existing_cart.items[i].amount,
+        discount_type: 1,
+        discount_amount: 12,
+      };
+      this.productArray.push(this.product);
+    }
+    console.log('product', this.product);
+   
+    console.log("Product Array:",this.productArray);
+    
+    return this.productArray;
   }
 
-  goToCheckout(){
+  goToCheckout() {
     this.getCartItems();
-    this.data={
-      "order_date": this.dateFormat,
-      "special_note": "its special",
-      "estimate_delivery_date": "2023-03-15",
-      "sub_total": this.Subtotal(),
-      "tax_amount": this.GST,
-      "discount_amount": 0,
-      "total_amount": this.Total,
-      "paid_amount": this.Total,
-      "payment_type": 2,
-      "order_products":this.get_cart_data(),
-    }
-    console.log("Cart For checkout:--",this.cartItems);
-    this.cartService.cartData=this.data;
+    this.data = {
+      order_date: this.dateFormat,
+      special_note: 'its special',
+      estimate_delivery_date: '2023-03-15',
+      sub_total: this.Subtotal(),
+      tax_amount: this.GST,
+      discount_amount: 0,
+      total_amount: this.Total,
+      paid_amount: this.Total,
+      payment_type: 2,
+      order_products: this.get_cart_data(),
+    };
+    console.log('Cart For checkout:--', this.cartItems);
+    this.cartService.cartData = this.data;
     this.cartService.setCartTotal(this.Total);
-    console.log("Cart Data ----",this.cartService.cartData);
+    console.log('Cart Data ----', this.cartService.cartData);
     this.router.navigate(['/catalog/checkout']);
-    
   }
 }

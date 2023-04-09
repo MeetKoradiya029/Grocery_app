@@ -63,10 +63,13 @@
       </div>
       
       <div class="dropdown">
-        <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          {{userName?userDetails.username:"Guest User"}}
+        <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" *ngIf="userName;else Guest">
+          {{userDetails.username}}
 
         </a>
+        <ng-template #Guest>
+          Guest User
+        </ng-template>
       
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" routerLink="/users/profile/home">Profile</a></li>
