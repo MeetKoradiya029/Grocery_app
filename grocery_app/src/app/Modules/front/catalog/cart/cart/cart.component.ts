@@ -142,10 +142,20 @@ export class CartComponent implements OnInit, AfterViewInit {
 
   incrementQuantity(index: any) {
     this.existing_cart.items[index].quantity += 1;
+    this.cartService.EditCart(this.userId,this.existing_cart).subscribe((res)=>{
+      if(res){
+        console.log("quantity edited in cart :",res);
+        
+      }
+    });
   }
   decrementQuantity(index: any) {
     if (this.existing_cart.items[index].quantity > 1) {
       this.existing_cart.items[index].quantity -= 1;
+      this.cartService.EditCart(this.userId,this.existing_cart).subscribe((res)=>{
+        console.log("quantity decrement:--",res);
+        
+      })
     }
   }
 
