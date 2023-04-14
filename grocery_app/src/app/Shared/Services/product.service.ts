@@ -7,9 +7,12 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class ProductService {
+  //#region 
   baseURL = environment.baseURL;
   getAllProductsByCategoryIdUrl = environment.getAllProductsByCategoryId;
   getProductByIdUrl = environment.getProductById;
+  getAllProductsUrl = environment.getAllProducts;
+  //#endregion
 
   constructor(private http: HttpClient) {}
 
@@ -70,6 +73,18 @@ export class ProductService {
         }),
       });
     } catch (error: any) {
+      return throwError(() => new Error(error));
+    }
+  }
+  getAllProducts(){
+    try {
+      return this.http.get<any>(this.baseURL+this.getAllProductsUrl,{
+        headers: new HttpHeaders({
+          'ngrok-skip-browser-warning': 'skip-browser-warning',
+          'Access-Control-Allow-Origin': '*',
+        }),
+      })
+    } catch (error:any) {
       return throwError(() => new Error(error));
     }
   }

@@ -1,6 +1,6 @@
 <div class="container mt-3">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
       <app-profile-sidebar></app-profile-sidebar>
     </div>
     <div class="col">
@@ -23,8 +23,8 @@
         </div>
         
       </div>
-
-      <form class="form" [formGroup]="address">
+      <div class="h2">Add more addresses</div>
+      <form class="form shadow-sm p-3 mb-5 bg-body-tertiary rounded" [formGroup]="address" style="background-color: rgb(255, 255, 255);">
         <div class="form-group col">
           <label for="inputAddress">Address</label>
           <input

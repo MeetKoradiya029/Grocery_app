@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from './profilePage/profile-page/profileMenuP
 import { ProfileComponent } from './profilePage/profile-page/profileMenuPages/profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from 'src/app/Shared/Guards/auth.guard';
+import { OrdersComponent } from './profilePage/profile-page/profileMenuPages/orders/orders.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AuthGuard } from 'src/app/Shared/Guards/auth.guard';
     ProfilePageComponent,
     ManageAddressComponent,
     ChangePasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    
   ],
   imports: [
     CommonModule,

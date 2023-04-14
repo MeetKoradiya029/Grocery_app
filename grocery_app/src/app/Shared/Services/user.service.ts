@@ -6,7 +6,11 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
-import { UserModel } from 'src/app/Models/user-model';
+import { AddressModel } from 'src/app/Models/address-model';
+import { ChangePass } from 'src/app/Models/change-pass';
+import { EditUser } from 'src/app/Models/edit-user';
+import { UserModel } from 'src/app/Models/register-model';
+import { Userlogin } from 'src/app/Models/userlogin';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -25,7 +29,9 @@ export class UserService {
   getUserDetailUrl = environment.getUserDetails;
   addAddressUrl = environment.addAddress;
   editAddressUrl = environment.updateAddress;
-  deleteAddressUrl = environment.deleteAddress
+  deleteAddressUrl = environment.deleteAddress;
+  getAllOrderUrl = environment.getCustomerAllOrder;
+  getOrderByIdUrl=environment.getOrderById
 
   snackHorizontal: MatSnackBarHorizontalPosition = 'start';
   snackVertical: MatSnackBarVerticalPosition = 'bottom';
@@ -59,9 +65,9 @@ export class UserService {
     }
   }
 
-  loginUser(body: any) {
+  loginUser(body:Userlogin) {
     try {
-      return this.http.post<any>(this.baseURL + this.loginURL, body);
+      return this.http.post<Userlogin>(this.baseURL + this.loginURL, body);
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -87,32 +93,32 @@ export class UserService {
     }
   }
 
-  changePassword(body: any) {
+  changePassword(body: ChangePass) {
     try {
-      return this.http.put<any>(this.baseURL + this.changePasswordUrl, body);
+      return this.http.put<ChangePass>(this.baseURL + this.changePasswordUrl, body);
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
   }
 
-  updateUser(body: any) {
+  updateUser(body: EditUser) {
     try {
-      return this.http.put<any>(this.baseURL + this.updateProfile, body);
+      return this.http.put<EditUser>(this.baseURL + this.updateProfile, body);
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
   }
 
-  addAddress(body: any) {
+  addAddress(body: AddressModel) {
     try {
-      return this.http.post<any>(this.baseURL + this.addAddressUrl, body);
+      return this.http.post<AddressModel>(this.baseURL + this.addAddressUrl, body);
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
   }
-  updateAddress(body: any, encryption: any) {
+  updateAddress(body: AddressModel, encryption: any) {
     try {
-      return this.http.put<any>(this.baseURL + this.editAddressUrl, body, {
+      return this.http.put<AddressModel>(this.baseURL + this.editAddressUrl, body, {
         headers: new HttpHeaders({
           'ngrok-skip-browser-warning': 'skip-browser-warning',
           'Access-Control-Allow-Origin': '*',
@@ -156,5 +162,20 @@ export class UserService {
       horizontalPosition: snackHorizontal,
       verticalPosition: snackVertical,
     });
+  }
+
+  Get_Customer_All_Orders(){
+    try {
+      return this.http.get<any>(this.baseURL+this.getAllOrderUrl,{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'})})
+    } catch (error:any) {
+      return throwError(() => new Error(error))
+    }
+  }
+  Get_Order_Detail_By_Id(order_id:any){
+    try {
+      return this.http.get<any>(this.baseUrl+this.getOrderByIdUrl,{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*',"order_id":order_id})})
+    } catch (error:any) {
+      return throwError(() => new Error(error))
+    }
   }
 }

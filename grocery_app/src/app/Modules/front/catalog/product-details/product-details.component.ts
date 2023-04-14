@@ -18,7 +18,7 @@ export class ProductDetailsComponent implements OnInit {
   products: any[] = [];
   category: any;
   productId: any;
-  cartProducts: any;
+  cartProducts: any = [];
   ProductWithQuantity: any;
   totalQuantity: any;
 
@@ -28,13 +28,13 @@ export class ProductDetailsComponent implements OnInit {
   isLoading = false;
 
   Id: any;
+  customerId: any;
   productSlug: any;
   filteredItem: any = [];
   encryptedId: any;
-  customerId: any;
   user: any;
-  userId: any;
-  cart: any=[];
+
+  cart: any = [];
   //#region
 
   constructor(
@@ -57,7 +57,7 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.ShowCart();
-    this.getUserId();
+    this.getUserDetails();
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
@@ -93,104 +93,61 @@ export class ProductDetailsComponent implements OnInit {
   quantityObj = {
     quantity: this.fromInput,
   };
-  existing_cart:any
-  existing_product:any
+  existing_cart: any;
+  existing_product: any;
   ADDCart(product: any) {
     console.log('current product:-->', product);
 
     this.user = this.cookieService.get('userLoginToken');
+    this.ShowCart();
+    let CartArr = JSON.parse(localStorage.getItem('cart') || '');
     if (this.user) {
-      this.existing_cart = this.cart.find((user: any) => user.id == this.userId);
-      console.log('Existing cart:', typeof(this.existing_cart));
-
-      this.existing_product = this.existing_cart.items.find((p:any)=>p.id==product.id);
-      console.log("existing cart items array -----",this.existing_product);
       
+      this.existing_cart = CartArr.find(
+        (user: any) => user.user_id == this.customerId
+      );
+      console.log('Existing cart:', typeof this.existing_cart);
+
+      this.existing_product = this.existing_cart.items.find(
+        (p: any) => p.id == product.id
+      );
+      console.log('existing cart items array -----', this.existing_product);
+
       console.log('Existing product :', this.existing_product);
       if (this.existing_cart) {
-
         if (!this.existing_product) {
-          debugger;
+          ;
           this.ProductWithQuantity = Object.assign(product, this.quantityObj);
 
-          this.cartService
-            .AddCartUserWise(this.userId, this.ProductWithQuantity)
-            .subscribe((res) => {
-              console.log('Product with no-existing response:', res);
-              this.ShowCart();
-            });
-        } else if (this.existing_product) {
-          // debugger;
-          // existing_product.quantity = existing_product.quantity + 1;
-          // this.fromInput = existing_product.quantity;
-          // this.cartService
-          //   .UpdateCartUserWise(this.userId,existing_product).subscribe((res)=>{
-          //     console.log("existing_ product response",res);
-              
-          //   });
+          this.cartService._addToCart_User_Wise(
+            this.customerId,
+            this.ProductWithQuantity,
+            product.id
+          );
 
-          for(let i=0;i<this.existing_cart.items.length;i++){
-            this.existing_cart.items[i]
-            if(this.existing_cart.items[i]==product){
-              this.existing_cart.items[i].quantity=this.existing_cart.items[i].quantity+1
-              this.quantityObj.quantity=this.existing_cart.items[i].quantity
+          console.log('Item Added in cart -----', this.cartProducts);
+        } else if (this.existing_product) {
           
-              console.log("this.existing_cart.items[i]",product)
-              console.log("this.existing_cart.items[i].quantity",this.existing_cart.items[i].quantity)
-              console.log("this.quantityObj.quantity",this.quantityObj.quantity)
-            }
-          }    
-          console.log("existing_cart",this.existing_cart)
-          
-              this.existing_product.quantity=this.existing_product.quantity+1;
-              this.quantityObj.quantity=this.existing_product.quantity
-              this.fromInput=this.existing_product.quantity
-          
-                this.cartService.EditCart(this.userId,this.existing_cart).subscribe((cart)=>{
-                  // console.log("cart in Service",cart)
-                  // console.log("Product Index",productindex)
-                  console.log("cart",cart)
-                })
-             
-              }
+          this.existing_product.quantity = this.existing_product.quantity + 1;
+          this.fromInput = this.existing_product.quantity;
+          localStorage.setItem('cart', JSON.stringify(CartArr));
+          console.log('existing_cart', this.existing_cart);
+          this.ShowCart();
         }
-      
+      }
     } else {
       localStorage.setItem('guestUserCart', JSON.stringify(product));
     }
   }
 
   ShowCart() {
-    this.cartProducts = this.cartService.getCartProducts().subscribe((res) => {
-      if (res) {
-        console.log('cart products:', res);
-        this.cart = res;
-        
-        console.log('cart all ', this.cart);
-      }
-    });
-  }
-
-  getUserId() {
-    this.userService.getUserDetail().subscribe((res) => {
-      if (res) {
-        console.log('user Id:', res.data.id);
-        this.userId = res.data.id;
-      }
-    });
-  }
-
-  checkInputQuantity(quantityFromInput: any) {
-    for (let i = 0; i < this.cartProducts.length; i++) {
-      if (this.cartProducts[i].id == this.filteredItem[0].id) {
-        this.totalQuantity = this.cartProducts[i].quantity + quantityFromInput;
-        console.log('total quantity:', this.totalQuantity);
-        quantityFromInput = '';
-      }
-
-      return this.totalQuantity;
+    let CartArr = JSON.parse(localStorage.getItem('cart') || '');
+    if (CartArr) {
+      this.cartProducts = CartArr;
     }
+    return this.cartProducts;
   }
+
 
   getProductById(encryption: any) {
     this.productService.getProductById(encryption).subscribe({
@@ -218,16 +175,24 @@ export class ProductDetailsComponent implements OnInit {
       error: () => {},
     });
   }
-  getCustomerId() {
-    this.userService.getUserDetail().subscribe({
-      next: (res) => {
-        if (res) {
-          this.customerId = res.data.id;
-        }
-      },
-      error: (error) => {
-        console.log('Get user details error::', error);
-      },
+  getUserDetails() {
+    return new Promise((resolve, reject) => {
+      this.userService.getUserDetail().subscribe({
+        next: (res) => {
+          if (res) {
+            console.log('User Data:----', res);
+
+            this.customerId = res.data.id;
+            console.log('User ID ::--', this.customerId);
+            resolve(res);
+            return this.customerId;
+          }
+        },
+        error: (error) => {
+          console.log('User Details error:', error);
+          reject(error);
+        },
+      });
     });
   }
 }

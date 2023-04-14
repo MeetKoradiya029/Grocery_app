@@ -129,8 +129,8 @@ export class ManageAddressComponent implements OnInit {
     return flag;
   }
 
-  getUserAddress() {
-    this.userService.getUserDetail().subscribe({
+  async getUserAddress() {
+    (this.userService.getUserDetail()).subscribe({
       next: (address) => {
         if (address) {
           console.log('Address response', address.data.addresses);
@@ -205,7 +205,7 @@ export class ManageAddressComponent implements OnInit {
       if(encryption){
         console.log("Encryption for delete :::",encryption.data);
         this.encryptionData=encryption.data;
-        this.deleteAddress();
+        this.deleteAddress(addressId);
       }
     })
 
@@ -216,13 +216,17 @@ export class ManageAddressComponent implements OnInit {
     
   }
 
-  deleteAddress(){
+  deleteAddress(addressId:any){
 
     this.userService.deleteAddress(this.encryptionData).subscribe({
       next: (deleteRes) => {
         if(deleteRes){
           console.log("delete Response:-=-=--",deleteRes);
+          this.getUserAddress()
+          console.log("addresId",addressId);
           
+          
+          // this.addressArr.splice(addressId,1);
         }
       },
       error: (deleteError) => {

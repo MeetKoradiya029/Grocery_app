@@ -8,6 +8,7 @@ import { ProfileComponent } from './profilePage/profile-page/profileMenuPages/pr
 import { RegistrationComponent } from './registration/registration.component';
 import { AuthGuard } from 'src/app/Shared/Guards/auth.guard';
 import { OrderConfirmComponent } from '../catalog/cart/order-confirm/order-confirm.component';
+import { OrdersComponent } from './profilePage/profile-page/profileMenuPages/orders/orders.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path:'orderconfirm',
     component:OrderConfirmComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path:'profile/orders',
+    component:OrdersComponent,
     canActivate:[AuthGuard]
   }
 

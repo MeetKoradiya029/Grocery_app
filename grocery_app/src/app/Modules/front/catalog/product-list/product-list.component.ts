@@ -31,7 +31,10 @@ export class ProductListComponent implements OnInit {
   confirmAlert: any = new Ngxalert();
   alertWithBtnObj: any = new Ngxalert();
   username: any;
-
+  quantityObj = {
+    quantity: 1,
+  };
+  ProductWithQuantity: any;
   //#endregion
 
   //#region
@@ -46,9 +49,9 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.products = this.productService.getProducts();
+    // this.products = this.productService.getProducts();
     this.checkUser();
-    this.getUserDetials();
+    this.getUserDetails();
     this.getCartItems();
 
     // this.route.paramMap.subscribe((params) => {
@@ -108,28 +111,35 @@ export class ProductListComponent implements OnInit {
   }
 
   getCartItems() {
-    this.cartService.getCartProducts().subscribe((res) => {
-      if (res) {
-        this.cartProducts = res;
-        console.log('Cart Products ><<><><', this.cartProducts);
-      }
-    });
+    let CartArr = JSON.parse(localStorage.getItem('cart')||"")
+    if(CartArr){
+      this.cartProducts=CartArr
+    }
+    return this.cartProducts;
   }
 
-  getUserDetials() {
-    this.userService.getUserDetail().subscribe({
-      next: (res) => {
-        if (res) {
-          console.log('User Data:----', res);
-
-          this.userId = res.data.id;
-          this.username = res.data.username;
-          console.log('User ID ::--', this.userId);
-        }
-      },
-      error: () => {},
-    });
-    return this.userId;
+  getUserDetails(){
+    return new Promise((resolve,reject)=>{
+      this.userService.getUserDetail().subscribe({
+        next: (res) => {
+          if (res) {
+            console.log('User Data:----', res);
+  
+            this.userId = res.data.id;
+            this.username = res.data.username;
+            console.log('User ID ::--', this.userId);
+            resolve(res);
+            return this.userId
+          }
+        },
+        error: (error) => {
+          console.log("User Details error:",error);
+          reject(error)
+          
+        },
+      })
+      
+    })
   }
 
   checkUser() {
@@ -138,62 +148,59 @@ export class ProductListComponent implements OnInit {
 
     return this.user;
   }
+  
 
   AddToCart(productObj: any) {
-    const qtyObj = {
-      quantity: 1,
-    };
-    let productWithQty = Object.assign(productObj, qtyObj);
-    console.log('product with quantity:', productWithQty);
-
-    this.cartObj = {
-      user_id: this.userId,
-      items: [productWithQty],
-    };
-
+   
+    this.getCartItems();
     if (this.user) {
-      let existingItem = this.cartProducts.find(
+      
+      let existingCart = this.cartProducts.find(
         (item: any) =>
-          (item.user_id == this.userId) && (item.items.find((product:any)=>product.id==productObj.id))
+          (item.user_id == this.userId)
       );
-      console.log('existing item', existingItem);
-      if (existingItem) {
-        this.openConfirmDialog(
-          `Hello ${this.username}`,
-          'Item already Exist in your cart plese check cart'
-        );
-      } else {
-        this.cartService.addToCart(this.cartObj).subscribe((res) => {
-          if (res) {
-            console.log('cart response', res);
-            this.getCartItems();
-            this.userService.openSnackBar(
-              'Item Added in your cart!',
-              'OK',
-              'end',
-              'top'
-            );
-          }
-        });
-      }
+      let existing_product = existingCart.items.find((p:any)=>p.id==productObj.id);
+      console.log("existing cart items array -----",existing_product);
+      
+      console.log('Existing product :',existing_product);
+  
+      if (existingCart) {
+
+        if(existing_product){
+          this.openConfirmDialog(
+            `Hello ${this.username}`,
+            `Item already Exist in your cart`
+          );
+        }else{
+          this.ProductWithQuantity = Object.assign(productObj, this.quantityObj);
+          this.cartService
+          ._addToCart_User_Wise(this.userId, this.ProductWithQuantity,productObj.id);
+        }
+       
+      } 
     } else {
-      let guestItem = localStorage.getItem('guestUser');
+      let guestItem = localStorage.getItem('guestUserCart');
       if (guestItem) {
         this.openConfirmDialog(
           'Attention!',
           'You can add ony one item per user!'
         );
       } else {
-        localStorage.setItem('guestUser', JSON.stringify(productObj));
+        localStorage.setItem('guestUserCart', JSON.stringify(this.ProductWithQuantity));
       }
     }
   }
+  
 
   openConfirmDialog(dialogTitle: any, message: any) {
     this.alertWithBtnObj.create({
       title: dialogTitle,
       message: message,
     });
+  }
+
+  goToCart(){
+    
   }
 
   //#endregion

@@ -27,7 +27,18 @@ import { CategoryService } from './Shared/Services/category.service';
 import { AuthInterceptor } from './Shared/interceptors/auth.interceptor';
 import { UserService } from './Shared/Services/user.service';
 import { MatCardModule } from '@angular/material/card';
-import  { NgxDialogsModule } from 'ngx-dialogs';
+import { NgxDialogsModule } from 'ngx-dialogs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { OrdersComponent } from './Modules/front/users/profilePage/profile-page/profileMenuPages/orders/orders.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import {
+  NgxAwesomePopupModule,
+  DialogConfigModule,
+  ConfirmBoxConfigModule,
+  ToastNotificationConfigModule
+} from '@costlydeveloper/ngx-awesome-popup';
 
 @NgModule({
   declarations: [
@@ -38,8 +49,8 @@ import  { NgxDialogsModule } from 'ngx-dialogs';
     ContactusComponent,
     FooterComponent,
     CategoryComponent,
+    OrdersComponent,
     CategoryProductsComponent,
-    CartComponent,
   ],
   providers: [
     CategoryService,
@@ -54,10 +65,9 @@ import  { NgxDialogsModule } from 'ngx-dialogs';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    BrowserAnimationsModule,
     CarouselModule,
     MatCarouselModule,
     IvyCarouselModule,
@@ -67,7 +77,14 @@ import  { NgxDialogsModule } from 'ngx-dialogs';
     UsersModule,
     MatSnackBarModule,
     MatCardModule,
-    NgxDialogsModule
+    MatExpansionModule,
+    NgxDialogsModule,
+    NgxSpinnerModule,
+    ToastrModule.forRoot(),
+    NgxAwesomePopupModule.forRoot(), // Essential, mandatory main module.
+    DialogConfigModule.forRoot(), // Needed for instantiating dynamic components.
+    ConfirmBoxConfigModule.forRoot(), // Needed for instantiating confirm boxes.
+    ToastNotificationConfigModule.forRoot() 
   ],
 })
 export class AppModule {}

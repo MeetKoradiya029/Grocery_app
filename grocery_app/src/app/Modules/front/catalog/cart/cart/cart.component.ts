@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {
+  ConfirmBoxInitializer,
+  DialogLayoutDisplay,
+} from '@costlydeveloper/ngx-awesome-popup';
 import { CartService } from 'src/app/Shared/Services/cart.service';
 import { UserService } from 'src/app/Shared/Services/user.service';
 
@@ -22,15 +26,20 @@ export class CartComponent implements OnInit, AfterViewInit {
   dateFormat: any;
   existing_cart: any;
   userId: any;
-  productArray: any=[];
+  productArray: any = [];
   cartProductsFor: any;
+  GuestUserCart: any;
+  existing_product: any;
+  cart: any;
   //#endregion
   //#region
   constructor(
     private cartService: CartService,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+    this.getCartItems();
+  }
   ngAfterViewInit() {
     this.groupedProducts = this.cartItems.reduce((acc, product) => {
       const existingCategory = acc.find((group: any) => {
@@ -92,22 +101,17 @@ export class CartComponent implements OnInit, AfterViewInit {
   // }
 
   getCartItems() {
-    this.cartService.getCartProducts().subscribe((res) => {
-      if (res) {
-        this.cartItems = res;
-        // console.log("UserID",this.userId)
-        // console.log("RES=>>>>",res)
-        console.log('Cart Items :----', this.cartItems);
-        this.existing_cart = this.cartItems.find(
-          (item) => item.id === this.userId
-        );
-        console.log('Existing cart:', this.existing_cart);
-        // this.cartProductsFor = this.existing_cart.items;
-      }
-    });
+    let cartArr = JSON.parse(localStorage.getItem('cart') || '');
+    this.cartItems = cartArr;
+    this.existing_cart = this.cartItems.find(
+      (user: any) => user.user_id == this.userId
+    );
+    this.cart = this.existing_cart?.items;
+    let guestUser = JSON.parse(localStorage.getItem('guestUserCart'));
+    this.GuestUserCart = guestUser;
   }
 
-  getUserId() {
+  async getUserId() {
     this.userService.getUserDetail().subscribe((res) => {
       if (res) {
         this.userId = res.data.id;
@@ -119,18 +123,33 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   productId: any;
-  removeItem(id: any, i: any) {
-    //  id =  parseInt(id)
-    this.productId = id;
-    console.log('id :', typeof id);
+  removeItem(productObj: any) {
+    const confirmBox = new ConfirmBoxInitializer();
+    confirmBox.setTitle('Are you sure?');
+    confirmBox.setMessage('Do you want to Delete?');
+    confirmBox.setButtonLabels('DELETE', 'NO');
 
-    this.cartService.removeCartProducts(id).subscribe((response) => {
-      if (response) {
-        console.log('delted : ', id, response);
-        console.log('cart Items', this.cartItems);
-        this.cartItems.splice(i, 1);
+    // Choose layout color type
+    confirmBox.setConfig({
+      layoutType: DialogLayoutDisplay.DANGER, // SUCCESS | INFO | NONE | DANGER | WARNING
+    });
+
+    confirmBox.openConfirmBox$().subscribe((resp: any) => {
+      // IConfirmBoxPublicResponse
+      console.log('Clicked button response: ', resp);
+
+      if (resp.success) {
+        //  id =  parseInt(id)
+        this.existing_product = this.existing_cart.items.find(
+          (product: any) => product.id == productObj.id
+        );
+        if (this.existing_product) {
+          this.cartService._deleteCart_localStorage(this.userId, productObj);
+          let index = this.existing_cart.items.indexOf(this.existing_product);
+          this.existing_cart.items.splice(index, 1);
+          this.getCartItems();
+        }
       }
-      // this.delete(id);
     });
   }
   delete(id: any) {
@@ -140,28 +159,29 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
   // counter:number;
 
-  incrementQuantity(index: any) {
-    this.existing_cart.items[index].quantity += 1;
-    this.cartService.EditCart(this.userId,this.existing_cart).subscribe((res)=>{
-      if(res){
-        console.log("quantity edited in cart :",res);
-        
-      }
-    });
+  incrementQuantity(productObj: any, index: any) {
+    this.cartService._quantity_increment(this.userId, productObj);
+    this.existing_product = this.existing_cart.items.find(
+      (product) => product.id == productObj.id
+    );
+    if (this.existing_product.quantity > 0) {
+      this.existing_product.quantity = this.existing_product.quantity + 1;
+    }
   }
-  decrementQuantity(index: any) {
-    if (this.existing_cart.items[index].quantity > 1) {
-      this.existing_cart.items[index].quantity -= 1;
-      this.cartService.EditCart(this.userId,this.existing_cart).subscribe((res)=>{
-        console.log("quantity decrement:--",res);
-        
-      })
+  decrementQuantity(productObj: any, index: any) {
+    this.cartService._quantity_decrement(this.userId, productObj);
+    this.existing_product = this.existing_cart.items.find(
+      (product) => product.id == productObj.id
+    );
+    if (this.existing_product > 1) {
+      this.existing_product.quantity = this.existing_product.quantity - 1;
     }
   }
 
   Subtotal() {
     // console.log('cart:', this.cartItems);
     let subtotal = 0;
+
     for (let i = 0; i < this.existing_cart.items.length; i++) {
       subtotal +=
         this.existing_cart.items[i].amount *
@@ -188,9 +208,9 @@ export class CartComponent implements OnInit, AfterViewInit {
       this.productArray.push(this.product);
     }
     console.log('product', this.product);
-   
-    console.log("Product Array:",this.productArray);
-    
+
+    console.log('Product Array:', this.productArray);
+
     return this.productArray;
   }
 
@@ -202,7 +222,7 @@ export class CartComponent implements OnInit, AfterViewInit {
       estimate_delivery_date: '2023-03-15',
       sub_total: this.Subtotal(),
       tax_amount: this.GST,
-      discount_amount: 0,
+      discount_amount: 10,
       total_amount: this.Total,
       paid_amount: this.Total,
       payment_type: 2,

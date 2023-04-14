@@ -1,1 +1,88 @@
-<p>orders works!</p>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-3">
+      <app-profile-sidebar></app-profile-sidebar>
+    </div>
+
+    <div class="col">
+      <div class="mx-5 d-flex justify-content-center">
+        <div class="row g-1 m-lg-5 d-flex justify-content-center">
+          <div
+            style="
+              text-align: center;
+              border-top: 2px solid black;
+              margin-bottom: 10px;
+            "
+          >
+            <div
+              style="
+                display: inline-block;
+                position: relative;
+                top: -10px;
+                background-color: white;
+                padding: 0px 10px;
+                font-size: 25px;
+              "
+            >
+              Past Orders
+            </div>
+          </div>
+          <!-- (click)="Open_Panel(arr.id)" -->
+          <mat-accordion class="row g-5 m-lg-5 d-flex justify-content-center">
+            <mat-expansion-panel
+              *ngFor="let arr of PastOrderArr; let i = index"
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <img
+                    src="https://img.icons8.com/cute-clipart/40/null/in-transit.png"
+                  />
+                  <small class="m-2 text-muted">Complete</small>
+                  <div class="vl"></div>
+                  <small class="text-muted"
+                    >Order Date: {{ arr.order_date }}</small
+                  >
+                  <div class="vl"></div>
+                </mat-panel-title>
+                <mat-panel-description>
+                  <small
+                    >Estimate Delivered Date:
+                    {{ arr.estimate_delivery_date }}</small
+                  >
+                  <div class="vl"></div>
+                  <small>Order Amount: RS {{ arr.paid_amount }}</small>
+                  <div class="vl"></div>
+                  <span>{{ arr.item }} Item</span>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <table>
+                <tr>
+                  <th>No.</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Product Amount</th>
+                  <th>Discount Amount</th>
+                </tr>
+                <tr *ngFor="let item of arr.order_items; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.product_name }}</td>
+                  <td>{{ item.qty }}</td>
+                  <td>{{ item.product_amount }}</td>
+                  <td>{{ item.discount_amount }}</td>
+                </tr>
+              </table>
+              <div></div>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <ng-container *ngIf="!PastOrderArr.length">
+            <div
+              class="fs-3 fw-bold text-danger align-items-center text-center mt-4"
+            >
+              {{ username }},You haven't Ordered Previously
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

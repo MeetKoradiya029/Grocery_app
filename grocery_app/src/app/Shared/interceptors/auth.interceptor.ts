@@ -29,7 +29,7 @@ if(this.tokenCookie){
 
 }
     
-    console.log("interseptor",request);
+    // console.log("interseptor",request);
     
 
     return next.handle(request);

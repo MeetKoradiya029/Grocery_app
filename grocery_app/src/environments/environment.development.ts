@@ -1,6 +1,6 @@
 export const environment = {
     baseUrl:"http://localhost:3000/",
-    baseURL:"https://a521-117-217-127-105.in.ngrok.io/api/v1/",
+    baseURL:"https://0305-117-217-127-105.ngrok-free.app/api/v1/",
     getAllcategory:"category/get-all-categories",
     registerUser:"customer/register",
     loginUser:"customer/login",
@@ -12,6 +12,10 @@ export const environment = {
     deleteAddress:'customer/delete-customer-address',
     getAllProductsByCategoryId:'product/get-product-by-category-id',
     getProductById:'product/get-product-by-id',
+    getCustomerAllOrder:"customer/get-customer-all-orders",
+    getOrderById:"order/get-order-by-id",
+    getAllProducts:'product/get-all-products',
+    postOrder:'order/add-order',
     encryptId:"encryption",
     postUserUrl:"users",
     getUsersUrl:"users",

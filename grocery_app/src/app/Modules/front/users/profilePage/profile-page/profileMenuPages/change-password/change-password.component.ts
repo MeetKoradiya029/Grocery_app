@@ -38,24 +38,30 @@ export class ChangePasswordComponent implements OnInit {
      let flag=true;
       this.formData = this.changePassowrd.getRawValue();
       console.log("change Password",this.formData);
-      
+      let {oldpassword,newpassword,confirmpassword}=this.changePassowrd.getRawValue()
        this.body = {
-        oldPassword:this.formData.oldpassword,
-        newPassword:this.formData.newPassword,
+        oldPassword:oldpassword,
+        newPassword:newpassword,
        }
-
-       if(!this.formData.oldPassword||!this.formData.newPassword||!this.formData.confirmpassword){
-        this.openSnackBar();
-        flag=false;
-        return flag;
+       if(!oldpassword||!newpassword||!confirmpassword){
+          // alert("form is empty!");
+          this.userService.openSnackBar("Form is Empty!","OK","end","top")
+          flag = false;
+          return flag;
        }
-
-       this.userService.changePassword(this.body).subscribe((res)=>{
-        if(res){
-          console.log("change pass res",res);
-          
-        }
-       })
+       if(flag=true){
+        this.userService.changePassword(this.body).subscribe({next:(res)=>{
+          if(res){
+            console.log("change pass res",res);
+            this.userService.openSnackBar("Password Changed!","OK","end","top")
+            this.changePassowrd.reset();
+          }
+        },error:(error)=>{
+          this.userService.openSnackBar(error.error.message,"Ok","end","top")
+        }});
+        
+       }
+       
        return flag
   }
 

@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate,OnInit {
   ngOnInit(){
     this.router.events.subscribe((res:any)=>{
         if(res.url){
-          console.log("res.url",res.url);
+          // console.log("res.url",res.url);
           
             this.checkUser();
         }

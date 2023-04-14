@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar bg-body-tertiary">
+  <nav class="navbar bg-body-tertiary fixed-top">
     <div class="container container_nav">
       <div class="d-flex">
         <a routerLink="" routerLinkActive="active">
@@ -58,13 +58,13 @@
         <div><img src="../../assets/cart4.svg" alt="" height="30px"></div>
         <div class="cart">
           <div>My Cart</div>
-          <div>{{subtotal()|currency:'INR'}}({{cartProducts.length}})</div>
+          <div>{{subtotal|currency:'INR'}}({{cartProducts.length}})</div>
         </div>
       </div>
       
       <div class="dropdown">
         <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" *ngIf="userName;else Guest">
-          {{userDetails.username}}
+          {{userDetails?userDetails.username:""}}
 
         </a>
         <ng-template #Guest>
@@ -73,8 +73,8 @@
       
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" routerLink="/users/profile/home">Profile</a></li>
-          <li><a class="dropdown-item" href="#">Orders</a></li>
-          <li><a class="dropdown-item" href="#">Setting</a></li>
+          <li><a class="dropdown-item" routerLink="/users/profile/orders">Orders</a></li>
+          <li><a class="dropdown-item" href="#">Logout</a></li>
         </ul>
       </div>
        
