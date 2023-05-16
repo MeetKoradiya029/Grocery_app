@@ -46,6 +46,8 @@ export class ProfileSidebarComponent implements OnInit {
     if (this.user) {
       console.log('user token in logout fn:', this.user);
       this.cookieService.delete('userLoginToken');
+      localStorage.removeItem("userToken");
+      sessionStorage.removeItem("User_Details");
       this.userService.openSnackBar("Logged Out succcessfully!","Ok","end","top");
       setTimeout(()=>{
         this.router.navigate(['']);

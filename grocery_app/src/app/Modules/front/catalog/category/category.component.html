@@ -12,7 +12,7 @@
       </div>
     </div>
   </div> -->
-<div class="container" style="margin-top: 100px">
+<div class="container" style="margin-top: 50px">
   <!-- <ngx-spinner
     bdColor="rgba(0, 0, 0, 0.8)"
     size="medium"
@@ -21,6 +21,7 @@
     [fullScreen]="true"
     ><p style="color: white">Loading...</p></ngx-spinner
   > -->
+ 
 
   <carousel
     [autoplay]="true"
@@ -44,4 +45,15 @@
       </div>
     </div>
   </carousel>
+  <div class="container" *ngIf="filteredcategoryProducts.length">
+
+    <div class="card" style="width: 15rem;" *ngFor="let category of filteredcategoryProducts">
+      <img src="../../../../../assets/category.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">{{category.title}}</p>
+      </div>
+    </div>
+  </div>
 </div>
+
+

@@ -1,0 +1,19 @@
+mat-accordion{
+    background-color: white;
+}
+.order_date{
+    color: white;
+}
+
+mat-expansion-panel{
+    background-color: white;
+    color:black;
+}
+
+mat-panel-title{
+    color: black;
+}
+mat-panel-description{
+    color: black;
+}
+

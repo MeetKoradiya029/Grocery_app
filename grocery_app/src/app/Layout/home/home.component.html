@@ -4,7 +4,7 @@
       <button
         class="btn btn-success"
         type="button"
-        routerLink="/catalog/categories"
+        routerLink="/catalog/allcategory"
         routerLinkActive="avtive"
       >
         <img src="../../assets/grid.svg" alt="" style="filter: invert(100%)" />
@@ -43,20 +43,7 @@
         <h1>Explore Categories</h1>
       </div>
 
-      <ul class="nav navbar">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">All</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Vegetables</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Fruits</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">Coffe & teas</a>
-        </li>
-      </ul>
+      
     </div>
 
     <app-category></app-category>
@@ -83,20 +70,7 @@
           class="collapse navbar-collapse justify-content-end"
           id="navbarNav"
         >
-          <ul class="nav navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link">Vegetables</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Fruits</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Coffe And Teas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Meat</a>
-            </li>
-          </ul>
+         <a href=""></a>
         </div>
       </div>
     </nav>
@@ -104,10 +78,12 @@
     <carousel
       [autoplay]="true"
       [height]="450"
-      [cellWidth]="350"
+      
+      [cellWidth]="200"
       [autoplayInterval]="3000"
       [pauseOnHover]="true"
       class="container"
+      *ngIf="products.length!=0"
     >
       <div
         class="carousel-cell"
@@ -116,10 +92,9 @@
         <div class="card bg-white m-2 w-auto">
           <img
             class="rounded mx-auto d-block"
-            src="../../../assets//grocery.jpg"
+            src="{{'http://localhost:8080/api/v1/get-image/' + product.avatar_image}}"
             alt=""
-            width="175"
-            height="100"
+            
             [routerLink]="['/catalog/product-details/', product.id]"
           />
           <div class="card-body text-left">

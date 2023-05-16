@@ -4,6 +4,7 @@ import { AboutComponent } from './Layout/navbar/about/about.component';
 import { ContactusComponent } from './Layout/navbar/contactus/contactus.component';
 import { HomeComponent } from './Layout/home/home.component';
 import { CategoryProductsComponent } from './Modules/front/catalog/category-products/category-products.component';
+import { ErrorpageComponent } from './Shared/Components/errorpage/errorpage.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent},
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path:"allcategory",component:CategoryProductsComponent},
   {path:"users",loadChildren:()=>import('./Modules/front/users/users.module').then((m)=>m.UsersModule)},
   {path:"about",component:AboutComponent},
-  {path:"contact",component:ContactusComponent}
+  {path:"contact",component:ContactusComponent},
+  {path:'**',component:ErrorpageComponent}
 ];
 
 @NgModule({

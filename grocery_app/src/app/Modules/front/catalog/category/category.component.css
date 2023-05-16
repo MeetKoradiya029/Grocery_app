@@ -6,3 +6,6 @@
     width: 199px;
     height: 120px;
 }
+carousel{
+    z-index: 50;
+}

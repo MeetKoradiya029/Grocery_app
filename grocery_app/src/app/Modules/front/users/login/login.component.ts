@@ -90,7 +90,17 @@ export class LoginComponent implements OnInit {
           console.log('cookie:', this.cookie);
 
           localStorage.setItem('userToken', JSON.stringify(this.token));
-          this.getUserDetails();
+          this.getUserDetails().then((result)=>{
+            if(result){
+
+              localStorage.setItem('userData',JSON.stringify(this.User_Details))
+            }
+          }).catch((error)=>{
+            if(error){
+              console.log("error in get user details:",error);
+              
+            }
+          })
           this.router.navigate(['/home']);
         }
       });
@@ -133,6 +143,7 @@ export class LoginComponent implements OnInit {
           if (res) {
             if (res.data) {
               console.log('User Details ', res.data);
+              this.User_Details=res.data;
               this.cartService._addCart(res.data.id);
               sessionStorage.setItem('User_Details', JSON.stringify(res.data));
               this.Showcart();

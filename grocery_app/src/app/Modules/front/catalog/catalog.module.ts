@@ -10,12 +10,17 @@ import { RouterModule } from '@angular/router';
 // import { CartModule } from './cart/cart.module';
 import { LoaderComponent } from './loader_for_products/loader/loader.component';
 import { CartModule } from './cart/cart.module';
+import { MatSelectModule } from '@angular/material/select';
+import { CategoryFilterPipe } from './category/category-filter.pipe';
+import { AllcategoryComponent } from './category/allcategory/allcategory.component';
 
 @NgModule({
   declarations: [
     ProductListComponent,
     ProductDetailsComponent,
     LoaderComponent,
+    CategoryFilterPipe,
+    AllcategoryComponent,
   ],
   imports: [
     CommonModule,
@@ -25,7 +30,8 @@ import { CartModule } from './cart/cart.module';
     FormsModule,
     IvyCarouselModule,
     RouterModule,
-    CartModule
+    CartModule,
+    MatSelectModule 
   ],
 
   exports: [ProductListComponent],

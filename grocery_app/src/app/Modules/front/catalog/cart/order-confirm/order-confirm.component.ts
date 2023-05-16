@@ -13,8 +13,8 @@ export class OrderConfirmComponent implements OnInit{
   }
 
   ngOnInit(){
-      setTimeout(()=>{
-        this.router.navigate([''])
-      },6000)
+      // setTimeout(()=>{
+      //   this.router.navigate([''])
+      // },6000)
   }
 }

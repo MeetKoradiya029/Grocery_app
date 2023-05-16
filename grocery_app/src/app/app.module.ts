@@ -31,6 +31,8 @@ import { NgxDialogsModule } from 'ngx-dialogs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { OrdersComponent } from './Modules/front/users/profilePage/profile-page/profileMenuPages/orders/orders.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {MatSelectModule} from '@angular/material/select';
+
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import {
@@ -39,6 +41,9 @@ import {
   ConfirmBoxConfigModule,
   ToastNotificationConfigModule
 } from '@costlydeveloper/ngx-awesome-popup';
+import { CategoryFilterPipe } from './Modules/front/catalog/category/category-filter.pipe';
+import { ErrorpageComponent } from './Shared/Components/errorpage/errorpage.component';
+
 
 @NgModule({
   declarations: [
@@ -51,6 +56,7 @@ import {
     CategoryComponent,
     OrdersComponent,
     CategoryProductsComponent,
+    ErrorpageComponent,
   ],
   providers: [
     CategoryService,
@@ -84,7 +90,9 @@ import {
     NgxAwesomePopupModule.forRoot(), // Essential, mandatory main module.
     DialogConfigModule.forRoot(), // Needed for instantiating dynamic components.
     ConfirmBoxConfigModule.forRoot(), // Needed for instantiating confirm boxes.
-    ToastNotificationConfigModule.forRoot() 
+    ToastNotificationConfigModule.forRoot(),
+    MatSelectModule
+  
   ],
 })
 export class AppModule {}

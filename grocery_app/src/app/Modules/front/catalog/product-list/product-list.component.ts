@@ -6,6 +6,7 @@ import { CartService } from 'src/app/Shared/Services/cart.service';
 import { UserService } from 'src/app/Shared/Services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Ngxalert } from 'ngx-dialogs';
+import { ConfirmBoxInitializer, DialogLayoutDisplay, ToastEvokeService } from '@costlydeveloper/ngx-awesome-popup';
 
 @Component({
   selector: 'app-product-list',
@@ -45,7 +46,8 @@ export class ProductListComponent implements OnInit {
     private encryptionService: EncryptionService,
     private cartService: CartService,
     private userService: UserService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private toastService:ToastEvokeService
   ) {}
 
   ngOnInit() {
@@ -167,14 +169,27 @@ export class ProductListComponent implements OnInit {
       if (existingCart) {
 
         if(existing_product){
-          this.openConfirmDialog(
-            `Hello ${this.username}`,
-            `Item already Exist in your cart`
-          );
+          const confirmBox = new ConfirmBoxInitializer();
+          confirmBox.setTitle('Item already exists');
+          confirmBox.setMessage('Do you want to open your cart?');
+          confirmBox.setButtonLabels('YES', 'NO');
+        
+          // Choose layout color type
+          confirmBox.setConfig({
+            layoutType: DialogLayoutDisplay.INFO, // SUCCESS | INFO | NONE | DANGER | WARNING
+          });
+
+          confirmBox.openConfirmBox$().subscribe((res)=>{
+            if(res.success){
+                console.log("response",res);
+                this.router.navigate(['/catalog/cart'])
+            }
+          })
         }else{
           this.ProductWithQuantity = Object.assign(productObj, this.quantityObj);
           this.cartService
           ._addToCart_User_Wise(this.userId, this.ProductWithQuantity,productObj.id);
+          this.toastService.success('Item Added In Cart!', 'Open Your Cart').subscribe();
         }
        
       } 

@@ -23,6 +23,7 @@ export class OrderService {
     data: any
   ) {
     try {
+      
       return this.http.post<any>(this.baseURL + this.addOrderUrl, data, {
         headers: new HttpHeaders({
           'ngrok-skip-browser-warning': 'skip-browser-warning',

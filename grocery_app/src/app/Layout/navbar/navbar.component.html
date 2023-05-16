@@ -1,4 +1,4 @@
-<header>
+<header id="gro-header">
   <nav class="navbar bg-body-tertiary fixed-top">
     <div class="container container_nav">
       <div class="d-flex">
@@ -11,7 +11,7 @@
         </a>
        
         <div class="logo-txt">
-          <div class="h4"><a routerLink="" routerLinkActive="active" style="text-decoration: none;color: black;">Cybercom Creation</a></div>
+          <div class="h4"><a routerLink="" routerLinkActive="active" style="text-decoration: none;color: black;">Green Basket</a></div>
           <div class="subHead"><a routerLink="" routerLinkActive="active" style="text-decoration: none; color: gray;">GROCERY SHOPPING APP</a></div>
         </div>
 
@@ -46,7 +46,7 @@
             <button class="btn search_btn" type="submit"><i class="bi bi-search"><img src="../../assets/search.svg" alt=""></i></button>
           </div>
           <div class="container">
-            <button class="btn btn-danger" type="submit" routerLink="users/login" routerLinkActive="active" *ngIf="!user">Login</button>
+            <button class="btn btn-success" type="submit" routerLink="users/login" routerLinkActive="active" *ngIf="!userName">Login</button>
           </div>
          
         </form>
@@ -55,26 +55,23 @@
       </div>
 
       <div class="cart_contain" routerLink="/catalog/cart" routerLinkActive="active">
-        <div><img src="../../assets/cart4.svg" alt="" height="30px"></div>
-        <div class="cart">
-          <div>My Cart</div>
-          <div>{{subtotal|currency:'INR'}}({{cartProducts.length}})</div>
-        </div>
+        <div><img src="../../assets/cart4.svg" alt="" height="40px"></div>
+       
       </div>
       
       <div class="dropdown">
-        <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" *ngIf="userName;else Guest">
-          {{userDetails?userDetails.username:""}}
+        <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{userName?usr:"Guest"}}
 
         </a>
-        <ng-template #Guest>
+        <!-- <ng-template #Guest>
           Guest User
-        </ng-template>
+        </ng-template> -->
       
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" routerLink="/users/profile/home">Profile</a></li>
           <li><a class="dropdown-item" routerLink="/users/profile/orders">Orders</a></li>
-          <li><a class="dropdown-item" href="#">Logout</a></li>
+          <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
         </ul>
       </div>
        

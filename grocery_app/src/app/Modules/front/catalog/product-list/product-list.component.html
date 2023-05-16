@@ -3,7 +3,7 @@
   <div class="row g-2">
       <h3>{{category}}</h3>
       <div class="card" style="width: 18rem; margin: 10px;" *ngFor="let product of category_productArr">
-        <img src="../../../../../assets/cat_img.jpg" class="card-img-top" [routerLink]="['/catalog/product-details/',product.product.id]">
+        <img src="{{'http://localhost:8080/api/v1/get-image/' + product.product.avatar_image}}" class="card-img-top" [routerLink]="['/catalog/product-details/',product.product.id]" width="100" height="200">
         <div class="card-body">
           <h5 class="card-title">{{ product.product.title}}</h5>
           <p class="card-text">{{ product.product.description }}</p>

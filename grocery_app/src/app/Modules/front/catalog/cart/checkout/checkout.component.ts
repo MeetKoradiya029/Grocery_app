@@ -62,8 +62,8 @@ export class CheckoutComponent implements OnInit {
     this.encryption(
       this.addressId,
       this.addressId,
-      'W4YV_pkH7OAkvZO4P1gbzA==',
-      'Nn9l9xhHYQsvNB503C4EAQ=='
+      '3',
+      '4'
     );
     return this.addressId;
   }
@@ -103,33 +103,74 @@ export class CheckoutComponent implements OnInit {
     console.log('Cart Data---', this.cart);
     console.log(this.billing_addressId);
     console.log(this.delivery_addressId);
-    // this.encryptionService.encryptId(payment_status.toString()).subscribe({
-    //   next: (res) => {
-    //     if (res) {
-    //       console.log('encryption, for payment_status:', res.data);
-    //       this.payment_status = res.data;
-    //     }
-    //   },
-    //   error: (error) => {
-    //     if (error) {
-    //       console.log('payment status error:', error);
-    //     }
-    //   },
-    // });
-    // this.encryptionService.encryptId(order_status.toString()).subscribe({
-    //   next: (res) => {
-    //     if (res) {
-    //       console.log('encryption, for order_status:', res.data);
-    //       this.order_status = res.data;
-    //     }
-    //   },
-    //   error: (error) => {
-    //     if (error) {
-    //       console.log('order_status error:', error);
-    //     }
-    //   },
-    // });
+    this.encryptionService.encryptId(payment_status.toString()).subscribe({
+      next: (res) => {
+        if (res) {
+          console.log('encryption, for payment_status:', res.data);
+          this.payment_status = res.data;
+        }
+      },
+      error: (error) => {
+        if (error) {
+          console.log('payment status error:', error);
+        }
+      },
+    });
+    this.encryptionService.encryptId(order_status.toString()).subscribe({
+      next: (res) => {
+        if (res) {
+          console.log('encryption, for order_status:', res.data);
+          this.order_status = res.data;
+        }
+      },
+      error: (error) => {
+        if (error) {
+          console.log('order_status error:', error);
+        }
+      },
+    });
   }
+
+
+//   PaymentStatus(){
+//     // selected=true
+//     this.encryptionService.encryptId("3").subscribe({
+//       next: (encryption_res) => {
+//         if (encryption_res) {
+//           console.log('encryption_res', encryption_res.data);
+//           this.payment_status = encryption_res.data;
+//           // return this.Encyption_Data
+//           console.log('payment_status', this.payment_status);
+//         }
+//       },
+//       error: (encryption_error) => {
+//         console.log('encryption_error', encryption_error);
+//       },
+//     });
+//     // this.delivery_address_id=this.encryption(addressSelect)
+  
+
+// }
+// OrderStatus(){
+//     // selected=true
+//     this.encryptionService.encryptId("4").subscribe({
+//       next: (encryption_res) => {
+//         if (encryption_res) {
+//           console.log('encryption_res', encryption_res.data);
+//           this.order_status = encryption_res.data;
+//           // return this.Encyption_Data
+//           console.log('order_status', this.order_status);
+//         }
+//       },
+//       error: (encryption_error) => {
+//         console.log('encryption_error', encryption_error);
+//       },
+//     });
+//     // this.delivery_address_id=this.encryption(addressSelect)
+  
+
+// }
+
 
   checkout() {
     // ;
@@ -146,8 +187,8 @@ export class CheckoutComponent implements OnInit {
         .addOrder(
           this.billing_addressId,
           this.delivery_addressId,
-          'W4YV_pkH7OAkvZO4P1gbzA==',
-          'Nn9l9xhHYQsvNB503C4EAQ==',
+          this.payment_status,
+          this.order_status,
           this.cart
         )
         .subscribe({

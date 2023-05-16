@@ -13,7 +13,7 @@ import { BrowserModule } from '@angular/platform-browser';
   declarations: [
     CartComponent,
     CheckoutComponent,
-    OrderConfirmComponent,
+    OrderConfirmComponent, 
   ],
   imports: [
     CommonModule,

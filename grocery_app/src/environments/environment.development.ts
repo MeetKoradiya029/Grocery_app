@@ -1,6 +1,6 @@
 export const environment = {
     baseUrl:"http://localhost:3000/",
-    baseURL:"https://0305-117-217-127-105.ngrok-free.app/api/v1/",
+    baseURL:"http://localhost:8080/api/v1/",
     getAllcategory:"category/get-all-categories",
     registerUser:"customer/register",
     loginUser:"customer/login",

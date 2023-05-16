@@ -9,81 +9,71 @@ import { UserService } from 'src/app/Shared/Services/user.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit,DoCheck {
-  //#region 
+export class NavbarComponent implements OnInit {
+  //#region
   cartProducts: any = [];
   user: any;
-  userName:any
+  userName: any;
   userDetails: any;
   cartItemCount: any;
   subtotal: number;
+  user_name:any;
+  usr: any;
   //#endregion
 
   constructor(
     private cartService: CartService,
     private userService: UserService,
     private cookieService: CookieService,
-    private router:Router
+    private router: Router
   ) {
-    this.router.events.subscribe((res:any)=>{
+
+    this.router.events.subscribe((res: any) => {
       this.userName = this.cookieService.get('userLoginToken');
-      if(res.url){
-
-        if(this.userName){
-
+      if (res.url) {
+        // debugger;
+        if (this.userName) {
+          let userDetail = JSON.parse(localStorage.getItem("userData"));
           // console.log("res.url",res.url);
-          
+            if(userDetail){
+              
+              this.user_name= userDetail.username;
+              this.usr=!this.user_name?"Guest":this.user_name
+              
+            }
           this.user = this.cookieService.get('userLoginToken');
           // console.log("User====>",this.user)
-          
-          this.cartService.getItemCount()
-          this.cartService.Subtotal()
+
+          this.cartService.getItemCount();
+          this.cartService.Subtotal();
         }
-        }
-      })  
+      }
+    });
   }
-  ngDoCheck() {
-    this.user = this.cookieService.get('userLoginToken')
-    
-    if(this.user){
-      return this.user
-    }
-  }
-  
+  // ngDoCheck() {
+  //   this.user = this.cookieService.get('userLoginToken');
+
+  //   if (this.user) {
+  //     return this.user;
+  //   }
+  // }
 
   async ngOnInit() {
     await this.getUserDetails();
     this.cartService.Subtotal();
-    // this.cartProducts = this.cartService.getCartProducts().subscribe((res) => {
-    //   if (res) {
-    //     console.log('cart items', res);
-    //   }
-    //   this.cartProducts = res;
-    // });
-    // this.subtotal();
-    this.cartService.currentSubtotal.subscribe((res)=>{
-      
-     if(res){
-       console.log("subtotal", res);
-       
-       this.subtotal=res
-     }
-    })
-    
-    this.cartItemCount=this.cartService.getItemCount()
-        this.cartService.cartLength$.subscribe((length) => {
-    
 
-            this.cartItemCount = length;
-          
-      });
-    
+    this.cartService.currentSubtotal.subscribe((res) => {
+      if (res) {
+        console.log('subtotal', res);
 
-    
+        this.subtotal = res;
+      }
+    });
 
-    
-    
-    
+    this.cartItemCount = this.cartService.getItemCount();
+    this.cartService.cartLength$.subscribe((length) => {
+      this.cartItemCount = length;
+    });
   }
 
   // subtotal() {
@@ -104,15 +94,14 @@ export class NavbarComponent implements OnInit,DoCheck {
             console.log('User Data:----', res);
 
             // this.customerId = res.data.id;
-            if(res.data){
-              
+            if (res.data) {
               this.userDetails = res.data;
             }
             // console.log('User ID ::--', this.customerId);
-           
+
             resolve(res);
 
-            return this.userDetails
+            return this.userDetails;
           }
         },
         error: (error) => {
@@ -121,5 +110,29 @@ export class NavbarComponent implements OnInit,DoCheck {
         },
       });
     });
+  }
+
+  logout() {
+    
+    //   console.log("login token:",this.cookieService.get('userLoginToken'));
+    debugger
+    let user = this.cookieService.get('userLoginToken');
+    if (user) {
+      console.log('user token in logout fn:', user);
+      this.cookieService.delete('userLoginToken');
+      localStorage.removeItem("userToken");
+      
+      setTimeout(()=>{
+
+        if(user){
+          this.cookieService.delete('userLoginToken');
+          this.userService.openSnackBar("Logged Out succcessfully!","Ok","end","top");
+          this.router.navigate(['']);
+        }
+      },1000)
+      if(!user){
+        this.user = user;
+      }
+    }
   }
 }
